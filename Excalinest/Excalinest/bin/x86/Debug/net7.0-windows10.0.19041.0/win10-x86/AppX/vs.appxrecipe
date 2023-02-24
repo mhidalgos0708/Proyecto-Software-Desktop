@@ -29,33 +29,33 @@
     <AppXManifest Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\bin\x86\Debug\net7.0-windows10.0.19041.0\win10-x86\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2023-02-24T04:11:50.127</Modified>
+      <Modified>2023-02-24T21:07:35.879</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\bin\x86\Debug\net7.0-windows10.0.19041.0\win10-x86\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2023-02-24T04:04:04.294</Modified>
+      <Modified>2023-02-24T21:07:35.384</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\bin\x86\Debug\net7.0-windows10.0.19041.0\win10-x86\Excalinest.runtimeconfig.json">
       <PackagePath>Excalinest.runtimeconfig.json</PackagePath>
-      <Modified>2023-02-24T04:04:03.314</Modified>
+      <Modified>2023-02-24T21:07:34.852</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\bin\x86\Debug\net7.0-windows10.0.19041.0\win10-x86\Excalinest.dll">
       <PackagePath>Excalinest.dll</PackagePath>
-      <Modified>2023-02-24T04:04:02.542</Modified>
+      <Modified>2023-02-24T21:07:34.167</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\appsettings.json">
       <PackagePath>appsettings.json</PackagePath>
-      <Modified>2023-02-24T04:02:18.702</Modified>
+      <Modified>2023-02-24T21:06:27.210</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\obj\x86\Debug\net7.0-windows10.0.19041.0\win10-x86\apphost.exe">
       <PackagePath>Excalinest.exe</PackagePath>
-      <Modified>2023-02-24T04:04:02.576</Modified>
+      <Modified>2023-02-24T21:07:34.195</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\bin\x86\Debug\net7.0-windows10.0.19041.0\win10-x86\Excalinest.deps.json">
       <PackagePath>Excalinest.deps.json</PackagePath>
-      <Modified>2023-02-24T04:04:03.027</Modified>
+      <Modified>2023-02-24T21:07:34.683</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\.nuget\packages\microsoft.netcore.app.runtime.win-x86\7.0.3\runtimes\win-x86\lib\net7.0\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -1047,7 +1047,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest.Core\bin\x86\Debug\net7.0\Excalinest.Core.dll">
       <PackagePath>Excalinest.Core.dll</PackagePath>
-      <Modified>2023-02-24T04:03:39.150</Modified>
+      <Modified>2023-02-24T21:07:22.254</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\.nuget\packages\colorcode.winui\2.0.13\lib\net5.0-windows10.0.18362\ColorCode.WinUI.pri">
       <PackagePath>ColorCode.WinUI.pri</PackagePath>
@@ -1107,35 +1107,35 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
-      <Modified>2023-02-24T04:02:18.936</Modified>
+      <Modified>2023-02-24T21:06:27.160</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
-      <Modified>2023-02-24T04:02:18.937</Modified>
+      <Modified>2023-02-24T21:06:27.161</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
-      <Modified>2023-02-24T04:02:18.938</Modified>
+      <Modified>2023-02-24T21:06:27.161</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
-      <Modified>2023-02-24T04:02:18.939</Modified>
+      <Modified>2023-02-24T21:06:27.162</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
-      <Modified>2023-02-24T04:02:18.941</Modified>
+      <Modified>2023-02-24T21:06:27.162</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
-      <Modified>2023-02-24T04:02:18.943</Modified>
+      <Modified>2023-02-24T21:06:27.163</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
-      <Modified>2023-02-24T04:02:18.945</Modified>
+      <Modified>2023-02-24T21:06:27.163</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\Excalinest\Excalinest\Assets\WindowIcon.ico">
       <PackagePath>Assets\WindowIcon.ico</PackagePath>
-      <Modified>2023-02-24T04:02:17.502</Modified>
+      <Modified>2023-02-24T21:06:27.165</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
