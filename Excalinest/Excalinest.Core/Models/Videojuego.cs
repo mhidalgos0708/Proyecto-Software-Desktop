@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using System.Drawing;
 
 namespace Excalinest.Core.Models;
-internal class Videojuego
+public class Videojuego
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
