@@ -15,10 +15,10 @@
         <TextBox AutomationProperties.Name="multi-line TextBox"
         TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="False"
         SelectionHighlightColor="Green" MinWidth="400" MaxHeight="200"/>
-        
+
 
         <Button x:ConnectionId='2' Margin="10" x:Name="myButton"                       >Click Me</Button>
-       
+
     </StackPanel>
 </Window>
 

@@ -224,21 +224,35 @@ namespace FrontEnd.FrontEnd_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[6];
+            _typeNameTable = new string[13];
             _typeNameTable[0] = "Microsoft.UI.Xaml.Controls.XamlControlsResources";
             _typeNameTable[1] = "Microsoft.UI.Xaml.ResourceDictionary";
             _typeNameTable[2] = "Object";
             _typeNameTable[3] = "Boolean";
-            _typeNameTable[4] = "FrontEnd.MainWindow";
-            _typeNameTable[5] = "Microsoft.UI.Xaml.Window";
+            _typeNameTable[4] = "FrontEnd.BlankPage1";
+            _typeNameTable[5] = "Microsoft.UI.Xaml.Controls.Page";
+            _typeNameTable[6] = "Microsoft.UI.Xaml.Controls.UserControl";
+            _typeNameTable[7] = "FrontEnd.BlankPage2";
+            _typeNameTable[8] = "FrontEnd.BlankPage3";
+            _typeNameTable[9] = "FrontEnd.MainWindow";
+            _typeNameTable[10] = "Microsoft.UI.Xaml.Window";
+            _typeNameTable[11] = "Windows.Graphics.SizeInt32";
+            _typeNameTable[12] = "System.ValueType";
 
-            _typeTable = new global::System.Type[6];
+            _typeTable = new global::System.Type[13];
             _typeTable[0] = typeof(global::Microsoft.UI.Xaml.Controls.XamlControlsResources);
             _typeTable[1] = typeof(global::Microsoft.UI.Xaml.ResourceDictionary);
             _typeTable[2] = typeof(global::System.Object);
             _typeTable[3] = typeof(global::System.Boolean);
-            _typeTable[4] = typeof(global::FrontEnd.MainWindow);
-            _typeTable[5] = typeof(global::Microsoft.UI.Xaml.Window);
+            _typeTable[4] = typeof(global::FrontEnd.BlankPage1);
+            _typeTable[5] = typeof(global::Microsoft.UI.Xaml.Controls.Page);
+            _typeTable[6] = typeof(global::Microsoft.UI.Xaml.Controls.UserControl);
+            _typeTable[7] = typeof(global::FrontEnd.BlankPage2);
+            _typeTable[8] = typeof(global::FrontEnd.BlankPage3);
+            _typeTable[9] = typeof(global::FrontEnd.MainWindow);
+            _typeTable[10] = typeof(global::Microsoft.UI.Xaml.Window);
+            _typeTable[11] = typeof(global::Windows.Graphics.SizeInt32);
+            _typeTable[12] = typeof(global::System.ValueType);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -274,7 +288,10 @@ namespace FrontEnd.FrontEnd_XamlTypeInfo
         }
 
         private object Activate_0_XamlControlsResources() { return new global::Microsoft.UI.Xaml.Controls.XamlControlsResources(); }
-        private object Activate_4_MainWindow() { return new global::FrontEnd.MainWindow(); }
+        private object Activate_4_BlankPage1() { return new global::FrontEnd.BlankPage1(); }
+        private object Activate_7_BlankPage2() { return new global::FrontEnd.BlankPage2(); }
+        private object Activate_8_BlankPage3() { return new global::FrontEnd.BlankPage3(); }
+        private object Activate_9_MainWindow() { return new global::FrontEnd.MainWindow(); }
         private void MapAdd_0_XamlControlsResources(object instance, object key, object item)
         {
             var collection = (global::System.Collections.Generic.IDictionary<global::System.Object, global::System.Object>)instance;
@@ -313,15 +330,56 @@ namespace FrontEnd.FrontEnd_XamlTypeInfo
                 xamlType = new global::FrontEnd.FrontEnd_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 4:   //  FrontEnd.MainWindow
-                userType = new global::FrontEnd.FrontEnd_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Window"));
-                userType.Activator = Activate_4_MainWindow;
+            case 4:   //  FrontEnd.BlankPage1
+                userType = new global::FrontEnd.FrontEnd_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_4_BlankPage1;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 5:   //  Microsoft.UI.Xaml.Window
+            case 5:   //  Microsoft.UI.Xaml.Controls.Page
                 xamlType = new global::FrontEnd.FrontEnd_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 6:   //  Microsoft.UI.Xaml.Controls.UserControl
+                xamlType = new global::FrontEnd.FrontEnd_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 7:   //  FrontEnd.BlankPage2
+                userType = new global::FrontEnd.FrontEnd_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_7_BlankPage2;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 8:   //  FrontEnd.BlankPage3
+                userType = new global::FrontEnd.FrontEnd_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_8_BlankPage3;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 9:   //  FrontEnd.MainWindow
+                userType = new global::FrontEnd.FrontEnd_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Window"));
+                userType.Activator = Activate_9_MainWindow;
+                userType.AddMemberName("Size");
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 10:   //  Microsoft.UI.Xaml.Window
+                xamlType = new global::FrontEnd.FrontEnd_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 11:   //  Windows.Graphics.SizeInt32
+                userType = new global::FrontEnd.FrontEnd_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.ValueType"));
+                userType.SetIsReturnTypeStub();
+                xamlType = userType;
+                break;
+
+            case 12:   //  System.ValueType
+                userType = new global::FrontEnd.FrontEnd_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                xamlType = userType;
                 break;
             }
             return xamlType;
@@ -392,6 +450,11 @@ namespace FrontEnd.FrontEnd_XamlTypeInfo
             var that = (global::Microsoft.UI.Xaml.Controls.XamlControlsResources)instance;
             that.UseCompactResources = (global::System.Boolean)Value;
         }
+        private object get_1_MainWindow_Size(object instance)
+        {
+            var that = (global::FrontEnd.MainWindow)instance;
+            return that.Size;
+        }
 
         private global::Microsoft.UI.Xaml.Markup.IXamlMember CreateXamlMember(string longMemberName)
         {
@@ -406,6 +469,12 @@ namespace FrontEnd.FrontEnd_XamlTypeInfo
                 xamlMember.SetIsDependencyProperty();
                 xamlMember.Getter = get_0_XamlControlsResources_UseCompactResources;
                 xamlMember.Setter = set_0_XamlControlsResources_UseCompactResources;
+                break;
+            case "FrontEnd.MainWindow.Size":
+                userType = (global::FrontEnd.FrontEnd_XamlTypeInfo.XamlUserType)GetXamlTypeByName("FrontEnd.MainWindow");
+                xamlMember = new global::FrontEnd.FrontEnd_XamlTypeInfo.XamlMember(this, "Size", "Windows.Graphics.SizeInt32");
+                xamlMember.Getter = get_1_MainWindow_Size;
+                xamlMember.SetIsReadOnly();
                 break;
             }
             return xamlMember;

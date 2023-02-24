@@ -30,29 +30,29 @@
     <AppXManifest Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\bin\x86\Debug\net6.0-windows10.0.19041.0\win10-x86\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2023-02-22T21:30:17.550</Modified>
+      <Modified>2023-02-24T03:53:35.265</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\bin\x86\Debug\net6.0-windows10.0.19041.0\win10-x86\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2023-02-22T21:30:17.068</Modified>
+      <Modified>2023-02-24T03:53:06.819</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\bin\x86\Debug\net6.0-windows10.0.19041.0\win10-x86\FrontEnd.runtimeconfig.json">
       <PackagePath>FrontEnd.runtimeconfig.json</PackagePath>
-      <Modified>2023-02-22T21:18:12.858</Modified>
+      <Modified>2023-02-23T21:07:52.326</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\bin\x86\Debug\net6.0-windows10.0.19041.0\win10-x86\FrontEnd.dll">
       <PackagePath>FrontEnd.dll</PackagePath>
-      <Modified>2023-02-22T21:30:16.641</Modified>
+      <Modified>2023-02-24T03:53:34.859</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\obj\x86\Debug\net6.0-windows10.0.19041.0\win10-x86\apphost.exe">
       <PackagePath>FrontEnd.exe</PackagePath>
-      <Modified>2023-02-22T21:30:16.699</Modified>
+      <Modified>2023-02-24T03:53:34.875</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\bin\x86\Debug\net6.0-windows10.0.19041.0\win10-x86\FrontEnd.deps.json">
       <PackagePath>FrontEnd.deps.json</PackagePath>
-      <Modified>2023-02-22T21:18:12.704</Modified>
+      <Modified>2023-02-24T03:31:10.471</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\.nuget\packages\microsoft.netcore.app.runtime.win-x86\6.0.14\runtimes\win-x86\lib\net6.0\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -1016,31 +1016,35 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
-      <Modified>2023-02-22T04:15:24.305</Modified>
+      <Modified>2023-02-23T12:12:32.349</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\Assets\logo.png">
+      <PackagePath>Assets\logo.png</PackagePath>
+      <Modified>2023-02-24T03:43:47.072</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
-      <Modified>2023-02-22T04:15:24.305</Modified>
+      <Modified>2023-02-23T12:12:32.350</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
-      <Modified>2023-02-22T04:15:24.306</Modified>
+      <Modified>2023-02-23T12:12:32.351</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
-      <Modified>2023-02-22T04:15:24.307</Modified>
+      <Modified>2023-02-23T12:12:32.351</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
-      <Modified>2023-02-22T04:15:24.307</Modified>
+      <Modified>2023-02-23T12:12:32.352</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
-      <Modified>2023-02-22T04:15:24.308</Modified>
+      <Modified>2023-02-23T12:12:32.352</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
-      <Modified>2023-02-22T04:15:24.309</Modified>
+      <Modified>2023-02-23T12:12:32.353</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

@@ -15,9 +15,9 @@
         <TextBox AutomationProperties.Name="multi-line TextBox"
         TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="False"
         SelectionHighlightColor="Green" MinWidth="400" MaxHeight="200"/>
-        
+
 
         <Button Margin="10" x:Name="myButton" Click="myButton_Click">Click Me</Button>
-       
+
     </StackPanel>
 </Window>

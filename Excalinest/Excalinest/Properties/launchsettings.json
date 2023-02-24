@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "Excalinest (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "Excalinest (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}

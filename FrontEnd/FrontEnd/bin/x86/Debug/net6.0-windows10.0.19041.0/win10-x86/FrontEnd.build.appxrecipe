@@ -763,6 +763,9 @@
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\Assets\logo.png">
+      <PackagePath>Assets\logo.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Silvia Rodríguez\Documents\GitHub\Proyecto-Software-Desktop\FrontEnd\FrontEnd\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
     </AppxPackagedFile>

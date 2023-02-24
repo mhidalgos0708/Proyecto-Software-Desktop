@@ -44,8 +44,11 @@ namespace FrontEnd
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new MainWindow();
-            m_window.Activate();
+            this.m_window = new Window();
+            Frame rootFrame = m_window.Content as Frame;
+            this.m_window.Content = rootFrame = new Frame(); ;
+            this.m_window.Activate();
+            rootFrame.Navigate(typeof(BlankPage3));
         }
 
         private Window m_window;

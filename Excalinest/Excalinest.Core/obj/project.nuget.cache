@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "3d5dfGyw48wzxKNTPg94/NZozz5fOQor//ep1jA51806HjKsSivsdn6dmd1vBnTO7dh35rJYO2pU4+chDYykeQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Silvia Rodríguez\\Documents\\GitHub\\Proyecto-Software-Desktop\\Excalinest\\Excalinest.Core\\Excalinest.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Silvia Rodríguez\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
