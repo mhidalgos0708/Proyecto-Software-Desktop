@@ -8,21 +8,27 @@ namespace Excalinest.Core.Services;
 
 public class MongoConnection
 {
-    private MongoClient _mongoclient;
-    public string CurrentUrl
+    private readonly MongoClient _mongoclient;
+    private string CurrentUrl
     {
-        get; private set;
+        get; set;
     }
 
+    private readonly MongoClientSettings settings;
+    private readonly MongoClient client;
+    private readonly IMongoDatabase database;
+
+    // Conexión a mongo funcionando correctamente
     public MongoConnection()
     {
-        CurrentUrl = "mongodb://excalinest:<AcWqA5Ez6LNGUiKF>@ac-7lxzxoi-shard-00-00.auytmua.mongodb.net:27017,ac-7lxzxoi-shard-00-01.auytmua.mongodb.net:27017,ac-7lxzxoi-shard-00-02.auytmua.mongodb.net:27017/?ssl=true&replicaSet=atlas-131utc-shard-0&authSource=admin&retryWrites=true&w=majority";
-        _mongoclient = new MongoClient(CurrentUrl);
+        settings = MongoClientSettings.FromConnectionString("mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/?retryWrites=true&w=majority");
+        client = new MongoClient(settings);
+        database = client.GetDatabase("ExcalinestDB");
     }
 
-    public async Task<IEnumerable<string>> GetCollectionsFrom(string dbName)
+    //Métodos incompletos
+    public async Task<IEnumerable<string>> GetCollectionsFrom()
     {
-        var database = _mongoclient.GetDatabase(dbName);
         var cursor = await database.ListCollectionNamesAsync();
         return cursor.ToEnumerable();
     }
@@ -31,14 +37,5 @@ public class MongoConnection
     {
         var cursor = await _mongoclient.ListDatabaseNamesAsync();
         return cursor.ToEnumerable();
-    }
-
-    public async Task<(BsonElement, BsonElement)> ExecuteRawAsync(string dbName, string command)
-    {
-        var db = _mongoclient.GetDatabase(dbName);
-        var result = await db.RunCommandAsync<BsonDocument>(command);
-        result.TryGetElement("cursor", out BsonElement cursor);
-        result.TryGetElement("ok", out BsonElement ok);
-        return (cursor, ok);
     }
 }
