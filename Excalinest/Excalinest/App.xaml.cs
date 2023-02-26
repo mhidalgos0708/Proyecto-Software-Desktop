@@ -80,6 +80,8 @@ public partial class App : Application
             services.AddTransient<ListDetailsPage>();
             services.AddTransient<MainViewModel>();
             services.AddTransient<MainPage>();
+            services.AddTransient<TestViewModel>();
+            services.AddTransient<TestPage>();
             services.AddTransient<ShellPage>();
             services.AddTransient<ShellViewModel>();
 
