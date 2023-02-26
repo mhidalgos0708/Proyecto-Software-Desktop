@@ -3,6 +3,8 @@ using MongoDB.Bson.Serialization.Attributes;
 using System.Drawing;
 
 namespace Excalinest.Core.Models;
+
+// Modelo para almacenar los videojuegos extraídos de la base de datos de Mongo
 public class Videojuego
 {
     [BsonId]
