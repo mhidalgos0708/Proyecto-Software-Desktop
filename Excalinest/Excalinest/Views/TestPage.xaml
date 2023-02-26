@@ -12,7 +12,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <!-- Buttons arranged vertically inside a StackPanel. -->
-    <Grid x:Name="ContentArea">
-        <Button>Button 1</Button>
-    </Grid>
+    <Button x:Name="btn1" Content="Ejecutar"
+          Click="EjecutarVideojuego" ClickMode="Press"
+          Margin="5,5,5,5" Width="150" 
+          HorizontalAlignment="Left" 
+          Foreground="Blue"/>
 </Page>
