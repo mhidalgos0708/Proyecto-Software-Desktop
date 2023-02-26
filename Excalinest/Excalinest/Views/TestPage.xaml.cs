@@ -23,7 +23,7 @@ using System.Diagnostics;
 
 namespace Excalinest.Views;
 /// <summary>
-/// An empty page that can be used on its own or navigated to within a Frame.
+/// A page to test execution func
 /// </summary>
 public sealed partial class TestPage : Page
 {
