@@ -25,7 +25,7 @@ public sealed partial class VideogamesDetailPage : Page
     {
         ViewModel = App.GetService<VideogamesDetailViewModel>();
         InitializeComponent();
-        Videojuego = "RiotClientServices";
+        Videojuego = "Wednesday";
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
