@@ -3,8 +3,12 @@
 using Excalinest.Contracts.Services;
 using Excalinest.ViewModels;
 
+
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System.Diagnostics;
+
 
 namespace Excalinest.Views;
 
@@ -15,10 +19,13 @@ public sealed partial class VideogamesDetailPage : Page
         get;
     }
 
+    private readonly string Videojuego;
+
     public VideogamesDetailPage()
     {
         ViewModel = App.GetService<VideogamesDetailViewModel>();
         InitializeComponent();
+        Videojuego = "RiotClientServices";
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -39,5 +46,10 @@ public sealed partial class VideogamesDetailPage : Page
                 navigationService.SetListDataItemForNextConnectedAnimation(ViewModel.Item);
             }
         }
+    }
+
+    public void EjecutarVideojuego(object sender, RoutedEventArgs e)
+    {
+        Process.Start("Excalinest\\Assets\\Videojuegos\\", Videojuego);
     }
 }

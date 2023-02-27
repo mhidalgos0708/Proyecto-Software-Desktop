@@ -70,8 +70,8 @@
                         <StackPanel x:Name="shipToGroup" Margin="{StaticResource SmallTopMargin}">
                         </StackPanel>
 
-                        <StackPanel x:Name="orderTotalGroup" Margin="{StaticResource SmallTopMargin}" HorizontalAlignment="Right">
-							<Button Style="{StaticResource AccentButtonStyle}" Content="Ejecutar" Width="100" Height="40"/>
+                        <StackPanel x:Name="ejecutarBtn" Margin="{StaticResource SmallTopMargin}" HorizontalAlignment="Right">
+                            <Button Style="{StaticResource AccentButtonStyle}" Content="Ejecutar" Width="100" Height="40" Click="EjecutarVideojuego" ClickMode="Press"/>
                         </StackPanel>
                     </StackPanel>
 
