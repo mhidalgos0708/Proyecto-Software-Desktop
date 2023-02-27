@@ -20,6 +20,8 @@ public class PageService : IPageService
         Configure<ContentGridDetailViewModel, ContentGridDetailPage>();
         Configure<DataGridViewModel, DataGridPage>();
         Configure<SettingsViewModel, SettingsPage>();
+        Configure<VideogamesViewModel, VideogamesPage>();
+        Configure<VideogamesDetailViewModel, VideogamesDetailPage>();
     }
 
     public Type GetPageType(string key)

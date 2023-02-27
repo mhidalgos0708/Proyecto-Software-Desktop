@@ -68,6 +68,10 @@ public partial class App : Application
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
+            services.AddTransient<VideogamesDetailViewModel>();
+            services.AddTransient<VideogamesDetailPage>();
+            services.AddTransient<VideogamesViewModel>();
+            services.AddTransient<VideogamesPage>();
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
             services.AddTransient<DataGridViewModel>();
