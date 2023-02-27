@@ -109,4 +109,7 @@
   <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
     <value>https://YourPrivacyUrlGoesHere/</value>
   </data>
+  <data name="Shell_Videogames.Content" xml:space="preserve">
+    <value>Videogames</value>
+  </data>
 </root>
