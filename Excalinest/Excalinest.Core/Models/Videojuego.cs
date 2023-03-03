@@ -1,15 +1,19 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Libmongocrypt;
 using System.Drawing;
+using System.Text.Json;
 
 namespace Excalinest.Core.Models;
 
+
 // Modelo para almacenar los videojuegos extraídos de la base de datos de Mongo
+[BsonIgnoreExtraElements]
 public class Videojuego
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string? ID
+    //[BsonId]
+    //[BsonRepresentation(BsonType.ObjectId)]
+    public ObjectId ID
     {
         get; set;
     }
@@ -17,15 +21,40 @@ public class Videojuego
     [BsonElement("titulo")]
     public string Titulo { get; set; } = null!;
 
-    public Image Portada { get; set; } = null!;
+    [BsonElement("portada")]
+    public Portada Portada { get; set; } = null!;
 
+    [BsonElement("sinopsis")]
     public string Sinopsis { get; set; } = null!;
-
+    
+    [BsonElement("usuario")]
     public string Usuario { get; set; } = null!;
 
-    public FileStream JuegoZIP { get; set; } = null!;
-
+    [BsonElement("juegoZip")]
+    public Zip JuegoZIP { get; set; } = null!;
+    
+    /*
     public List<string> Etiquetas { get; set; } = null!;
 
-    public List<Image> RedesSociales { get; set; } = null!;
+    public List<Image> RedesSociales { get; set; } = null!;*/
+}
+
+public class Portada
+{
+    [BsonElement("imgtype")]
+    public string ImgType { get; set; } = null;
+
+    [BsonElement("data")]
+    public byte[] Data { get; set; } = null;
+
+}
+
+public class Zip
+{
+    [BsonElement("filetype")]
+    public string FileType { get; set; } = null;
+
+    [BsonElement("data")]
+    public byte[] Data { get; set; } = null;
+
 }
