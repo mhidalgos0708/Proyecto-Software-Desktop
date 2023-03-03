@@ -41,7 +41,7 @@ public class Videojuego
 
 public class Portada
 {
-    [BsonElement("imgtype")]
+    [BsonElement("tipoImagen")]
     public string ImgType { get; set; } = null;
 
     [BsonElement("data")]
@@ -51,7 +51,7 @@ public class Portada
 
 public class Zip
 {
-    [BsonElement("filetype")]
+    [BsonElement("tipoArchivo")]
     public string FileType { get; set; } = null;
 
     [BsonElement("data")]

@@ -74,6 +74,13 @@ public class ServicioVideojuego
         return entity;
     }
 
+    public async Task<Videojuego> GetVideojuegoPorTitulo(string titulo)
+    {
+        var filter = Builders<Videojuego>.Filter.Eq("titulo", titulo);
+        var entity = collection.Find(filter).FirstOrDefault();
+        return entity;
+    }
+
     public async Task<Videojuego> CreateVideojuego(Videojuego videojuego)
     {
     

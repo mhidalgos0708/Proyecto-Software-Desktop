@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -56,7 +57,8 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         if (clickedItem != null)
         {
             _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
-            _navigationService.NavigateTo(typeof(VideogamesDetailViewModel).FullName!, clickedItem.ID);
+            _navigationService.NavigateTo(typeof(VideogamesDetailViewModel).FullName!, clickedItem.Titulo);
+            Debug.WriteLine(clickedItem.Titulo);
         }
     }
 }

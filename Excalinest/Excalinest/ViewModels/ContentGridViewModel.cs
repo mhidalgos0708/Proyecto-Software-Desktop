@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -51,6 +52,7 @@ public class ContentGridViewModel : ObservableRecipient, INavigationAware
     {
         if (clickedItem != null)
         {
+            Debug.WriteLine(clickedItem.ToString());
             _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
             _navigationService.NavigateTo(typeof(ContentGridDetailViewModel).FullName!, clickedItem.OrderID);
         }

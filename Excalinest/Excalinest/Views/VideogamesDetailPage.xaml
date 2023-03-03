@@ -43,12 +43,7 @@
                         VerticalAlignment="Top"
                         RelativePanel.AlignTopWithPanel="True"
                         RelativePanel.AlignLeftWithPanel="True">
-                        <FontIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="70"
-                            Glyph="{x:Bind ViewModel.Item.Symbol}"
-                            AutomationProperties.Name="{x:Bind ViewModel.Item.SymbolName}" />
+
                     </Grid>
 
                     <TextBlock
@@ -57,12 +52,12 @@
                         RelativePanel.AlignTopWithPanel="True"
                         RelativePanel.RightOf="itemHero"
                         Style="{ThemeResource TitleTextBlockStyle}"
-                        Text="{x:Bind ViewModel.Item.Company, Mode=OneWay}" />
+                        Text="{x:Bind ViewModel.Item.Titulo, Mode=OneWay}" />
 
                     <StackPanel x:Name="propertiesGroup1" RelativePanel.Below="itemHero">
                         <StackPanel x:Name="statusGroup" Margin="{StaticResource SmallTopMargin}">
                             <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Publicado por" />
-                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.Item.Status}" />
+                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.Item.Usuario}" />
                         </StackPanel>
                     </StackPanel>
 
@@ -83,7 +78,7 @@
                     Text="Sinopsis" />
                 <TextBlock Margin="10,10,10,10"
                     Style="{ThemeResource BodyTextBlockStyle}" 
-                    Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis hendrerit nulla, vel molestie libero. In nec ultricies magna, ultricies molestie ipsum. Mauris non dignissim velit. Etiam malesuada blandit mauris eu maximus. Quisque ornare, felis nec scelerisque mollis, risus dolor posuere magna, in gravida quam mi id nisi. Nullam mattis consequat ex. Cras nulla neque, dictum ac urna et, vestibulum feugiat ex. Pellentesque malesuada accumsan ligula, vel fringilla lacus facilisis sit amet. Proin convallis tempor arcu, ac placerat libero pretium ut. Praesent hendrerit nisl at lobortis viverra. Fusce vitae velit odio. Nam ut tortor sed purus finibus sollicitudin quis at ante. Ut sodales dolor vel eros mollis suscipit. Donec eu nulla id urna ultricies consequat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;" />
+                    Text="{x:Bind ViewModel.Item.Usuario}" />
 
                 <TextBlock
                     Margin="{StaticResource SmallTopMargin}"
