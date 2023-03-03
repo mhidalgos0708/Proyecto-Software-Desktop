@@ -24,7 +24,7 @@ public sealed partial class VideogamesPage : Page
         InitializeComponent();
     }
 
-    public void TagComboBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
+    public async void TagComboBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
     {
         ComboBox tag = (ComboBox)sender;
         String chosenTag = tag.SelectedItem as String;
