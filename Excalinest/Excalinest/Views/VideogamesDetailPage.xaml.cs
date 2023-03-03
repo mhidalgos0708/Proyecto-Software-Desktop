@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.WinUI.UI.Animations;
 
 using Excalinest.Contracts.Services;
+using Excalinest.Core.Models;
 using Excalinest.ViewModels;
 
 using Microsoft.UI.Xaml;
@@ -51,29 +52,27 @@ public sealed partial class VideogamesDetailPage : Page
     }
 
     // Método para ejecutar el videojuego actual, busca en la ruta del mismo nombre el ejecutable correspondiente
+    // Se hace la suposición de que el ejecutable se llama igual que el juego **Importante preguntar**
     public void EjecutarVideojuego(object sender, RoutedEventArgs e)
     {
-        var NombreExtension = NombreVideojuego + ".EXE";
-        var RutaJuego = @"Excalinest\Assets\Videojuegos\" + NombreVideojuego;
+        Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+
+        var RutaJuego =  @".\Assets\Videojuegos\" + NombreVideojuego;
+        
         try
         {
-            var VideojuegoEjecutable = Directory.GetFiles("D:\\", NombreExtension, SearchOption.AllDirectories)
-                    .Select(fileName => Path.GetFileNameWithoutExtension(fileName))
+            var VideojuegoEjecutable = Directory.GetFiles(RutaJuego, "*.exe", SearchOption.AllDirectories)
                     .AsEnumerable()
                     .ToArray();
 
             for (var i = 0; i < VideojuegoEjecutable.Length; i++)
             {
-                if (Path.GetFileName(Path.GetFileNameWithoutExtension(VideojuegoEjecutable[i])) == NombreVideojuego)
-                {
-                    var VideojuegoActual = Process.Start(VideojuegoEjecutable[i]);
-                }
+                var VideojuegoActual = Process.Start(VideojuegoEjecutable[i]);
             }
-            
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
