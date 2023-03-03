@@ -53,6 +53,8 @@ public sealed partial class VideogamesDetailPage : Page
 
     // Método para ejecutar el videojuego actual, busca en la ruta del mismo nombre el ejecutable correspondiente
     // Se hace la suposición de que el ejecutable se llama igual que el juego **Importante preguntar**
+    // Cambiar posible pulga en línea var VideojuegoActual = Process.Start(VideojuegoEjecutable[i]); por ejecución de directa del crashhandler
+
     public void EjecutarVideojuego(object sender, RoutedEventArgs e)
     {
         Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
