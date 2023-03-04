@@ -45,6 +45,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         foreach (var item in data)
         {
             Source.Add(item);
+
         }
     }
 
@@ -58,7 +59,6 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         {
             _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
             _navigationService.NavigateTo(typeof(VideogamesDetailViewModel).FullName!, clickedItem.Titulo);
-            Debug.WriteLine(clickedItem.Titulo);
         }
     }
 }

@@ -38,6 +38,7 @@
                         <Grid x:Name="itemThumbnail" Padding="{StaticResource XSmallLeftTopRightBottomMargin}">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <!-- <FontIcon AutomationProperties.Name="{x:Bind Titulo}" FontSize="20" Glyph="{x:Bind Symbol}"  /> -->
+
                                 <TextBlock
                                     Margin="{StaticResource XXSmallTopMargin}"
                                     HorizontalAlignment="Center"

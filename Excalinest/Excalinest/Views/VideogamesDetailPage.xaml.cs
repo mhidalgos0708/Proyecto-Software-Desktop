@@ -19,12 +19,12 @@ using Image = System.Drawing.Image;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Storage.Streams;
 using Microsoft.UI.Xaml;
+using System.Diagnostics;
 
 namespace Excalinest.Views;
 
 public sealed partial class VideogamesDetailPage : Page
 {
-
     public VideogamesDetailViewModel ViewModel
     {
         get;
@@ -40,6 +40,22 @@ public sealed partial class VideogamesDetailPage : Page
     {
         base.OnNavigatedTo(e);
         this.RegisterElementForConnectedAnimation("animationKeyContentGrid", itemHero);
+
+        GetImage();
+
+    }
+
+    private async void GetImage()
+    {
+        BitmapImage biSource = new BitmapImage();
+        using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+        {
+            await stream.WriteAsync(ViewModel.Item.Portada.Data.AsBuffer());
+            stream.Seek(0);
+            await biSource.SetSourceAsync(stream);
+        }
+
+        Cover.Source = biSource;
     }
 
     protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -52,6 +68,7 @@ public sealed partial class VideogamesDetailPage : Page
             if (ViewModel.Item != null)
             {
                 navigationService.SetListDataItemForNextConnectedAnimation(ViewModel.Item);
+                
             }
         }
     }
