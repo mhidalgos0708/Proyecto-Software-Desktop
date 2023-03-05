@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 using Excalinest.Contracts.ViewModels;
 using Excalinest.Core.Contracts.Services;
@@ -12,6 +13,8 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
     private readonly ISampleDataService _sampleDataService;
     private readonly ServicioVideojuego servicioVideojuego;
     private Videojuego? _item;
+
+    public ObservableCollection<string> Tags { get; } = new ObservableCollection<string>();
 
     public Videojuego? Item
     {
@@ -31,6 +34,7 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
         {
             var data = await _sampleDataService.GetContentGridDataAsync();
             Item = await servicioVideojuego.GetVideojuegoPorTitulo(titulo);
+            Tags.Add("2D");
         }
     }
 

@@ -20,20 +20,31 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Storage.Streams;
 using Microsoft.UI.Xaml;
 using System.Diagnostics;
+using System.Security.Policy;
 
 namespace Excalinest.Views;
 
 public sealed partial class VideogamesDetailPage : Page
 {
+
     public VideogamesDetailViewModel ViewModel
     {
         get;
     }
 
+ 
+
     public VideogamesDetailPage()
     {
         ViewModel = App.GetService<VideogamesDetailViewModel>();
         InitializeComponent();
+
+        List<string> items = new List<string>();
+        items.Add("2D");
+        items.Add("Adventure");
+
+        tagsList.ItemsSource = items;
+
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)

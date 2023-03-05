@@ -65,11 +65,45 @@
                 <TextBlock
                     Margin="{StaticResource SmallTopMargin}"
                     Style="{ThemeResource SubtitleTextBlockStyle}"
+                    Text="Tags" />
+
+                <ItemsControl Name="tagsList">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <controls:WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel x:Name="tStack" Orientation="Horizontal">
+                                <Border
+                                    Width="Auto"
+                                    Height="40"
+                                    MinWidth="60"
+                                    Margin="10"
+                                    Padding="0,8,0,0"
+                                    Background="#E9E9E9"
+                                    BorderBrush="White"
+                                    CornerRadius="20">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        Foreground="Gray"
+                                        Text="{Binding}" />
+                                </Border>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+
+                <TextBlock
+                    Margin="{StaticResource SmallTopMargin}"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"
                     Text="Sinopsis" />
                 <TextBlock
                     Margin="10,10,10,10"
                     Style="{ThemeResource BodyTextBlockStyle}"
-                    Text="{x:Bind ViewModel.Item.Usuario}" />
+                    Text="{x:Bind ViewModel.Item.Sinopsis}" />
 
                 <TextBlock
                     Margin="{StaticResource SmallTopMargin}"
