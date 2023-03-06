@@ -24,11 +24,14 @@ public sealed partial class VideogamesDetailPage : Page
 
     private readonly string NombreVideojuego;
 
+    private Process VideojuegoActual;
+
     public VideogamesDetailPage()
     {
         ViewModel = App.GetService<VideogamesDetailViewModel>();
         InitializeComponent();
         NombreVideojuego = "Wednesday";
+        VideojuegoActual = new Process();
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -71,8 +74,11 @@ public sealed partial class VideogamesDetailPage : Page
 
             for (var i = 0; i < VideojuegoEjecutable.Length; i++)
             {
-                //Ejecutar el archivo .exe del videojuego actual
-                var VideojuegoActual = Process.Start(VideojuegoEjecutable[i]);
+                // Ejecutar el archivo .exe del videojuego actual
+                VideojuegoActual.StartInfo.UseShellExecute = false; // Ejecutar directamente desde el archivo ejecutable
+                VideojuegoActual.StartInfo.FileName = VideojuegoEjecutable[i]; // Establecer la ruta del archivo ejecutable
+                VideojuegoActual.StartInfo.CreateNoWindow = true; // Abrir una nueva ventana
+                VideojuegoActual.Start(); 
             }
         }
         catch (Exception ex)
