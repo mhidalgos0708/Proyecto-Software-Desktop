@@ -1,6 +1,10 @@
-﻿using MongoDB.Bson;
+﻿using System.Runtime.InteropServices.WindowsRuntime;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-
+using Windows.Graphics.Imaging;
+using Windows.Storage;
+using Windows.Storage.Streams;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Excalinest.Core.Models;
 
@@ -41,9 +45,17 @@ public class Videojuego
     public Zip JuegoZIP { get; set; } = null!;
 
     [BsonElement("tags")]
-    public List<string> Etiquetas { get; set; } = null!;
-    /*
-    public List<Image> RedesSociales { get; set; } = null!;*/
+    public List<Tag> Etiquetas { get; set; } = null!;
+
+}
+
+public class Tag{
+    [BsonElement("nombre")]
+    public string Nombre { get; set; } = null!;
+
+    [BsonElement("id")]
+    public int ID { get; set; }
+
 }
 
 public class Portada

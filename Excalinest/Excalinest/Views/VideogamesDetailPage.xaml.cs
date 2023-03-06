@@ -1,27 +1,15 @@
-﻿using System.Drawing;
-using CommunityToolkit.WinUI.UI.Animations;
+﻿using CommunityToolkit.WinUI.UI.Animations;
 
 using Excalinest.Contracts.Services;
 using Excalinest.ViewModels;
 
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using System.Web;
-using Microsoft.AspNetCore.Mvc;
-using Image = System.Drawing.Image;
+using System.Drawing;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Storage.Streams;
-using Microsoft.UI.Xaml;
-using System.Diagnostics;
-using System.Security.Policy;
-using Microsoft.UI.Xaml.Media.Animation;
+using Image = Microsoft.UI.Xaml.Controls.Image;
 
 namespace Excalinest.Views;
 
@@ -33,19 +21,10 @@ public sealed partial class VideogamesDetailPage : Page
         get;
     }
 
- 
-
     public VideogamesDetailPage()
     {
         ViewModel = App.GetService<VideogamesDetailViewModel>();
         InitializeComponent();
-
-        List<string> items = new List<string>();
-        items.Add("2D");
-        items.Add("Adventure");
-
-        
-
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -63,50 +42,52 @@ public sealed partial class VideogamesDetailPage : Page
 
     private async void GetImageCover()
     {
-        BitmapImage biSource = new BitmapImage();
-        using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+        using (var memoryStream = new MemoryStream(ViewModel.Item.Portada.Data))
         {
-            await stream.WriteAsync(ViewModel.Item.Portada.Data.AsBuffer());
-            stream.Seek(0);
-            await biSource.SetSourceAsync(stream);
+            var bitmapImage = new BitmapImage();
+            await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
+
+            var imageControl = new Image();
+            Cover.Source = bitmapImage;
         }
-        Cover.Source = biSource;
     }
 
     private async void GetImageTwitter()
     {
-        BitmapImage biSource = new BitmapImage();
-        using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+        using (var memoryStream = new MemoryStream(ViewModel.Item.Twitter.Data))
         {
-            await stream.WriteAsync(ViewModel.Item.Twitter.Data.AsBuffer());
-            stream.Seek(0);
-            await biSource.SetSourceAsync(stream);
+            var bitmapImage = new BitmapImage();
+            await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
+
+            var imageControl = new Image();
+            Twitter.Source = bitmapImage;
         }
-        Twitter.Source = biSource;
+
+
     }
 
     private async void GetImageFacebook()
     {
-        BitmapImage biSource = new BitmapImage();
-        using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+        using (var memoryStream = new MemoryStream(ViewModel.Item.Facebook.Data))
         {
-            await stream.WriteAsync(ViewModel.Item.Facebook.Data.AsBuffer());
-            stream.Seek(0);
-            await biSource.SetSourceAsync(stream);
+            var bitmapImage = new BitmapImage();
+            await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
+
+            var imageControl = new Image();
+            Facebook.Source = bitmapImage;
         }
-        Facebook.Source = biSource;
     }
 
     private async void GetImageInstagram()
     {
-        BitmapImage biSource = new BitmapImage();
-        using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+        using (var memoryStream = new MemoryStream(ViewModel.Item.Instagram.Data))
         {
-            await stream.WriteAsync(ViewModel.Item.Instagram.Data.AsBuffer());
-            stream.Seek(0);
-            await biSource.SetSourceAsync(stream);
+            var bitmapImage = new BitmapImage();
+            await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
+
+            var imageControl = new Image();
+            Instagram.Source = bitmapImage;
         }
-        Instagram.Source = biSource;
     }
 
     protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

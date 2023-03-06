@@ -5,6 +5,7 @@
     xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:io="using:System.IO"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Excalinest.Core.Models"
     mc:Ignorable="d">
@@ -36,9 +37,11 @@
                 <controls:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="models:Videojuego">
                         <Grid x:Name="itemThumbnail" Padding="{StaticResource XSmallLeftTopRightBottomMargin}">
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel
+                                Name="myStackPanel"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
                                 <!-- <FontIcon AutomationProperties.Name="{x:Bind Titulo}" FontSize="20" Glyph="{x:Bind Symbol}"  /> -->
-
                                 <TextBlock
                                     Margin="{StaticResource XXSmallTopMargin}"
                                     HorizontalAlignment="Center"
