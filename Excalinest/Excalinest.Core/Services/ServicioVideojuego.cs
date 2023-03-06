@@ -41,21 +41,7 @@ public class ServicioVideojuego
         await Task.CompletedTask;
         Debug.WriteLine("get video juegos");
 
-        /*var dbList = client.ListDatabases().ToList();
-
-        var list = new List<Object>();
-        foreach (var item in dbList)
-        {
-            var model = BsonSerializer.Deserialize<Object>(item);
-            list.Add(model);
-        }*/
-
         IMongoCollection<BsonDocument> collection1 = database.GetCollection<BsonDocument>("videogames");
-
-        //collection.FindSync(x => x.titulo == "Rat Game 2").ToList().ForEach(game => Debug.WriteLine("JUEGO ", game));
-
-
-        //Debug.WriteLine(database.GetCollection<BsonDocument>("videogames").ToString());}
 
         var filterBSON = Builders<BsonDocument>.Filter.Empty;
         var listAll = collection1.Find(filterBSON).ToList();

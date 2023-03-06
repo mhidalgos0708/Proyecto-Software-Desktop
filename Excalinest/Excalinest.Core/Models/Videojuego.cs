@@ -1,8 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Libmongocrypt;
-using System.Drawing;
-using System.Text.Json;
+
 
 namespace Excalinest.Core.Models;
 
@@ -41,10 +39,10 @@ public class Videojuego
 
     [BsonElement("juegoZip")]
     public Zip JuegoZIP { get; set; } = null!;
-    
-    /*
-    public List<string> Etiquetas { get; set; } = null!;
 
+    [BsonElement("tags")]
+    public List<string> Etiquetas { get; set; } = null!;
+    /*
     public List<Image> RedesSociales { get; set; } = null!;*/
 }
 

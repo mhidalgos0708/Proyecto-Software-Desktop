@@ -44,7 +44,7 @@ public sealed partial class VideogamesDetailPage : Page
         items.Add("2D");
         items.Add("Adventure");
 
-        tagsList.ItemsSource = items;
+        
 
     }
 
@@ -58,6 +58,7 @@ public sealed partial class VideogamesDetailPage : Page
         GetImageInstagram();
         GetImageTwitter();
 
+        tagsList.ItemsSource = ViewModel.Item.Etiquetas;
     }
 
     private async void GetImageCover()
