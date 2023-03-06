@@ -57,18 +57,21 @@ public sealed partial class VideogamesDetailPage : Page
 
     public void EjecutarVideojuego(object sender, RoutedEventArgs e)
     {
-        Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+        // Esta línea se utiliza debido a que las rutas relativas en c# se establecen desde system32
+        Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory); // Establece a CurrentDirectory la ruta donde se buscan los archivos ensamblador y se encuentran los videojuegos ejecutables
 
         var RutaJuego =  @".\Assets\Videojuegos\" + NombreVideojuego;
         
         try
         {
-            var VideojuegoEjecutable = Directory.GetFiles(RutaJuego, "*.exe", SearchOption.AllDirectories)
+            // Obtener los nombres de archvios ejecutables dentro de la carpeta del juego actual
+            var VideojuegoEjecutable = Directory.GetFiles(RutaJuego, "*.exe", SearchOption.AllDirectories) // Retorna una lista de archivos .exe dentro de la carpeta RutaJuego
                     .AsEnumerable()
                     .ToArray();
 
             for (var i = 0; i < VideojuegoEjecutable.Length; i++)
             {
+                //Ejecutar el archivo .exe del videojuego actual
                 var VideojuegoActual = Process.Start(VideojuegoEjecutable[i]);
             }
         }
