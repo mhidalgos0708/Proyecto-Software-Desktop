@@ -21,6 +21,7 @@ using Windows.Storage.Streams;
 using Microsoft.UI.Xaml;
 using System.Diagnostics;
 using System.Security.Policy;
+using Microsoft.UI.Xaml.Media.Animation;
 
 namespace Excalinest.Views;
 
@@ -52,11 +53,14 @@ public sealed partial class VideogamesDetailPage : Page
         base.OnNavigatedTo(e);
         this.RegisterElementForConnectedAnimation("animationKeyContentGrid", itemHero);
 
-        GetImage();
+        GetImageCover();
+        GetImageFacebook();
+        GetImageInstagram();
+        GetImageTwitter();
 
     }
 
-    private async void GetImage()
+    private async void GetImageCover()
     {
         BitmapImage biSource = new BitmapImage();
         using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
@@ -65,8 +69,43 @@ public sealed partial class VideogamesDetailPage : Page
             stream.Seek(0);
             await biSource.SetSourceAsync(stream);
         }
-
         Cover.Source = biSource;
+    }
+
+    private async void GetImageTwitter()
+    {
+        BitmapImage biSource = new BitmapImage();
+        using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+        {
+            await stream.WriteAsync(ViewModel.Item.Twitter.Data.AsBuffer());
+            stream.Seek(0);
+            await biSource.SetSourceAsync(stream);
+        }
+        Twitter.Source = biSource;
+    }
+
+    private async void GetImageFacebook()
+    {
+        BitmapImage biSource = new BitmapImage();
+        using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+        {
+            await stream.WriteAsync(ViewModel.Item.Facebook.Data.AsBuffer());
+            stream.Seek(0);
+            await biSource.SetSourceAsync(stream);
+        }
+        Facebook.Source = biSource;
+    }
+
+    private async void GetImageInstagram()
+    {
+        BitmapImage biSource = new BitmapImage();
+        using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+        {
+            await stream.WriteAsync(ViewModel.Item.Instagram.Data.AsBuffer());
+            stream.Seek(0);
+            await biSource.SetSourceAsync(stream);
+        }
+        Instagram.Source = biSource;
     }
 
     protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

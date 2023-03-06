@@ -41,11 +41,9 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
 
         // TODO: Replace with real data.
         var data = await _videojuegoService.GetVideojuegos();
-        //var data = await _sampleDataService.GetContentGridDataAsync();
         foreach (var item in data)
         {
             Source.Add(item);
-
         }
     }
 

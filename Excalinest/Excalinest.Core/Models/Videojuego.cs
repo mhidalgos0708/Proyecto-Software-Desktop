@@ -24,6 +24,15 @@ public class Videojuego
     [BsonElement("portada")]
     public Portada Portada { get; set; } = null!;
 
+    [BsonElement("facebook")]
+    public Portada Facebook { get; set; } = null!;
+
+    [BsonElement("instagram")]
+    public Portada Instagram { get; set; } = null!;
+
+    [BsonElement("twitter")]
+    public Portada Twitter { get; set; } = null!;
+
     [BsonElement("sinopsis")]
     public string Sinopsis { get; set; } = null!;
     

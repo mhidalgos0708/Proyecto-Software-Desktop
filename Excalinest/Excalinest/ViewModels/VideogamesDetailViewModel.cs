@@ -14,8 +14,6 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
     private readonly ServicioVideojuego servicioVideojuego;
     private Videojuego? _item;
 
-    public ObservableCollection<string> Tags { get; } = new ObservableCollection<string>();
-
     public Videojuego? Item
     {
         get => _item;
@@ -32,9 +30,7 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
     {
         if (parameter is string titulo)
         {
-            var data = await _sampleDataService.GetContentGridDataAsync();
             Item = await servicioVideojuego.GetVideojuegoPorTitulo(titulo);
-            Tags.Add("2D");
         }
     }
 

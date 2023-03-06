@@ -110,16 +110,19 @@
                     Style="{ThemeResource SubtitleTextBlockStyle}"
                     Text="Redes Sociales de desarrolladores" />
 
-                <StackPanel Margin="30" Orientation="Horizontal">
+                <StackPanel
+                    Margin="20"
+                    Orientation="Horizontal"
+                    Spacing="100">
                     <StackPanel x:Name="facebookGroup" Margin="{StaticResource SmallTopMargin}">
                         <TextBlock
                             Margin="20"
                             Style="{ThemeResource SubtitleTextBlockStyle}"
                             Text="Facebook" />
                         <Image
-                            Height="130"
-                            Margin="20"
-                            Source="/Assets/blackSquare.png" />
+                            Name="Facebook"
+                            Width="200"
+                            Height="200" />
                     </StackPanel>
 
                     <StackPanel x:Name="igGroup" Margin="{StaticResource SmallTopMargin}">
@@ -128,9 +131,9 @@
                             Style="{ThemeResource SubtitleTextBlockStyle}"
                             Text="Instagram" />
                         <Image
-                            Height="130"
-                            Margin="20"
-                            Source="/Assets/blackSquare.png" />
+                            Name="Instagram"
+                            Width="200"
+                            Height="200" />
                     </StackPanel>
 
                     <StackPanel x:Name="twitterGroup" Margin="{StaticResource SmallTopMargin}">
@@ -139,9 +142,9 @@
                             Style="{ThemeResource SubtitleTextBlockStyle}"
                             Text="Twitter" />
                         <Image
-                            Height="130"
-                            Margin="20"
-                            Source="/Assets/blackSquare.png" />
+                            Name="Twitter"
+                            Width="200"
+                            Height="200" />
                     </StackPanel>
 
                 </StackPanel>
