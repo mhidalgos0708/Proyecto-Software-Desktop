@@ -3,6 +3,7 @@
 using Excalinest.Contracts.Services;
 using Excalinest.Core.Models;
 using Excalinest.ViewModels;
+using Excalinest.PatronesDiseño.ObserverTiempoInac;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -21,6 +22,9 @@ public sealed partial class VideogamesDetailPage : Page
     {
         get;
     }
+
+    private PublisherTiempoInac NotificadorTiempoInac;
+    private ISubscriberTiempoInac ObservadorTiempoInac;
 
     private readonly string NombreVideojuego;
 
@@ -72,14 +76,18 @@ public sealed partial class VideogamesDetailPage : Page
                     .AsEnumerable()
                     .ToArray();
 
-            for (var i = 0; i < VideojuegoEjecutable.Length; i++)
-            {
+            //for (var i = 0; i < VideojuegoEjecutable.Length; i++)
+            //{
                 // Ejecutar el archivo .exe del videojuego actual
                 VideojuegoActual.StartInfo.UseShellExecute = false; // Ejecutar directamente desde el archivo ejecutable
-                VideojuegoActual.StartInfo.FileName = VideojuegoEjecutable[i]; // Establecer la ruta del archivo ejecutable
+                VideojuegoActual.StartInfo.FileName = VideojuegoEjecutable[1]; // Establecer la ruta del archivo ejecutable
                 VideojuegoActual.StartInfo.CreateNoWindow = true; // Abrir una nueva ventana
                 VideojuegoActual.Start(); 
-            }
+
+                NotificadorTiempoInac = new PublisherTiempoInac(5000);
+                ObservadorTiempoInac = new SubscriberTiempoInac(VideojuegoActual);
+                NotificadorTiempoInac.Suscribirse(ObservadorTiempoInac);
+            //}
         }
         catch (Exception ex)
         {
