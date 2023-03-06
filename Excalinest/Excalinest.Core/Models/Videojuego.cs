@@ -1,10 +1,6 @@
-﻿using System.Runtime.InteropServices.WindowsRuntime;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using Windows.Graphics.Imaging;
-using Windows.Storage;
-using Windows.Storage.Streams;
-using Windows.UI.Xaml.Media.Imaging;
+
 
 namespace Excalinest.Core.Models;
 
@@ -46,7 +42,7 @@ public class Videojuego
 
     [BsonElement("tags")]
     public List<Tag> Etiquetas { get; set; } = null!;
-
+    
 }
 
 public class Tag{
