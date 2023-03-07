@@ -84,7 +84,7 @@ public sealed partial class VideogamesDetailPage : Page
                 VideojuegoActual.StartInfo.CreateNoWindow = true; // Abrir una nueva ventana
                 VideojuegoActual.Start(); 
 
-                NotificadorTiempoInac = new PublisherTiempoInac(5000);
+                NotificadorTiempoInac = new PublisherTiempoInac(20000);
                 ObservadorTiempoInac = new SubscriberTiempoInac(VideojuegoActual);
                 NotificadorTiempoInac.Suscribirse(ObservadorTiempoInac);
             //}
