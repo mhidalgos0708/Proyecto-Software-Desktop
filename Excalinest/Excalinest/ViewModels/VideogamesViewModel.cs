@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -36,7 +37,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         Source.Clear();
 
         // TODO: Replace with real data.
-        var data = await _sampleDataService.GetContentGridDataAsync();
+        var data = await _videojuegoService.GetVideojuegos();
         foreach (var item in data)
         {
             Source.Add(item);
@@ -52,7 +53,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         if (clickedItem != null)
         {
             _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
-            _navigationService.NavigateTo(typeof(VideogamesDetailViewModel).FullName!, clickedItem.OrderID);
+            _navigationService.NavigateTo(typeof(VideogamesDetailViewModel).FullName!, clickedItem.Titulo);
         }
     }
 }

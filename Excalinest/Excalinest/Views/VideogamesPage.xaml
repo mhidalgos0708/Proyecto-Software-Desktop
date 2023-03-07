@@ -10,16 +10,18 @@
     mc:Ignorable="d">
 
     <StackPanel>
-		<StackPanel Orientation="Horizontal" Margin="50">
-			<TextBlock FontSize="14" Width="200" Text="Seleccione un tag"/>
-			<ComboBox SelectionChanged="TagComboBox_SelectionChanged"
-                Width="400">
-				<x:String>Adventure</x:String>
-				<x:String>2D</x:String>
-				<x:String>Shooting</x:String>
-			</ComboBox>
-		</StackPanel>
-		
+        <StackPanel Margin="50" Orientation="Horizontal">
+            <TextBlock
+                Width="200"
+                FontSize="14"
+                Text="Seleccione un tag" />
+            <ComboBox Width="400" SelectionChanged="TagComboBox_SelectionChanged">
+                <x:String>Adventure</x:String>
+                <x:String>2D</x:String>
+                <x:String>Shooting</x:String>
+            </ComboBox>
+        </StackPanel>
+
         <Grid x:Name="ContentArea">
             <controls:AdaptiveGridView
                 animations:Connected.ListItemElementName="itemThumbnail"
@@ -32,15 +34,19 @@
                 SelectionMode="None"
                 StretchContentForSingleRow="False">
                 <controls:AdaptiveGridView.ItemTemplate>
-                    <DataTemplate x:DataType="models:SampleOrder">
+                    <DataTemplate x:DataType="models:Videojuego">
                         <Grid x:Name="itemThumbnail" Padding="{StaticResource XSmallLeftTopRightBottomMargin}">
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <FontIcon FontSize="20" AutomationProperties.Name="{x:Bind SymbolName}" Glyph="{x:Bind Symbol}" />
-                                <TextBlock FontSize="20"
+                            <StackPanel
+                                Name="myStackPanel"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                                <!-- <FontIcon AutomationProperties.Name="{x:Bind Titulo}" FontSize="20" Glyph="{x:Bind Symbol}"  /> -->
+                                <TextBlock
                                     Margin="{StaticResource XXSmallTopMargin}"
                                     HorizontalAlignment="Center"
+                                    FontSize="20"
                                     Style="{ThemeResource BodyTextStyle}"
-                                    Text="{x:Bind Company}" />
+                                    Text="{x:Bind Titulo}" />
                             </StackPanel>
                         </Grid>
                     </DataTemplate>

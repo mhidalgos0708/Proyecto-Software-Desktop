@@ -2,19 +2,164 @@
     x:Class="Excalinest.Views.VideogamesDetailPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:models="using:Excalinest.Core.Models"
+    xmlns:viewmodels="using:Excalinest.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:VideogamesDetailViewModel}"
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
+        <ScrollViewer IsTabStop="True">
+            <StackPanel x:Name="contentPanel">
+                <RelativePanel>
+                    <Grid
+                        x:Name="itemHero"
+                        Width="200"
+                        Height="200"
+                        Margin="{StaticResource SmallRightMargin}"
+                        Padding="{StaticResource XSmallLeftTopRightBottomMargin}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignTopWithPanel="True">
+                        <Image
+                            Name="Cover"
+                            Width="Auto"
+                            Height="Auto" />
+                    </Grid>
+
+                    <TextBlock
+                        x:Name="title"
+                        Margin="{StaticResource XXSmallTopMargin}"
+                        RelativePanel.AlignTopWithPanel="True"
+                        RelativePanel.RightOf="itemHero"
+                        Style="{ThemeResource TitleTextBlockStyle}"
+                        Text="{x:Bind ViewModel.Item.Titulo, Mode=OneWay}" />
+
+                    <StackPanel x:Name="propertiesGroup1" RelativePanel.Below="itemHero">
+                        <StackPanel x:Name="statusGroup" Margin="{StaticResource SmallTopMargin}">
+                            <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Publicado por" />
+                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.Item.Usuario}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel x:Name="propertiesGroup2" RelativePanel.Below="propertiesGroup1">
+                        <StackPanel x:Name="shipToGroup" Margin="{StaticResource SmallTopMargin}" />
+
+                        <StackPanel
+                            x:Name="orderTotalGroup"
+                            Margin="{StaticResource SmallTopMargin}"
+                            HorizontalAlignment="Right">
+                            <Button
+                                Width="100"
+                                Height="40"
+                                Content="Ejecutar"
+                                Style="{StaticResource AccentButtonStyle}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                </RelativePanel>
+
+                <TextBlock
+                    Margin="{StaticResource SmallTopMargin}"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                    Text="Tags" />
+
+                <ItemsControl Name="tagsList">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <controls:WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel x:Name="tStack" Orientation="Horizontal">
+                                <Border
+                                    Width="Auto"
+                                    Height="40"
+                                    MinWidth="60"
+                                    Margin="10"
+                                    Padding="0,8,0,0"
+                                    Background="#E9E9E9"
+                                    BorderBrush="White"
+                                    CornerRadius="20">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        Foreground="Gray"
+                                        Text="{Binding Name}" />
+                                </Border>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+
+                <TextBlock
+                    Margin="{StaticResource SmallTopMargin}"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                    Text="Sinopsis" />
+                <TextBlock
+                    Margin="10,10,10,10"
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Item.Sinopsis}" />
+
+                <TextBlock
+                    Margin="{StaticResource SmallTopMargin}"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                    Text="Redes Sociales de desarrolladores" />
+
+                <StackPanel
+                    Margin="20"
+                    Orientation="Horizontal"
+                    Spacing="100">
+                    <StackPanel x:Name="facebookGroup" Margin="{StaticResource SmallTopMargin}">
+                        <TextBlock
+                            Margin="20"
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="Facebook" />
+                        <Image
+                            Name="Facebook"
+                            Width="200"
+                            Height="200" />
+                    </StackPanel>
+
+                    <StackPanel x:Name="igGroup" Margin="{StaticResource SmallTopMargin}">
+                        <TextBlock
+                            Margin="20"
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="Instagram" />
+                        <Image
+                            Name="Instagram"
+                            Width="200"
+                            Height="200" />
+                    </StackPanel>
+
+                    <StackPanel x:Name="twitterGroup" Margin="{StaticResource SmallTopMargin}">
+                        <TextBlock
+                            Margin="20"
+                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                            Text="Twitter" />
+                        <Image
+                            Name="Twitter"
+                            Width="200"
+                            Height="200" />
+                    </StackPanel>
+
+                </StackPanel>
+                <TextBlock
+                    Margin="{StaticResource MediumBottomMargin}"
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    Text="" />
+            </StackPanel>
+        </ScrollViewer>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <!--641 is the default CompactModeThresholdWidth in NavigationView -->
+                        <!--  641 is the default CompactModeThresholdWidth in NavigationView  -->
                         <AdaptiveTrigger MinWindowWidth="641" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
@@ -27,92 +172,5 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-        <ScrollViewer
-            IsTabStop="True">
-            <StackPanel
-                x:Name="contentPanel">
-                <RelativePanel>
-                    <Grid
-                        x:Name="itemHero"
-                        Width="200"
-                        Height="200"
-                        Margin="{StaticResource SmallRightMargin}"
-                        Padding="{StaticResource XSmallLeftTopRightBottomMargin}"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        RelativePanel.AlignTopWithPanel="True"
-                        RelativePanel.AlignLeftWithPanel="True">
-                        <FontIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="70"
-                            Glyph="{x:Bind ViewModel.Item.Symbol}"
-                            AutomationProperties.Name="{x:Bind ViewModel.Item.SymbolName}" />
-                    </Grid>
-
-                    <TextBlock
-                        x:Name="title"
-                        Margin="{StaticResource XXSmallTopMargin}"
-                        RelativePanel.AlignTopWithPanel="True"
-                        RelativePanel.RightOf="itemHero"
-                        Style="{ThemeResource TitleTextBlockStyle}"
-                        Text="{x:Bind ViewModel.Item.Company, Mode=OneWay}" />
-
-                    <StackPanel x:Name="propertiesGroup1" RelativePanel.Below="itemHero">
-                        <StackPanel x:Name="statusGroup" Margin="{StaticResource SmallTopMargin}">
-                            <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Publicado por" />
-                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.Item.Status}" />
-                        </StackPanel>
-                    </StackPanel>
-
-                    <StackPanel x:Name="propertiesGroup2" RelativePanel.Below="propertiesGroup1">
-                        <StackPanel x:Name="shipToGroup" Margin="{StaticResource SmallTopMargin}">
-                        </StackPanel>
-
-                        <StackPanel x:Name="ejecutarBtn" Margin="{StaticResource SmallTopMargin}" HorizontalAlignment="Right">
-                            <Button Style="{StaticResource AccentButtonStyle}" Content="Ejecutar" Width="100" Height="40" Click="EjecutarVideojuego" ClickMode="Press"/>
-                        </StackPanel>
-                    </StackPanel>
-
-                </RelativePanel>
-
-                <TextBlock
-                    Margin="{StaticResource SmallTopMargin}"
-                    Style="{ThemeResource SubtitleTextBlockStyle}"
-                    Text="Sinopsis" />
-                <TextBlock Margin="10,10,10,10"
-                    Style="{ThemeResource BodyTextBlockStyle}" 
-                    Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis hendrerit nulla, vel molestie libero. In nec ultricies magna, ultricies molestie ipsum. Mauris non dignissim velit. Etiam malesuada blandit mauris eu maximus. Quisque ornare, felis nec scelerisque mollis, risus dolor posuere magna, in gravida quam mi id nisi. Nullam mattis consequat ex. Cras nulla neque, dictum ac urna et, vestibulum feugiat ex. Pellentesque malesuada accumsan ligula, vel fringilla lacus facilisis sit amet. Proin convallis tempor arcu, ac placerat libero pretium ut. Praesent hendrerit nisl at lobortis viverra. Fusce vitae velit odio. Nam ut tortor sed purus finibus sollicitudin quis at ante. Ut sodales dolor vel eros mollis suscipit. Donec eu nulla id urna ultricies consequat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;" />
-
-                <TextBlock
-                    Margin="{StaticResource SmallTopMargin}"
-                    Style="{ThemeResource SubtitleTextBlockStyle}"
-                    Text="Redes Sociales de desarrolladores" />
-				
-				<StackPanel Orientation="Horizontal" Margin="30">
-					<StackPanel x:Name="facebookGroup" Margin="{StaticResource SmallTopMargin}">
-						<TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Facebook" Margin="20" />
-						<Image Source="/Assets/blackSquare.png" Height="130" Margin="20" />
-					</StackPanel>
-
-					<StackPanel x:Name="igGroup" Margin="{StaticResource SmallTopMargin}">
-						<TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Instagram" Margin="20" />
-						<Image Source="/Assets/blackSquare.png" Height="130" Margin="20" />
-					</StackPanel>
-
-					<StackPanel x:Name="twitterGroup" Margin="{StaticResource SmallTopMargin}">
-						<TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Twitter" Margin="20"/>
-						<Image Source="/Assets/blackSquare.png" Height="130" Margin="20" />
-					</StackPanel>
-					
-				</StackPanel>
-				<TextBlock
-                    Margin="{StaticResource MediumBottomMargin}"
-                    Style="{ThemeResource BodyTextBlockStyle}"
-					Text=""> 
-				</TextBlock>
-			</StackPanel>
-        </ScrollViewer>
     </Grid>
 </Page>

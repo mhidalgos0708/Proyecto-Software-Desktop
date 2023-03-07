@@ -1,40 +1,90 @@
 ﻿using CommunityToolkit.WinUI.UI.Animations;
 
 using Excalinest.Contracts.Services;
-using Excalinest.Core.Models;
 using Excalinest.ViewModels;
 
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
-using System.Diagnostics;
-using System.Reflection;
-using System.Windows.Forms;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Image = Microsoft.UI.Xaml.Controls.Image;
 
 namespace Excalinest.Views;
 
-// Código para la ventana de detalles de cada videojuego
 public sealed partial class VideogamesDetailPage : Page
 {
+
     public VideogamesDetailViewModel ViewModel
     {
         get;
     }
 
-    private readonly string NombreVideojuego;
-
     public VideogamesDetailPage()
     {
         ViewModel = App.GetService<VideogamesDetailViewModel>();
         InitializeComponent();
-        NombreVideojuego = "Wednesday";
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
         this.RegisterElementForConnectedAnimation("animationKeyContentGrid", itemHero);
+
+        GetImageCover();
+        GetImageFacebook();
+        GetImageInstagram();
+        GetImageTwitter();
+
+        tagsList.ItemsSource = ViewModel.Item.Etiquetas;
+    }
+
+    private async void GetImageCover()
+    {
+        using (var memoryStream = new MemoryStream(ViewModel.Item.Portada.Data))
+        {
+            var bitmapImage = new BitmapImage();
+            await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
+
+            var imageControl = new Image();
+            Cover.Source = bitmapImage;
+        }
+    }
+
+    private async void GetImageTwitter()
+    {
+        using (var memoryStream = new MemoryStream(ViewModel.Item.Twitter.Data))
+        {
+            var bitmapImage = new BitmapImage();
+            await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
+
+            var imageControl = new Image();
+            Twitter.Source = bitmapImage;
+        }
+
+
+    }
+
+    private async void GetImageFacebook()
+    {
+        using (var memoryStream = new MemoryStream(ViewModel.Item.Facebook.Data))
+        {
+            var bitmapImage = new BitmapImage();
+            await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
+
+            var imageControl = new Image();
+            Facebook.Source = bitmapImage;
+        }
+    }
+
+    private async void GetImageInstagram()
+    {
+        using (var memoryStream = new MemoryStream(ViewModel.Item.Instagram.Data))
+        {
+            var bitmapImage = new BitmapImage();
+            await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
+
+            var imageControl = new Image();
+            Instagram.Source = bitmapImage;
+        }
     }
 
     protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -47,34 +97,10 @@ public sealed partial class VideogamesDetailPage : Page
             if (ViewModel.Item != null)
             {
                 navigationService.SetListDataItemForNextConnectedAnimation(ViewModel.Item);
+                
             }
         }
     }
 
-    // Método para ejecutar el videojuego actual, busca en la ruta del mismo nombre el ejecutable correspondiente
-    // Se hace la suposición de que el ejecutable se llama igual que el juego **Importante preguntar**
-    // Cambiar posible pulga en línea var VideojuegoActual = Process.Start(VideojuegoEjecutable[i]); por ejecución de directa del crashhandler
-
-    public void EjecutarVideojuego(object sender, RoutedEventArgs e)
-    {
-        Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-
-        var RutaJuego =  @".\Assets\Videojuegos\" + NombreVideojuego;
-        
-        try
-        {
-            var VideojuegoEjecutable = Directory.GetFiles(RutaJuego, "*.exe", SearchOption.AllDirectories)
-                    .AsEnumerable()
-                    .ToArray();
-
-            for (var i = 0; i < VideojuegoEjecutable.Length; i++)
-            {
-                var VideojuegoActual = Process.Start(VideojuegoEjecutable[i]);
-            }
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
+    
 }
