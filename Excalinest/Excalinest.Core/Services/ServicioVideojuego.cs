@@ -1,14 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Excalinest.Core.Models;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
+using Microsoft.Graph.ExternalConnectors;
+using MongoDB.Bson.Serialization;
+using MongoDB.Driver.Linq;
+
+
+using System.Text.Json;
 namespace Excalinest.Core.Services;
-internal class ServicioVideojuego
+public class ServicioVideojuego
 {
     private readonly MongoConnection _mongoConnection;
-    private readonly IMongoCollection<Videojuego> _videojuegos;
+    //private readonly IMongoCollection<Videojuego> _videojuegos;
 
     public readonly MongoClientSettings settings;
     public readonly MongoClient client;
@@ -18,13 +28,12 @@ internal class ServicioVideojuego
 
     public ServicioVideojuego()
     {
-        settings = MongoClientSettings.FromConnectionString("mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/?retryWrites=true&w=majority");
-        client = new MongoClient(settings);
+        settings = MongoClientSettings.FromConnectionString("mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/?retryWrites=true&w=majority"); client = new MongoClient(settings);
         database = client.GetDatabase("ExcalinestDB");
 
 
         _mongoConnection = new MongoConnection();
-        _videojuegos = _mongoConnection.database.GetCollection<Videojuego>("videogames");
+        //_videojuegos = _mongoConnection.database.GetCollection<Videojuego>("videogames");
         collection = database.GetCollection<Videojuego>("videogames");
     }
 
@@ -66,7 +75,7 @@ internal class ServicioVideojuego
            return videojuego;
        }
 
-    public async Task UpdateVideojuego(ObjectId id, Videojuego videojuegoIn)
+    public async Task UpdateVideojuego(String id, Videojuego videojuegoIn)
     {
     
            await collection.ReplaceOneAsync(videojuego => videojuego.ID == id, videojuegoIn);
@@ -78,7 +87,7 @@ internal class ServicioVideojuego
            await collection.DeleteOneAsync(videojuego => videojuego.ID == videojuegoIn.ID);
        }
 
-    public async Task RemoveVideojuego(ObjectId id)
+    public async Task RemoveVideojuego(String id)
     {
     
            await collection.DeleteOneAsync(videojuego => videojuego.ID == id);

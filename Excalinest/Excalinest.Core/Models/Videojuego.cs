@@ -4,10 +4,12 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Excalinest.Core.Models;
 
 // Modelo para almacenar los videojuegos extraídos de la base de datos de Mongo
+[BsonIgnoreExtraElements]
 public class Videojuego
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
+    
     public string? ID
     {
         get; set;
@@ -16,7 +18,8 @@ public class Videojuego
     [BsonElement("titulo")]
     public string Titulo { get; set; } = null!;
 
-    public Image Portada { get; set; } = null!;
+    [BsonElement("portada")]
+    public Portada Portada { get; set; } = null!;
 
     [BsonElement("facebook")]
     public Portada Facebook { get; set; } = null!;
@@ -30,6 +33,7 @@ public class Videojuego
     [BsonElement("sinopsis")]
     public string Sinopsis { get; set; } = null!;
 
+    [BsonElement("usuario")]
     public string Usuario { get; set; } = null!;
 
     [BsonElement("juegoZip")]

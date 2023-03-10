@@ -24,7 +24,7 @@ public sealed partial class VideogamesPage : Page
         
     }
 
-    public async void GetPortadas()
+    /*public async void GetPortadas()
     {
         List<BitmapImage> images = new List<BitmapImage>();
         // Assuming you have a list of MongoDB documents named "documents" containing image data as a byte array
@@ -51,7 +51,7 @@ public sealed partial class VideogamesPage : Page
             myStackPanel.Children.Add(imageControl); // Assumes you have a StackPanel named "myStackPanel" in your UI
             
         }
-    }
+    }*/
 
     public async void TagComboBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
     {
