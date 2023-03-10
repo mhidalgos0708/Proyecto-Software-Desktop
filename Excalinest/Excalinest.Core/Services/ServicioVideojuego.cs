@@ -15,6 +15,7 @@ using MongoDB.Driver.Linq;
 
 using System.Text.Json;
 using Tag = Excalinest.Core.Models.Tag;
+using Microsoft.Graph;
 
 namespace Excalinest.Core.Services;
 public class ServicioVideojuego
@@ -36,7 +37,6 @@ public class ServicioVideojuego
 
 
         _mongoConnection = new MongoConnection();
-        //_videojuegos = _mongoConnection.database.GetCollection<Videojuego>("videogames");
         collection = database.GetCollection<Videojuego>("videogames");
         collection_tags = database.GetCollection<Tag>("tags");
 
@@ -46,12 +46,6 @@ public class ServicioVideojuego
     {
         await Task.CompletedTask;
 
-        IMongoCollection<BsonDocument> collection1 = database.GetCollection<BsonDocument>("tags");
-
-        var filterBSON = Builders<BsonDocument>.Filter.Empty;
-        var listAll = collection1.Find(filterBSON).ToList();
-
-
         var filter = Builders<Tag>.Filter.Empty;
         return collection_tags.Find(filter).ToList();
 
@@ -59,18 +53,18 @@ public class ServicioVideojuego
     public async Task<IEnumerable<Videojuego>> GetVideojuegos()
     {
         await Task.CompletedTask;
-        Debug.WriteLine("get video juegos");
-
-        IMongoCollection<BsonDocument> collection1 = database.GetCollection<BsonDocument>("videogames");
-
-        var filterBSON = Builders<BsonDocument>.Filter.Empty;
-        var listAll = collection1.Find(filterBSON).ToList();
-
-
-        Debug.WriteLine("todos videojuegos: ", listAll.ToString());
 
         var filter = Builders<Videojuego>.Filter.Empty;
         return collection.Find(filter).ToList();
+    }
+
+    public async Task<IEnumerable<Videojuego>> GetVideojuegosByTagID(int ID)
+    {
+        await Task.CompletedTask;
+
+        var filter1 = Builders<Videojuego>.Filter.Eq("tags.id", ID);
+
+        return collection.Find(filter1).ToList();
     }
 
     public async Task<Videojuego> GetVideojuego(string id)

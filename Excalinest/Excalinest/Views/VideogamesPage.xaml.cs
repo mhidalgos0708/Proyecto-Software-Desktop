@@ -60,7 +60,8 @@ public sealed partial class VideogamesPage : Page
     {
         ComboBox tag = (ComboBox)sender;
         Tag chosenTag = tag.SelectedItem as Tag;
-        Debug.WriteLine(chosenTag.ID);       
+        Debug.WriteLine(chosenTag.ID);
+        await ViewModel.GetVideojuegosByTag(chosenTag.ID);
     }
 
     

@@ -40,13 +40,19 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
     {
         Source.Clear();
 
+        Tag defaultValue = new Tag();
+        defaultValue.ID = -1;
+        defaultValue.Nombre = "Todos";
+
+        Tags.Add(defaultValue);
+
         var tags = await _videojuegoService.GetTags();
         foreach (var item in tags)
         {
             Tags.Add(item);
         }
 
-
+        
         // TODO: Replace with real data.
         var data = await _videojuegoService.GetVideojuegos();
         foreach (var item in data)
@@ -65,6 +71,30 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         {
             _navigationService.SetListDataItemForNextConnectedAnimation(clickedItem);
             _navigationService.NavigateTo(typeof(VideogamesDetailViewModel).FullName!, clickedItem.Titulo);
+        }
+    }
+
+    public async Task GetVideojuegosByTag(int ID)
+    {
+        if(ID == -1)
+        {
+            Source.Clear();
+
+            var data = await _videojuegoService.GetVideojuegos();
+            foreach (var item in data)
+            {
+                Source.Add(item);
+            }
+        }
+        else
+        {
+            Source.Clear();
+
+            var data = await _videojuegoService.GetVideojuegosByTagID(ID);
+            foreach (var item in data)
+            {
+                Source.Add(item);
+            }
         }
     }
 }

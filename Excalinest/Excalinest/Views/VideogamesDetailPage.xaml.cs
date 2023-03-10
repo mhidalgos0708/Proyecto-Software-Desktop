@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.WinUI.UI.Animations;
+﻿using System.Diagnostics;
+using CommunityToolkit.WinUI.UI.Animations;
 
 using Excalinest.Contracts.Services;
 using Excalinest.ViewModels;
