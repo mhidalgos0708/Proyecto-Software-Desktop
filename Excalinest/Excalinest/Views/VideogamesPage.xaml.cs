@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Excalinest.Core.Models;
 using Excalinest.ViewModels;
 
 using Microsoft.UI.Xaml.Controls;
@@ -21,8 +22,10 @@ public sealed partial class VideogamesPage : Page
         ViewModel = App.GetService<VideogamesViewModel>();
         InitializeComponent();
 
-        
+        // taglist.ItemsSource = ViewModel.Tags;
     }
+
+
 
     /*public async void GetPortadas()
     {
@@ -56,8 +59,8 @@ public sealed partial class VideogamesPage : Page
     public async void TagComboBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
     {
         ComboBox tag = (ComboBox)sender;
-        String chosenTag = tag.SelectedItem as String;
-        Debug.WriteLine(chosenTag);       
+        Tag chosenTag = tag.SelectedItem as Tag;
+        Debug.WriteLine(chosenTag.ID);       
     }
 
     

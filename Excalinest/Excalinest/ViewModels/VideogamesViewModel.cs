@@ -25,6 +25,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
     }
 
     public ObservableCollection<Videojuego> Source { get; } = new ObservableCollection<Videojuego>();
+    public ObservableCollection<Tag> Tags { get; } = new ObservableCollection<Tag>();
 
     public VideogamesViewModel(INavigationService navigationService, ISampleDataService sampleDataService)
     {
@@ -38,6 +39,13 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
     public async void OnNavigatedTo(object parameter)
     {
         Source.Clear();
+
+        var tags = await _videojuegoService.GetTags();
+        foreach (var item in tags)
+        {
+            Tags.Add(item);
+        }
+
 
         // TODO: Replace with real data.
         var data = await _videojuegoService.GetVideojuegos();

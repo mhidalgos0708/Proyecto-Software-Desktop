@@ -15,11 +15,14 @@
                 Width="200"
                 FontSize="14"
                 Text="Seleccione un tag" />
-            <ComboBox Width="400" SelectionChanged="TagComboBox_SelectionChanged">
-                <x:String>Adventure</x:String>
-                <x:String>2D</x:String>
-                <x:String>Shooting</x:String>
-            </ComboBox>
+
+            <ComboBox
+                Width="400"
+                DisplayMemberPath="Nombre"
+                ItemsSource="{x:Bind ViewModel.Tags}"
+                SelectedValuePath="Nombre"
+                SelectionChanged="TagComboBox_SelectionChanged" />
+
         </StackPanel>
 
         <Grid x:Name="ContentArea">

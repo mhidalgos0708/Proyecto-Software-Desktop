@@ -44,8 +44,9 @@ public class Videojuego
     
 }
 
+[BsonIgnoreExtraElements]
 public class Tag{
-    [BsonElement("nombre")]
+    [BsonElement("name")]
     public string Nombre { get; set; } = null!;
 
     [BsonElement("id")]
