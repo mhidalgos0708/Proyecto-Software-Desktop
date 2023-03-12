@@ -9,6 +9,8 @@ using Windows.Foundation;
 
 namespace Excalinest.PatronesDiseño.ObserverTiempoInac;
 
+
+// Clase encargada de botar el proceso si pasa el tiempo de inactividad
 public class SubscriberTiempoInac : ISubscriberTiempoInac
 {
     private Process Videojuego;
@@ -21,5 +23,6 @@ public class SubscriberTiempoInac : ISubscriberTiempoInac
     public void Actualizar()
     {
         Videojuego.Kill();
+        Videojuego.Dispose();
     }
 }

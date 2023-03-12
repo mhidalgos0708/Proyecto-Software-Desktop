@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Windows.UI.Core;
-using System.Windows.Input;
 using Timer = System.Timers.Timer; // Eliminar referencia ambigua
+
 
 namespace Excalinest.PatronesDiseño.ObserverTiempoInac;
 
-public class PublisherTiempoInac
+public partial class PublisherTiempoInac
 {
     private List<ISubscriberTiempoInac> Subscribers; // Lista de suscriptores
 
@@ -19,23 +22,25 @@ public class PublisherTiempoInac
 
     private int SegundosInactividad;
 
+    [LibraryImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static partial bool GetLastInputInfo(ref ULTIMOINPUTINFO pUltimoInputInfo);
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct ULTIMOINPUTINFO // Struct para almacenar el tiempo que trancurrió desde el último input del teclado o mouse
+    {
+        public uint cbSize;
+        public uint dwTime;
+    }
+
+
     public PublisherTiempoInac(int pSegundosInactividad)
     {
-        // Inicializar eventos de teclado para cancelar la inactividad
-
-        /*ControlEventos.MouseMove += (sender, e) => ControlarEventosMouse(sender, e);
-        ControlEventos.MouseDown += (sender, e) => ControlarEventosMouse(sender, e);
-        ControlEventos.MouseUp += (sender, e) => ControlarEventosMouse(sender, e);
-        ControlEventos.MouseWheel += (sender, e) => ControlarEventosMouse(sender, e);*/
-        CoreWindow.GetForCurrentThread().KeyDown += (sender, args) =>
-        {
-            ReiniciarTemporizador();
-        };
 
         // Inicializar el temporizador
         SegundosInactividad = pSegundosInactividad;
         Subscribers = new List<ISubscriberTiempoInac>();
-        Temporizador = new Timer(SegundosInactividad); // Establecer los segundos de inactividad a través de un parámetro
+        Temporizador = new Timer(100); // Establecer los segundos de inactividad a través de un parámetro
         Temporizador.Elapsed += (sender, e) =>
         {
             Notificar(); // Este método se llama em base a la cantidad preconfigurada, en este caso 5 segundos
@@ -50,35 +55,42 @@ public class PublisherTiempoInac
         Subscribers.Add(subscriber);
     }
 
+    private bool HasInput()
+    {
+        var UltimoInputInfo = new ULTIMOINPUTINFO();
+        UltimoInputInfo.cbSize = (uint)Marshal.SizeOf(UltimoInputInfo); // Propiedad que almacena el tamaño del struct en bytes
+        if (!GetLastInputInfo(ref UltimoInputInfo))
+        {
+            Temporizador.Stop();
+            return false;
+        } else
+        {
+            var tiempoTranscurrido = (uint)Environment.TickCount - UltimoInputInfo.dwTime;
+            return tiempoTranscurrido < SegundosInactividad; // Detecta si ha habido actividad dentro del rango permitido de inactividad
+        }
+    }
+
     // Eliminar nuevos suscriptores
     public void Desuscribirse(ISubscriberTiempoInac subscriber)
     {
         Subscribers.Remove(subscriber);
     }
 
-    // Notificar que se venció el tiempo de inactividad al 
-    public void Notificar()
+    // Notificar que se venció el tiempo de inactividad al pasar cierto tiempo especificado por el usuario admin
+    private void Notificar()
     {
-        foreach (var subscriber in Subscribers)
+        if(!HasInput())
         {
-            subscriber.Actualizar();
+            foreach (var subscriber in Subscribers)
+            {
+                subscriber.Actualizar();
+            }
+            Temporizador.Stop(); // Parar el temporizador para que no siga ejecutándose en segundo plano
         }
-        Temporizador.Stop(); // Parar el temporizador para que no siga ejecutándose en segundo plano
     }
 
-    // Manejar eventos de reseteo de mouse: mover, presionar, liberar click y mover la rueda del mouse. También, manejar interacción con el teclado.
-    /*private void ControlarEventosMouse(object sender, MouseEventArgs e)
+    ~PublisherTiempoInac()
     {
-        Temporizador.Stop();
-        Temporizador.Start();
-        MessageBox.Show(Temporizador.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    }*/
-
-    private void ReiniciarTemporizador()
-    {
-        Temporizador.Stop();
-        Temporizador.Interval = SegundosInactividad;
-        Temporizador.Start();
+        Temporizador.Dispose();
     }
-
 }

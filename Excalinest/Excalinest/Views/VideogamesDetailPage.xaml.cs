@@ -8,10 +8,12 @@ using Excalinest.PatronesDiseño.ObserverTiempoInac;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+
 using System.Diagnostics;
-using System.Reflection;
 using System.Windows.Forms;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using WinUIEx;
+using Windows.ApplicationModel.Core;
+using Microsoft.UI.Xaml.Input;
 
 namespace Excalinest.Views;
 
@@ -34,6 +36,8 @@ public sealed partial class VideogamesDetailPage : Page
     {
         ViewModel = App.GetService<VideogamesDetailViewModel>();
         InitializeComponent();
+
+        // Inicilizar atributos asociados a ejecutar
         NombreVideojuego = "Wednesday";
         VideojuegoActual = new Process();
     }
@@ -59,9 +63,6 @@ public sealed partial class VideogamesDetailPage : Page
     }
 
     // Método para ejecutar el videojuego actual, busca en la ruta del mismo nombre el ejecutable correspondiente
-    // Se hace la suposición de que el ejecutable se llama igual que el juego **Importante preguntar**
-    // Cambiar posible pulga en línea var VideojuegoActual = Process.Start(VideojuegoEjecutable[i]); por ejecución de directa del crashhandler
-
     public void EjecutarVideojuego(object sender, RoutedEventArgs e)
     {
         // Esta línea se utiliza debido a que las rutas relativas en c# se establecen desde system32
@@ -73,21 +74,18 @@ public sealed partial class VideogamesDetailPage : Page
         {
             // Obtener los nombres de archvios ejecutables dentro de la carpeta del juego actual
             var VideojuegoEjecutable = Directory.GetFiles(RutaJuego, "*.exe", SearchOption.AllDirectories) // Retorna una lista de archivos .exe dentro de la carpeta RutaJuego
+                    .Where(archivo => !archivo.Contains("UnityCrashHandler"))
                     .AsEnumerable()
                     .ToArray();
 
-            //for (var i = 0; i < VideojuegoEjecutable.Length; i++)
-            //{
-                // Ejecutar el archivo .exe del videojuego actual
-                VideojuegoActual.StartInfo.UseShellExecute = false; // Ejecutar directamente desde el archivo ejecutable
-                VideojuegoActual.StartInfo.FileName = VideojuegoEjecutable[1]; // Establecer la ruta del archivo ejecutable
-                VideojuegoActual.StartInfo.CreateNoWindow = true; // Abrir una nueva ventana
-                VideojuegoActual.Start(); 
+            VideojuegoActual.StartInfo.UseShellExecute = false; // Ejecutar directamente desde el archivo ejecutable
+            VideojuegoActual.StartInfo.FileName = VideojuegoEjecutable[0]; // Establecer la ruta del archivo ejecutable
+            VideojuegoActual.StartInfo.CreateNoWindow = true; // Abrir una nueva ventana
+            VideojuegoActual.Start();
 
-                NotificadorTiempoInac = new PublisherTiempoInac(20000);
-                ObservadorTiempoInac = new SubscriberTiempoInac(VideojuegoActual);
-                NotificadorTiempoInac.Suscribirse(ObservadorTiempoInac);
-            //}
+            NotificadorTiempoInac = new PublisherTiempoInac(60000);
+            ObservadorTiempoInac = new SubscriberTiempoInac(VideojuegoActual);
+            NotificadorTiempoInac.Suscribirse(ObservadorTiempoInac);
         }
         catch (Exception ex)
         {
