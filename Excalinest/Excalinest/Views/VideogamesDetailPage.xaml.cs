@@ -3,11 +3,19 @@ using CommunityToolkit.WinUI.UI.Animations;
 
 using Excalinest.Contracts.Services;
 using Excalinest.ViewModels;
+using Excalinest.PatronesDiseño.ObserverTiempoInac;
 
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Image = Microsoft.UI.Xaml.Controls.Image;
+
+using System.Windows.Forms;
+using WinUIEx;
+using Windows.ApplicationModel.Core;
+using Microsoft.UI.Xaml.Input;
+
 
 namespace Excalinest.Views;
 
@@ -19,10 +27,21 @@ public sealed partial class VideogamesDetailPage : Page
         get;
     }
 
+    private PublisherTiempoInac NotificadorTiempoInac;
+    private ISubscriberTiempoInac ObservadorTiempoInac;
+
+    private readonly string NombreVideojuego;
+
+    private Process VideojuegoActual;
+
     public VideogamesDetailPage()
     {
         ViewModel = App.GetService<VideogamesDetailViewModel>();
         InitializeComponent();
+
+        // Inicilizar atributos asociados a ejecutar
+        NombreVideojuego = "Wednesday";
+        VideojuegoActual = new Process();
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -103,5 +122,34 @@ public sealed partial class VideogamesDetailPage : Page
         }
     }
 
-    
+    // Método para ejecutar el videojuego actual, busca en la ruta del mismo nombre el ejecutable correspondiente
+    public void EjecutarVideojuego(object sender, RoutedEventArgs e)
+    {
+        // Esta línea se utiliza debido a que las rutas relativas en c# se establecen desde system32
+        Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory); // Establece a CurrentDirectory la ruta donde se buscan los archivos ensamblador y se encuentran los videojuegos ejecutables
+
+        var RutaJuego =  @".\Assets\Videojuegos\" + NombreVideojuego;
+        
+        try
+        {
+            // Obtener los nombres de archvios ejecutables dentro de la carpeta del juego actual
+            var VideojuegoEjecutable = Directory.GetFiles(RutaJuego, "*.exe", SearchOption.AllDirectories) // Retorna una lista de archivos .exe dentro de la carpeta RutaJuego
+                    .Where(archivo => !archivo.Contains("UnityCrashHandler"))
+                    .AsEnumerable()
+                    .ToArray();
+
+            VideojuegoActual.StartInfo.UseShellExecute = false; // Ejecutar directamente desde el archivo ejecutable
+            VideojuegoActual.StartInfo.FileName = VideojuegoEjecutable[0]; // Establecer la ruta del archivo ejecutable
+            VideojuegoActual.StartInfo.CreateNoWindow = true; // Abrir una nueva ventana
+            VideojuegoActual.Start();
+
+            NotificadorTiempoInac = new PublisherTiempoInac(60000);
+            ObservadorTiempoInac = new SubscriberTiempoInac(VideojuegoActual);
+            NotificadorTiempoInac.Suscribirse(ObservadorTiempoInac);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
 }
