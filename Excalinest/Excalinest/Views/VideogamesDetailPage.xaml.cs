@@ -130,9 +130,9 @@ public sealed partial class VideogamesDetailPage : Page
         NombreVideojuego = ViewModel.Item.Titulo;
 
         // Esta línea se utiliza debido a que las rutas relativas en c# se establecen desde system32
-        Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory); // Establece a CurrentDirectory la ruta donde se buscan los archivos ensamblador y se encuentran los videojuegos ejecutables
+        // Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory); // Establece a CurrentDirectory la ruta donde se buscan los archivos ensamblador y se encuentran los videojuegos ejecutables
 
-        var RutaJuego =  @".\Assets\Videojuegos\" + NombreVideojuego;
+        var RutaJuego =  @"..\..\VideojuegosExcalinest\" + NombreVideojuego;
         
         try
         {
