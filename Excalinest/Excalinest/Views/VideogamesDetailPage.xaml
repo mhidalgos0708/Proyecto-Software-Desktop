@@ -56,7 +56,9 @@
                                 Width="100"
                                 Height="40"
                                 Content="Ejecutar"
-                                Style="{StaticResource AccentButtonStyle}" />
+                                Style="{StaticResource AccentButtonStyle}" 
+                                Click="EjecutarVideojuego"
+                                ClickMode="Press"/>
                         </StackPanel>
                     </StackPanel>
 
