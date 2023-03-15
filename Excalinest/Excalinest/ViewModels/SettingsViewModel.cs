@@ -70,4 +70,9 @@ public class SettingsViewModel : ObservableRecipient
 
         return $"{"AppDisplayName".GetLocalized()} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
     }
+
+    public void SalirApp(object sender, RoutedEventArgs e)
+    {
+        Application.Current.Exit();
+    }
 }
