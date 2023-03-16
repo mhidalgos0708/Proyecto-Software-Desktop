@@ -9,6 +9,7 @@
     MinWidth="500"
     MinHeight="500"
     PersistenceId="MainWindow"
+    
     mc:Ignorable="d">
     <windowex:WindowEx.Backdrop>
         <windowex:MicaSystemBackdrop />
