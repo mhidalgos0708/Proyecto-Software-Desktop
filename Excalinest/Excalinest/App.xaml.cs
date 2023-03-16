@@ -74,14 +74,6 @@ public partial class App : Application
             services.AddTransient<VideogamesPage>();
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
-            services.AddTransient<DataGridViewModel>();
-            services.AddTransient<DataGridPage>();
-            services.AddTransient<ContentGridDetailViewModel>();
-            services.AddTransient<ContentGridDetailPage>();
-            services.AddTransient<ContentGridViewModel>();
-            services.AddTransient<ContentGridPage>();
-            services.AddTransient<ListDetailsViewModel>();
-            services.AddTransient<ListDetailsPage>();
             services.AddTransient<MainViewModel>();
             services.AddTransient<MainPage>();
             services.AddTransient<ShellPage>();

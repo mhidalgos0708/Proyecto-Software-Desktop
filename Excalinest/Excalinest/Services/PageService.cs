@@ -15,10 +15,6 @@ public class PageService : IPageService
     public PageService()
     {
         Configure<MainViewModel, MainPage>();
-        Configure<ListDetailsViewModel, ListDetailsPage>();
-        Configure<ContentGridViewModel, ContentGridPage>();
-        Configure<ContentGridDetailViewModel, ContentGridDetailPage>();
-        Configure<DataGridViewModel, DataGridPage>();
         Configure<SettingsViewModel, SettingsPage>();
         Configure<VideogamesViewModel, VideogamesPage>();
         Configure<VideogamesDetailViewModel, VideogamesDetailPage>();
