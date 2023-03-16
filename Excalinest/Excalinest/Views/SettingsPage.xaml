@@ -14,7 +14,7 @@
         <StackPanel
             x:Name="ContentArea">
 
-            <TextBlock x:Uid="Settings_Cierre" Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <TextBlock x:Uid="Settings_Salir" Style="{ThemeResource SubtitleTextBlockStyle}" />
             
             <StackPanel
             x:Name="grupoSalir"
