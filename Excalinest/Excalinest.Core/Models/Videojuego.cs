@@ -36,8 +36,8 @@ public class Videojuego
     [BsonElement("usuario")]
     public string Usuario { get; set; } = null!;
 
-    [BsonElement("juegoZip")]
-    public Zip JuegoZIP { get; set; } = null!;
+    [BsonElement("bucketId")]
+    public string bucketId { get; set; } = null!;
 
     [BsonElement("tags")]
     public List<Tag> Etiquetas { get; set; } = null!;
