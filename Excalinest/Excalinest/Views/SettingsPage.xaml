@@ -13,10 +13,11 @@
     <Grid>
         <StackPanel
             x:Name="ContentArea">
+
             <TextBlock x:Uid="Settings_Cierre" Style="{ThemeResource SubtitleTextBlockStyle}" />
             
             <StackPanel
-            x:Name="orderTotalGroup"
+            x:Name="grupoSalir"
             Margin="{StaticResource SmallTopMargin}"
             HorizontalAlignment="Left">
                 <Button

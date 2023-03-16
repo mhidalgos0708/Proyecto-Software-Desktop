@@ -10,7 +10,13 @@ using Excalinest.Views;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
+using Windows.ApplicationModel.Core;
+using WinUIEx;
 
 namespace Excalinest;
 
@@ -106,5 +112,7 @@ public partial class App : Application
         base.OnLaunched(args);
 
         await App.GetService<IActivationService>().ActivateAsync(args);
+
+        MainWindow.GetAppWindow().SetPresenter(AppWindowPresenterKind.FullScreen);
     }
 }

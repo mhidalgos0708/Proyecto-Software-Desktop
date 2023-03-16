@@ -100,7 +100,7 @@
   <data name="Settings_AboutDescription.Text" xml:space="preserve">
     <value>TODO: Replace with your app description.</value>
   </data>
-  <data name="Settings_Cierre.Text" xml:space="preserve">
+  <data name="Settings_PantallaCompleta.Text" xml:space="preserve">
     <value>Cerrar aplicación</value>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
