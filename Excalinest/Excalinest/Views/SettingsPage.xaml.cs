@@ -1,6 +1,7 @@
 ﻿using Excalinest.ViewModels;
-
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Windows.UI.Core;
 
 namespace Excalinest.Views;
 

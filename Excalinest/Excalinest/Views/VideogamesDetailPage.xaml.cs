@@ -30,9 +30,11 @@ public sealed partial class VideogamesDetailPage : Page
     private PublisherTiempoInac NotificadorTiempoInac;
     private ISubscriberTiempoInac ObservadorTiempoInac;
 
-    private readonly string NombreVideojuego;
+    private string NombreVideojuego;
 
     private Process VideojuegoActual;
+
+    private readonly int SegundosInactividad;
 
     public VideogamesDetailPage()
     {
@@ -40,7 +42,7 @@ public sealed partial class VideogamesDetailPage : Page
         InitializeComponent();
 
         // Inicilizar atributos asociados a ejecutar
-        NombreVideojuego = "Wednesday";
+        SegundosInactividad = 60;
         VideojuegoActual = new Process();
     }
 
@@ -125,10 +127,12 @@ public sealed partial class VideogamesDetailPage : Page
     // Método para ejecutar el videojuego actual, busca en la ruta del mismo nombre el ejecutable correspondiente
     public void EjecutarVideojuego(object sender, RoutedEventArgs e)
     {
-        // Esta línea se utiliza debido a que las rutas relativas en c# se establecen desde system32
-        Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory); // Establece a CurrentDirectory la ruta donde se buscan los archivos ensamblador y se encuentran los videojuegos ejecutables
+        NombreVideojuego = ViewModel.Item.Titulo;
 
-        var RutaJuego =  @".\Assets\Videojuegos\" + NombreVideojuego;
+        // Esta línea se utiliza debido a que las rutas relativas en c# se establecen desde system32
+        // Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory); // Establece a CurrentDirectory la ruta donde se buscan los archivos ensamblador y se encuentran los videojuegos ejecutables
+
+        var RutaJuego =  @"..\..\VideojuegosExcalinest\" + NombreVideojuego;
         
         try
         {
@@ -143,7 +147,7 @@ public sealed partial class VideogamesDetailPage : Page
             VideojuegoActual.StartInfo.CreateNoWindow = true; // Abrir una nueva ventana
             VideojuegoActual.Start();
 
-            NotificadorTiempoInac = new PublisherTiempoInac(60000);
+            NotificadorTiempoInac = new PublisherTiempoInac(SegundosInactividad*1000);
             ObservadorTiempoInac = new SubscriberTiempoInac(VideojuegoActual);
             NotificadorTiempoInac.Suscribirse(ObservadorTiempoInac);
         }
@@ -151,5 +155,10 @@ public sealed partial class VideogamesDetailPage : Page
         {
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+    }
+
+    ~VideogamesDetailPage()
+    {
+        VideojuegoActual.Dispose(); // Borrar memoria del proceso una vez se accede a otra página
     }
 }

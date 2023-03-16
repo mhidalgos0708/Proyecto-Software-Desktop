@@ -23,6 +23,5 @@ public class SubscriberTiempoInac : ISubscriberTiempoInac
     public void Actualizar()
     {
         Videojuego.Kill();
-        Videojuego.Dispose();
     }
 }
