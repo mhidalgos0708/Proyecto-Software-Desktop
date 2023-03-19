@@ -80,29 +80,4 @@ public class ServicioVideojuego
         var entity = collection.Find(filter).FirstOrDefault();
         return entity;
     }
-
-    public async Task<Videojuego> CreateVideojuego(Videojuego videojuego)
-    {
-    
-           await collection.InsertOneAsync(videojuego);
-           return videojuego;
-       }
-
-    public async Task UpdateVideojuego(String id, Videojuego videojuegoIn)
-    {
-    
-           await collection.ReplaceOneAsync(videojuego => videojuego.ID == id, videojuegoIn);
-       }
-
-    public async Task RemoveVideojuego(Videojuego videojuegoIn)
-    {
-    
-           await collection.DeleteOneAsync(videojuego => videojuego.ID == videojuegoIn.ID);
-       }
-
-    public async Task RemoveVideojuego(String id)
-    {
-    
-           await collection.DeleteOneAsync(videojuego => videojuego.ID == id);
-       }
 }
