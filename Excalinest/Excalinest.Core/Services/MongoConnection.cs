@@ -16,7 +16,7 @@ public class MongoConnection
 
     private readonly MongoClientSettings settings;
     private readonly MongoClient client;
-    private readonly IMongoDatabase database;
+    public IMongoDatabase database;
 
     // Conexión a mongo funcionando correctamente
     public MongoConnection()

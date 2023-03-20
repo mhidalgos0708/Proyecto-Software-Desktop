@@ -20,23 +20,14 @@ using Microsoft.Graph;
 namespace Excalinest.Core.Services;
 public class ServicioVideojuego
 {
-    private readonly MongoConnection _mongoConnection;
-    //private readonly IMongoCollection<Videojuego> _videojuegos;
-
-    public readonly MongoClientSettings settings;
-    public readonly MongoClient client;
     public readonly IMongoDatabase database;
 
     IMongoCollection<Videojuego> collection;
     IMongoCollection<Tag> collection_tags;
 
-    public ServicioVideojuego()
+    public ServicioVideojuego(MongoConnection mongoConnection)
     {
-        settings = MongoClientSettings.FromConnectionString("mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/?retryWrites=true&w=majority"); client = new MongoClient(settings);
-        database = client.GetDatabase("ExcalinestDB");
-
-
-        _mongoConnection = new MongoConnection();
+        database = mongoConnection.database;
         collection = database.GetCollection<Videojuego>("videogames");
         collection_tags = database.GetCollection<Tag>("tags");
 

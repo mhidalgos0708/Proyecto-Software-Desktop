@@ -23,7 +23,7 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
     public VideogamesDetailViewModel(ISampleDataService sampleDataService)
     {
         _sampleDataService = sampleDataService;
-        servicioVideojuego = new ServicioVideojuego();
+        servicioVideojuego = new ServicioVideojuego(new MongoConnection());
     }
 
     public async void OnNavigatedTo(object parameter)

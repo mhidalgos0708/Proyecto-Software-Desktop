@@ -31,7 +31,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
     {
         _navigationService = navigationService;
         _sampleDataService = sampleDataService;
-        _videojuegoService = new ServicioVideojuego();
+        _videojuegoService = new ServicioVideojuego(new MongoConnection());
 
         ItemClickCommand = new RelayCommand<Videojuego>(OnItemClick);
     }
