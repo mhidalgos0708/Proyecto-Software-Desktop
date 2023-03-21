@@ -77,18 +77,18 @@ internal class DesactivadorComandos
                 return (IntPtr)1; //Permite marcar el evento como "Handled"
             }
         }
-        return CallNextHookEx(ptrHook, nCode, wp, lp); 
+        return CallNextHookEx(ptrHook, nCode, wp, lp);
     }
 
     public void DesactivarHookTeclado()
     {
-        UnhookWindowsHookEx(ptrHook);
+        UnhookWindowsHookEx(ptrHook); 
     }
 
     public void ActivarHookTeclado()
     {
         var objModuloActual = Process.GetCurrentProcess().MainModule; //Obtener el proceso actual
         objProcesoTeclado = new LowLevelKeyboardProc(CapturarTecla); //Asociar el hook al método de capturar tecla
-        ptrHook = SetWindowsHookEx(WH_KEYBOARD_LL, objProcesoTeclado, GetModuleHandle(objModuloActual.ModuleName), 0); // Establecer hook en modo 13, permite captar teclas a bajo nivel
+        ptrHook = SetWindowsHookEx(WH_KEYBOARD_LL, objProcesoTeclado, GetModuleHandle(objModuloActual.ModuleName), 0); // Establecer hook en modo 13, que permite captar teclas a bajo nivel
     }
 }
