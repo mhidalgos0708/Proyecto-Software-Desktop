@@ -63,13 +63,3 @@ public class Portada
     public byte[] Data { get; set; } = null;
 
 }
-
-public class Zip
-{
-    [BsonElement("tipoArchivo")]
-    public string FileType { get; set; } = null;
-
-    [BsonElement("data")]
-    public byte[] Data { get; set; } = null;
-
-}
