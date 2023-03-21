@@ -65,7 +65,7 @@ internal class DesactivadorComandos
         if (nCode >= 0)
         {
             // Se establece una estructura para administrar los datos de la tecla
-            TCDLLHOOKSTRUCT infoTecla = (TCDLLHOOKSTRUCT)Marshal.PtrToStructure(lp, typeof(TCDLLHOOKSTRUCT));
+            var infoTecla = (TCDLLHOOKSTRUCT)Marshal.PtrToStructure(lp, typeof(TCDLLHOOKSTRUCT));
 
             // Desabilitar comandos: Alt + F4, Alt + Esc, Ctrl + Esc, Alt + Tab, botón Windows
             if (infoTecla.tecla == Keys.RShiftKey || infoTecla.tecla == Keys.ShiftKey || infoTecla.tecla == Keys.Shift || 
