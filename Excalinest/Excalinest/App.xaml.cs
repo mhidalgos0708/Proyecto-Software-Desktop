@@ -46,6 +46,8 @@ public partial class App : Application
 
     public static WindowEx MainWindow { get; } = new MainWindow();
 
+    private DesactivadorComandos _hookTeclado;
+
     public App()
     {
         InitializeComponent();
@@ -99,6 +101,9 @@ public partial class App : Application
         Build();
 
         UnhandledException += App_UnhandledException;
+
+        _hookTeclado = DesactivadorComandos.ObtenerHookTeclado();
+        _hookTeclado.ActivarHookTeclado();
     }
 
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
@@ -114,5 +119,10 @@ public partial class App : Application
         await App.GetService<IActivationService>().ActivateAsync(args);
 
         MainWindow.GetAppWindow().SetPresenter(AppWindowPresenterKind.FullScreen);
+    }
+
+    ~App()
+    {
+        _hookTeclado.DesactivarHookTeclado();
     }
 }
