@@ -19,16 +19,16 @@ public class Videojuego
     public string Titulo { get; set; } = null!;
 
     [BsonElement("portada")]
-    public Portada Portada { get; set; } = null!;
+    public ImageMongo Portada { get; set; } = null!;
 
     [BsonElement("facebook")]
-    public Portada Facebook { get; set; } = null!;
+    public ImageMongo Facebook { get; set; } = null!;
 
     [BsonElement("instagram")]
-    public Portada Instagram { get; set; } = null!;
+    public ImageMongo Instagram { get; set; } = null!;
 
     [BsonElement("twitter")]
-    public Portada Twitter { get; set; } = null!;
+    public ImageMongo Twitter { get; set; } = null!;
 
     [BsonElement("sinopsis")]
     public string Sinopsis { get; set; } = null!;
@@ -54,7 +54,7 @@ public class Tag{
 
 }
 
-public class Portada
+public class ImageMongo
 {
     [BsonElement("tipoImagen")]
     public string ImgType { get; set; } = null;
