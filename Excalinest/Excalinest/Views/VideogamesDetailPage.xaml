@@ -53,12 +53,16 @@
                             Margin="{StaticResource SmallTopMargin}"
                             HorizontalAlignment="Right">
                             <Button
-                                Width="100"
-                                Height="40"
-                                Content="Ejecutar"
-                                Style="{StaticResource AccentButtonStyle}" 
+                                Width="130"
+                                Height="55"
                                 Click="EjecutarVideojuego"
-                                ClickMode="Press"/>
+                                ClickMode="Press"
+                                Style="{StaticResource AccentButtonStyle}">
+                                <StackPanel>
+                                    <SymbolIcon Symbol="Play" />
+                                    <TextBlock Text="Ejecutar" />
+                                </StackPanel>
+                            </Button>
                         </StackPanel>
                     </StackPanel>
 

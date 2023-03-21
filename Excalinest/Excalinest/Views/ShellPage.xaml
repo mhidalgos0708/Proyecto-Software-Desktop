@@ -53,7 +53,7 @@
                 </NavigationViewItem>
                 <NavigationViewItem x:Uid="Shell_Videogames" helpers:NavigationHelper.NavigateTo="Excalinest.ViewModels.VideogamesViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xf0e2;" />
+                        <FontIcon Glyph="&#xE7FC;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
