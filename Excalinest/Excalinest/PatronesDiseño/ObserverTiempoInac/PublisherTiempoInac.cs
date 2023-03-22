@@ -55,7 +55,7 @@ public partial class PublisherTiempoInac
         Subscribers.Add(subscriber);
     }
 
-    private bool HasInput()
+    private bool HayEntrada()
     {
         var UltimoInputInfo = new ULTIMOINPUTINFO();
         UltimoInputInfo.cbSize = (uint)Marshal.SizeOf(UltimoInputInfo); // Propiedad que almacena el tamaño del struct en bytes
@@ -79,7 +79,7 @@ public partial class PublisherTiempoInac
     // Notificar que se venció el tiempo de inactividad al pasar cierto tiempo especificado por el usuario admin
     private void Notificar()
     {
-        if(!HasInput())
+        if(!HayEntrada())
         {
             foreach (var subscriber in Subscribers)
             {

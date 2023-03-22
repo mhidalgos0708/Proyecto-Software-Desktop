@@ -27,23 +27,10 @@ public sealed partial class VideogamesDetailPage : Page
         get;
     }
 
-    private PublisherTiempoInac NotificadorTiempoInac;
-    private ISubscriberTiempoInac ObservadorTiempoInac;
-
-    private string NombreVideojuego;
-
-    private Process VideojuegoActual;
-
-    private readonly int SegundosInactividad;
-
     public VideogamesDetailPage()
     {
         ViewModel = App.GetService<VideogamesDetailViewModel>();
         InitializeComponent();
-
-        // Inicilizar atributos asociados a ejecutar
-        SegundosInactividad = 60;
-        VideojuegoActual = new Process();
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -122,43 +109,5 @@ public sealed partial class VideogamesDetailPage : Page
                 
             }
         }
-    }
-
-    // Método para ejecutar el videojuego actual, busca en la ruta del mismo nombre el ejecutable correspondiente
-    public void EjecutarVideojuego(object sender, RoutedEventArgs e)
-    {
-        NombreVideojuego = ViewModel.Item.Titulo;
-
-        // Esta línea se utiliza debido a que las rutas relativas en c# se establecen desde system32
-        // Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory); // Establece a CurrentDirectory la ruta donde se buscan los archivos ensamblador y se encuentran los videojuegos ejecutables
-
-        var RutaJuego =  @"..\..\VideojuegosExcalinest\" + NombreVideojuego;
-        
-        try
-        {
-            // Obtener los nombres de archvios ejecutables dentro de la carpeta del juego actual
-            var VideojuegoEjecutable = Directory.GetFiles(RutaJuego, "*.exe", SearchOption.AllDirectories) // Retorna una lista de archivos .exe dentro de la carpeta RutaJuego
-                    .Where(archivo => !archivo.Contains("UnityCrashHandler"))
-                    .AsEnumerable()
-                    .ToArray();
-
-            VideojuegoActual.StartInfo.UseShellExecute = false; // Ejecutar directamente desde el archivo ejecutable
-            VideojuegoActual.StartInfo.FileName = VideojuegoEjecutable[0]; // Establecer la ruta del archivo ejecutable
-            VideojuegoActual.StartInfo.CreateNoWindow = true; // Abrir una nueva ventana
-            VideojuegoActual.Start();
-
-            NotificadorTiempoInac = new PublisherTiempoInac(SegundosInactividad*1000);
-            ObservadorTiempoInac = new SubscriberTiempoInac(VideojuegoActual);
-            NotificadorTiempoInac.Suscribirse(ObservadorTiempoInac);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
-
-    ~VideogamesDetailPage()
-    {
-        VideojuegoActual.Dispose(); // Borrar memoria del proceso una vez se accede a otra página
     }
 }
