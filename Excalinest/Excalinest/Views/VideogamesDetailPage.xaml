@@ -55,7 +55,7 @@
                             <Button
                                 Width="130"
                                 Height="55"
-                                Click="EjecutarVideojuego"
+                                Click="ViewModel.EjecutarVideojuego"
                                 ClickMode="Press"
                                 Style="{StaticResource AccentButtonStyle}">
                                 <StackPanel>
