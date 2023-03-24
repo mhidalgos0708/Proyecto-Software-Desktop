@@ -2,6 +2,7 @@
 
 using System.Windows.Forms;
 using System.Diagnostics;
+
 namespace Excalinest.Services;
 
 internal class DesactivadorComandos
@@ -60,6 +61,9 @@ internal class DesactivadorComandos
         return _instancia;
     }
 
+    //nCode: Un entero que indica el tipo de mensaje del teclado. Si es menor que 0 se retorna el valor resultado de invocar a CallNextHookEx
+    //wp: La tecla virtual presionada que activo el evento.
+    //lp: Puntero a la estructura KBDLLHOOKSTRUCT.
     private IntPtr CapturarTecla(int nCode, IntPtr wp, IntPtr lp)
     {
         if (nCode >= 0)
