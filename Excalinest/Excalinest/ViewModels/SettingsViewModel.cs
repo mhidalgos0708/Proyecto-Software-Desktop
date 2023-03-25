@@ -75,4 +75,5 @@ public class SettingsViewModel : ObservableRecipient
     {
         Application.Current.Exit();
     }
+
 }
