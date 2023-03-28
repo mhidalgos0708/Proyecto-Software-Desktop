@@ -8,6 +8,7 @@ using Excalinest.Core.Models;
 using Excalinest.Core.Services;
 using Excalinest.PatronesDiseño.ObserverTiempoInac;
 using Microsoft.UI.Xaml;
+using System.IO;
 
 using System.Diagnostics;
 
@@ -76,6 +77,41 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
             NotificadorTiempoInac.Suscribirse(ObservadorTiempoInac);
         }
         catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    public void EliminarVideojuego(object sender, RoutedEventArgs e)
+    {
+        NombreVideojuego = Item.Titulo;
+
+        try
+        {
+            var RutaJuego = @"..\..\VideojuegosExcalinest\" + NombreVideojuego;
+
+
+            if (Directory.Exists(RutaJuego))
+            {
+                var files = Directory.GetFiles(RutaJuego);
+                var subdirectories = Directory.GetDirectories(RutaJuego);
+
+                foreach (var file in files)
+                {
+                    File.Delete(file);
+                }
+
+                foreach (var subdirectory in subdirectories)
+                {
+                    Directory.Delete(subdirectory, true);
+                }
+
+                Directory.Delete(RutaJuego);
+
+                MessageBox.Show("Videojuego eliminado.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        catch (Exception ex) 
         {
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
