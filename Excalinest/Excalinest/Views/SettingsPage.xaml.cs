@@ -14,6 +14,8 @@ public sealed partial class SettingsPage : Page
 {
 
     private bool _carpetaValida = false;
+
+
     public SettingsViewModel ViewModel
     {
         get;
@@ -23,7 +25,11 @@ public sealed partial class SettingsPage : Page
     {
         ViewModel = App.GetService<SettingsViewModel>();
         InitializeComponent();
+
+        GetValues();
     }
+
+
 
     private async void PickFolderButton_Click(object sender, RoutedEventArgs e)
     {
@@ -86,5 +92,10 @@ public sealed partial class SettingsPage : Page
 
         var result = await dialog.ShowAsync(); 
         
+    }
+
+    private void GetValues()
+    {
+        ViewModel.GetValues();
     }
 }

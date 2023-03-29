@@ -31,7 +31,7 @@
                 Minimum="1"
                 SmallChange="1"
                 SpinButtonPlacementMode="Inline"
-                Value="1" />
+                Value="{x:Bind ViewModel._minutosInactividad}" />
 
             <TextBlock
                 Margin="{StaticResource LargeTopMargin}"

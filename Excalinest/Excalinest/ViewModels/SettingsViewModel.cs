@@ -19,6 +19,9 @@ public class SettingsViewModel : ObservableRecipient
     private ElementTheme _elementTheme;
     private string _versionDescription;
 
+    public string _rutaArchivo;
+    public int _minutosInactividad;
+
     public ElementTheme ElementTheme
     {
         get => _elementTheme;
@@ -74,6 +77,16 @@ public class SettingsViewModel : ObservableRecipient
     public void SalirApp(object sender, RoutedEventArgs e)
     {
         Application.Current.Exit();
+    }
+
+    public void GetValues()
+    {
+        var RutaArchivoConfig = @"..\..\VideojuegosExcalinest\config.txt";
+
+        string[] lines = File.ReadAllLines(RutaArchivoConfig);
+
+        _minutosInactividad = int.Parse(lines[0]);
+        _rutaArchivo = lines[1];
     }
 
 }
