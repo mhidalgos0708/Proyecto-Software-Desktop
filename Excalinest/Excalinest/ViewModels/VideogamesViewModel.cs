@@ -10,6 +10,7 @@ using Excalinest.Contracts.ViewModels;
 using Excalinest.Core.Contracts.Services;
 using Excalinest.Core.Models;
 using Excalinest.Core.Services;
+using Microsoft.VisualBasic.Logging;
 
 namespace Excalinest.ViewModels;
 
@@ -57,7 +58,10 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         var data = await _videojuegoService.GetVideojuegos();
         foreach (var item in data)
         {
-            Source.Add(item);
+            if (File.Exists(@"C:\Excalinest\"+item.Titulo+".zip"))
+            {
+                Source.Add(item);
+            }
         }
     }
 
@@ -83,7 +87,10 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
             var data = await _videojuegoService.GetVideojuegos();
             foreach (var item in data)
             {
-                Source.Add(item);
+                if (File.Exists(@"C:\Excalinest\"+item.Titulo+".zip"))
+                {
+                    Source.Add(item);
+                }
             }
         }
         else
@@ -93,7 +100,10 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
             var data = await _videojuegoService.GetVideojuegosByTagID(ID);
             foreach (var item in data)
             {
-                Source.Add(item);
+                if (File.Exists(@"C:\Excalinest\"+item.Titulo+".zip"))
+                {
+                    Source.Add(item);
+                }
             }
         }
     }
