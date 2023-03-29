@@ -56,7 +56,7 @@
                             <Button
                                 Width="130"
                                 Height="40"
-                                Click="ViewModel.EjecutarVideojuego"
+                                Click="DescargarVideojuego"
                                 ClickMode="Press"
                                 Style="{StaticResource AccentButtonStyle}"
                                 HorizontalAlignment="Right">
@@ -80,7 +80,7 @@
                             <Button
                                 Width="130"
                                 Height="40"
-                                Click="ViewModel.EjecutarVideojuego"
+                                Click="EjecutarVideojuego"
                                 ClickMode="Press"
                                 Style="{StaticResource AccentButtonStyle}"
                                 HorizontalAlignment="Left">
@@ -97,7 +97,7 @@
                             <Button
                                 Width="130"
                                 Height="40"
-                                Click="ViewModel.EliminarVideojuego"
+                                Click="EliminarVideojuego"
                                 ClickMode="Press"
                                 Style="{StaticResource AccentButtonStyle}"
                                 HorizontalAlignment="Right"

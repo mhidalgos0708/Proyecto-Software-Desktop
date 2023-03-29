@@ -44,6 +44,24 @@ public sealed partial class VideogamesDetailPage : Page
         GetImageTwitter();
 
         tagsList.ItemsSource = ViewModel.Item.Etiquetas;
+
+        var downloadGroup = FindName("downloadGroup") as StackPanel;
+        var executeGroup = FindName("executeGroup") as StackPanel;
+
+        if (VideogamesDetailViewModel.EsVideojuegoDescargado())
+        {
+            if (downloadGroup != null)
+            {
+                downloadGroup.Visibility = Visibility.Collapsed;
+            }
+        }
+        else
+        {
+            if (executeGroup != null)
+            {
+                executeGroup.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 
     private async void GetImageCover()
@@ -110,4 +128,29 @@ public sealed partial class VideogamesDetailPage : Page
             }
         }
     }
+
+    private void EjecutarVideojuego(object sender, RoutedEventArgs e)
+    {
+        VideogamesDetailViewModel.EjecutarVideojuego();
+    }
+
+    private void EliminarVideojuego(object sender, RoutedEventArgs e)
+    {
+        VideogamesDetailViewModel.EliminarVideojuego();
+
+        var downloadGroup = FindName("downloadGroup") as StackPanel;
+        var executeGroup = FindName("executeGroup") as StackPanel;
+
+        if (downloadGroup != null && executeGroup != null)
+        {
+            executeGroup.Visibility = Visibility.Collapsed;
+            downloadGroup.Visibility = Visibility.Visible;
+        }
+    }
+
+    private void DescargarVideojuego(object sender, RoutedEventArgs e)
+    {
+        VideogamesDetailViewModel.DescargarVideojuego();
+    }
+
 }

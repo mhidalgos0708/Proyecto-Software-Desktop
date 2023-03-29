@@ -20,12 +20,13 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
     private readonly ServicioVideojuego servicioVideojuego;
     private Videojuego? _item;
 
-    private PublisherTiempoInac NotificadorTiempoInac;
-    private ISubscriberTiempoInac ObservadorTiempoInac;
+    private static PublisherTiempoInac? NotificadorTiempoInac;
+    private static ISubscriberTiempoInac? ObservadorTiempoInac;
 
-    private string NombreVideojuego;
+    private static string NombreVideojuego = "";
 
-    private readonly int SegundosInactividad;
+    private static readonly int SegundosInactividad = 60;
+    private static string RutaJuego = "";
 
     public Videojuego? Item
     {
@@ -37,9 +38,6 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
     {
         _sampleDataService = sampleDataService;
         servicioVideojuego = new ServicioVideojuego(new MongoConnection());
-
-        // Inicilizar atributos asociados a ejecutar
-        SegundosInactividad = 60;
     }
 
     public async void OnNavigatedTo(object parameter)
@@ -47,6 +45,8 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
         if (parameter is string titulo)
         {
             Item = await servicioVideojuego.GetVideojuegoPorTitulo(titulo);
+            NombreVideojuego = Item.Titulo;
+            RutaJuego = @"..\..\VideojuegosExcalinest\" + NombreVideojuego;
         }
     }
 
@@ -55,14 +55,11 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
     }
 
     // Método para ejecutar el videojuego actual, busca en la ruta del mismo nombre el ejecutable correspondiente
-    public void EjecutarVideojuego(object sender, RoutedEventArgs e)
+    public static void EjecutarVideojuego()
     {
-        NombreVideojuego = Item.Titulo;
 
         // Esta línea se utiliza debido a que las rutas relativas en c# se establecen desde system32
         // Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory); // Establece a CurrentDirectory la ruta donde se buscan los archivos ensamblador y se encuentran los videojuegos ejecutables
-
-        var RutaJuego = @"..\..\VideojuegosExcalinest\" + NombreVideojuego;
 
         try
         {
@@ -82,15 +79,10 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
         }
     }
 
-    public void EliminarVideojuego(object sender, RoutedEventArgs e)
+    public static void EliminarVideojuego()
     {
-        NombreVideojuego = Item.Titulo;
-
         try
         {
-            var RutaJuego = @"..\..\VideojuegosExcalinest\" + NombreVideojuego;
-
-
             if (Directory.Exists(RutaJuego))
             {
                 var files = Directory.GetFiles(RutaJuego);
@@ -108,7 +100,7 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
 
                 Directory.Delete(RutaJuego);
 
-                MessageBox.Show("Videojuego eliminado.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Videojuego eliminado de la unidad C:/ exitosamente.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         catch (Exception ex) 
@@ -116,4 +108,14 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
+
+    public static bool EsVideojuegoDescargado()
+    {
+        return Directory.Exists(RutaJuego);
+    }
+
+    public static void DescargarVideojuego()
+    {
+        MessageBox.Show("Descargando "+NombreVideojuego+"...", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    } 
 }
