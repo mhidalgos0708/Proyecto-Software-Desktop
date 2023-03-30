@@ -5,6 +5,7 @@ using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 using Windows.Storage;
 using Windows.UI.Core;
+using Microsoft.Graph;
 
 
 namespace Excalinest.Views;
@@ -44,7 +45,6 @@ public sealed partial class SettingsPage : Page
         var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
 
 
-
         // Initialize the folder picker with the window handle (HWND).
         WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
 
@@ -67,13 +67,13 @@ public sealed partial class SettingsPage : Page
         }
     }
 
-    private async void ShowDialog_Click(object sender, RoutedEventArgs e)
+    private async void Guardar_Click(object sender, RoutedEventArgs e)
     {
         ContentDialog dialog = new ContentDialog();
 
         // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
         dialog.XamlRoot = this.XamlRoot;
-        dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+        dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
         dialog.Title = "Atención";
         dialog.PrimaryButtonText = "Ok";
         dialog.DefaultButton = ContentDialogButton.Primary;
@@ -97,5 +97,14 @@ public sealed partial class SettingsPage : Page
     private void GetValues()
     {
         ViewModel.GetValues();
+        PickFolderOutputTextBlock.Text = "Carpeta seleccionada: " + ViewModel._rutaArchivo;
+        if(ViewModel._rutaArchivo != null)
+        {
+            _carpetaValida = true;
+        }
+        else
+        {
+            _carpetaValida = false;
+        }
     }
 }

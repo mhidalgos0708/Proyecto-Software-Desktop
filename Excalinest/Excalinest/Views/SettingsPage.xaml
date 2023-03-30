@@ -59,7 +59,7 @@
                 Width="150"
                 Height="40"
                 Margin="{StaticResource LargeTopBottomMargin}"
-                Click="ShowDialog_Click"
+                Click="Guardar_Click"
                 ClickMode="Press"
                 Content="Guardar cambios"
                 Style="{StaticResource AccentButtonStyle}" />
