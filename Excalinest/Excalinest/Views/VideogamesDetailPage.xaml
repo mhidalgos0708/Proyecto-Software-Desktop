@@ -49,18 +49,67 @@
                         <StackPanel x:Name="shipToGroup" Margin="{StaticResource SmallTopMargin}" />
 
                         <StackPanel
-                            x:Name="orderTotalGroup"
+                            x:Name="downloadGroup"
                             Margin="{StaticResource SmallTopMargin}"
-                            HorizontalAlignment="Right">
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
                             <Button
                                 Width="130"
-                                Height="55"
-                                Click="ViewModel.EjecutarVideojuego"
+                                Height="40"
+                                Click="DescargarVideojuego"
                                 ClickMode="Press"
-                                Style="{StaticResource AccentButtonStyle}">
-                                <StackPanel>
-                                    <SymbolIcon Symbol="Play" />
-                                    <TextBlock Text="Ejecutar" />
+                                Style="{StaticResource AccentButtonStyle}"
+                                HorizontalAlignment="Right">
+                                <StackPanel Orientation="Horizontal">
+                                    <SymbolIcon 
+                                        HorizontalAlignment="Left"
+                                        Symbol="Download" />
+                                    <TextBlock 
+                                        HorizontalAlignment="Right"
+                                        Margin="10,0,0,0"
+                                        Text="Descargar" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+
+                        <StackPanel
+                            x:Name="executeGroup"
+                            Margin="{StaticResource SmallTopMargin}"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                            <Button
+                                Width="130"
+                                Height="40"
+                                Click="EjecutarVideojuego"
+                                ClickMode="Press"
+                                Style="{StaticResource AccentButtonStyle}"
+                                HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal">
+                                    <SymbolIcon 
+                                        HorizontalAlignment="Left"
+                                        Symbol="Play" />
+                                    <TextBlock 
+                                        HorizontalAlignment="Right"
+                                        Margin="10,0,0,0"
+                                        Text="Ejecutar" />
+                                </StackPanel>
+                            </Button>
+                            <Button
+                                Width="130"
+                                Height="40"
+                                Click="EliminarVideojuego"
+                                ClickMode="Press"
+                                Style="{StaticResource AccentButtonStyle}"
+                                HorizontalAlignment="Right"
+                                Margin="15,0,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <SymbolIcon 
+                                        HorizontalAlignment="Left"
+                                        Symbol="Delete" />
+                                    <TextBlock 
+                                        HorizontalAlignment="Right"
+                                        Margin="10,0,0,0"
+                                        Text="Eliminar" />
                                 </StackPanel>
                             </Button>
                         </StackPanel>

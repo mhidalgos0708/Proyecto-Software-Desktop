@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 using Excalinest.Contracts.ViewModels;
@@ -7,24 +6,22 @@ using Excalinest.Core.Contracts.Services;
 using Excalinest.Core.Models;
 using Excalinest.Core.Services;
 using Excalinest.PatronesDiseño.ObserverTiempoInac;
-using Microsoft.UI.Xaml;
-
-using System.Diagnostics;
 
 namespace Excalinest.ViewModels;
 
 public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
 {
     private readonly ISampleDataService _sampleDataService;
-    private readonly ServicioVideojuego servicioVideojuego;
+    private static ServicioVideojuego? servicioVideojuego;
     private Videojuego? _item;
 
-    private PublisherTiempoInac NotificadorTiempoInac;
-    private ISubscriberTiempoInac ObservadorTiempoInac;
+    private static PublisherTiempoInac? NotificadorTiempoInac;
+    private static ISubscriberTiempoInac? ObservadorTiempoInac;
 
-    private string NombreVideojuego;
+    private static string NombreVideojuego = "";
 
-    private readonly int SegundosInactividad;
+    private static int SegundosInactividad = 0;
+    private static string RutaJuego = "";
 
     public Videojuego? Item
     {
@@ -36,8 +33,6 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
     {
         _sampleDataService = sampleDataService;
         servicioVideojuego = new ServicioVideojuego(new MongoConnection());
-
-        // Inicilizar atributos asociados a ejecutar
         SegundosInactividad = 60;
     }
 
@@ -45,7 +40,12 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
     {
         if (parameter is string titulo)
         {
-            Item = await servicioVideojuego.GetVideojuegoPorTitulo(titulo);
+            if (servicioVideojuego != null)
+            {
+                Item = await servicioVideojuego.GetVideojuegoPorTitulo(titulo);
+                NombreVideojuego = Item.Titulo;
+            }
+            RutaJuego = @"..\..\VideojuegosExcalinest\";
         }
     }
 
@@ -54,19 +54,16 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
     }
 
     // Método para ejecutar el videojuego actual, busca en la ruta del mismo nombre el ejecutable correspondiente
-    public void EjecutarVideojuego(object sender, RoutedEventArgs e)
+    public static void EjecutarVideojuego()
     {
-        NombreVideojuego = Item.Titulo;
 
         // Esta línea se utiliza debido a que las rutas relativas en c# se establecen desde system32
         // Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory); // Establece a CurrentDirectory la ruta donde se buscan los archivos ensamblador y se encuentran los videojuegos ejecutables
 
-        var RutaJuego = @"..\..\VideojuegosExcalinest\" + NombreVideojuego;
-
         try
         {
-            // Obtener los nombres de archvios ejecutables dentro de la carpeta del juego actual
-            var VideojuegoEjecutable = Directory.GetFiles(RutaJuego, "*.exe", SearchOption.AllDirectories) // Retorna una lista de archivos .exe dentro de la carpeta RutaJuego
+            // Obtener los nombres de archivos ejecutables dentro de la carpeta del juego actual
+            var VideojuegoEjecutable = Directory.GetFiles(RutaJuego + NombreVideojuego, "*.exe", SearchOption.AllDirectories) // Retorna una lista de archivos .exe dentro de la carpeta RutaJuego
                     .Where(archivo => !archivo.Contains("UnityCrashHandler"))
                     .AsEnumerable()
                     .ToArray();
@@ -80,4 +77,64 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
+
+    public static void EliminarVideojuego()
+    {
+        try
+        {
+            if (Directory.Exists(RutaJuego + NombreVideojuego))
+            {
+                var files = Directory.GetFiles(RutaJuego + NombreVideojuego);
+                var subdirectories = Directory.GetDirectories(RutaJuego + NombreVideojuego);
+
+                foreach (var file in files)
+                {
+                    File.Delete(file);
+                    while (File.Exists(file))
+                    {
+                        Thread.Sleep(100);
+                    }
+                }
+
+                foreach (var subdirectory in subdirectories)
+                {
+                    Directory.Delete(subdirectory, true);
+                    while (Directory.Exists(subdirectory))
+                    {
+                        Thread.Sleep(100);
+                    }
+                }
+
+                Directory.Delete(RutaJuego + NombreVideojuego);
+
+                while (Directory.Exists(RutaJuego + NombreVideojuego))
+                {
+                    Thread.Sleep(100);
+                }
+
+                MessageBox.Show("Videojuego eliminado localmente con éxito.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        catch (Exception ex) 
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    public static bool EsVideojuegoDescargado()
+    {
+        return Directory.Exists(RutaJuego + NombreVideojuego);
+    }
+
+    public static async Task<bool> DescargarVideojuego()
+    {
+        await Task.CompletedTask;
+        if (servicioVideojuego != null)
+        {
+            var res = await servicioVideojuego.DownloadVideojuego(RutaJuego, NombreVideojuego + ".zip");
+            MessageBox.Show(res, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return true;
+        }
+        return true;
+    } 
 }
