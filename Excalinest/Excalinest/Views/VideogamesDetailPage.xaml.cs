@@ -1,21 +1,13 @@
-﻿using System.Diagnostics;
-using CommunityToolkit.WinUI.UI.Animations;
+﻿using CommunityToolkit.WinUI.UI.Animations;
 
 using Excalinest.Contracts.Services;
 using Excalinest.ViewModels;
-using Excalinest.PatronesDiseño.ObserverTiempoInac;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Image = Microsoft.UI.Xaml.Controls.Image;
-
-using System.Windows.Forms;
-using WinUIEx;
-using Windows.ApplicationModel.Core;
-using Microsoft.UI.Xaml.Input;
-
 
 namespace Excalinest.Views;
 
@@ -43,8 +35,11 @@ public sealed partial class VideogamesDetailPage : Page
         GetImageInstagram();
         GetImageTwitter();
 
-        tagsList.ItemsSource = ViewModel.Item.Etiquetas;
-
+        if (ViewModel.Item != null)
+        {
+            tagsList.ItemsSource = ViewModel.Item.Etiquetas;
+        }
+        
         var downloadGroup = FindName("downloadGroup") as StackPanel;
         var executeGroup = FindName("executeGroup") as StackPanel;
 
@@ -66,8 +61,9 @@ public sealed partial class VideogamesDetailPage : Page
 
     private async void GetImageCover()
     {
-        using (var memoryStream = new MemoryStream(ViewModel.Item.Portada.Data))
+        if (ViewModel.Item != null)
         {
+            using var memoryStream = new MemoryStream(ViewModel.Item.Portada.Data);
             var bitmapImage = new BitmapImage();
             await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
 
@@ -78,22 +74,22 @@ public sealed partial class VideogamesDetailPage : Page
 
     private async void GetImageTwitter()
     {
-        using (var memoryStream = new MemoryStream(ViewModel.Item.Twitter.Data))
+        if (ViewModel.Item != null)
         {
+            using var memoryStream = new MemoryStream(ViewModel.Item.Twitter.Data);
             var bitmapImage = new BitmapImage();
             await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
 
             var imageControl = new Image();
             Twitter.Source = bitmapImage;
         }
-
-
     }
 
     private async void GetImageFacebook()
     {
-        using (var memoryStream = new MemoryStream(ViewModel.Item.Facebook.Data))
+        if (ViewModel.Item != null)
         {
+            using var memoryStream = new MemoryStream(ViewModel.Item.Facebook.Data);
             var bitmapImage = new BitmapImage();
             await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
 
@@ -104,8 +100,9 @@ public sealed partial class VideogamesDetailPage : Page
 
     private async void GetImageInstagram()
     {
-        using (var memoryStream = new MemoryStream(ViewModel.Item.Instagram.Data))
+        if (ViewModel.Item != null)
         {
+            using var memoryStream = new MemoryStream(ViewModel.Item.Instagram.Data);
             var bitmapImage = new BitmapImage();
             await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
 
