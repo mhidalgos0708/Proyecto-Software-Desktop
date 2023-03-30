@@ -145,9 +145,17 @@ public sealed partial class VideogamesDetailPage : Page
         }
     }
 
-    private void DescargarVideojuego(object sender, RoutedEventArgs e)
+    private async void DescargarVideojuego(object sender, RoutedEventArgs e)
     {
-        VideogamesDetailViewModel.DescargarVideojuego();
+        await VideogamesDetailViewModel.DescargarVideojuego();
+        var downloadGroup = FindName("downloadGroup") as StackPanel;
+        var executeGroup = FindName("executeGroup") as StackPanel;
+
+        if (downloadGroup != null && executeGroup != null)
+        {
+            downloadGroup.Visibility = Visibility.Collapsed;
+            executeGroup.Visibility = Visibility.Visible;
+        }
     }
 
 }

@@ -90,14 +90,27 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
                 foreach (var file in files)
                 {
                     File.Delete(file);
+                    while (File.Exists(file))
+                    {
+                        Thread.Sleep(100);
+                    }
                 }
 
                 foreach (var subdirectory in subdirectories)
                 {
                     Directory.Delete(subdirectory, true);
+                    while (Directory.Exists(subdirectory))
+                    {
+                        Thread.Sleep(100);
+                    }
                 }
 
-                //Directory.Delete(RutaJuego);
+                Directory.Delete(RutaJuego + NombreVideojuego);
+
+                while (Directory.Exists(RutaJuego + NombreVideojuego))
+                {
+                    Thread.Sleep(100);
+                }
 
                 MessageBox.Show("Videojuego eliminado localmente con éxito.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -113,12 +126,15 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
         return Directory.Exists(RutaJuego + NombreVideojuego);
     }
 
-    public static async void DescargarVideojuego()
+    public static async Task<bool> DescargarVideojuego()
     {
+        await Task.CompletedTask;
         if (servicioVideojuego != null)
         {
             var res = await servicioVideojuego.DownloadVideojuego(RutaJuego, NombreVideojuego + ".zip");
             MessageBox.Show(res, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return true;
         }
+        return true;
     } 
 }
