@@ -58,7 +58,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         var data = await _videojuegoService.GetVideojuegos();
         foreach (var item in data)
         {
-            if (File.Exists(@"C:\Excalinest\"+item.Titulo+".zip"))
+            if (File.Exists(@"C:\Excalinest\VideojuegosExcalinest\"+item.Titulo+".exe"))
             {
                 Source.Add(item);
             }
@@ -87,7 +87,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
             var data = await _videojuegoService.GetVideojuegos();
             foreach (var item in data)
             {
-                if (File.Exists(@"C:\Excalinest\"+item.Titulo+".zip"))
+                if (File.Exists(@"C:\Excalinest\VideojuegosExcalinest\"+item.Titulo+".exe"))
                 {
                     Source.Add(item);
                 }
@@ -100,7 +100,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
             var data = await _videojuegoService.GetVideojuegosByTagID(ID);
             foreach (var item in data)
             {
-                if (File.Exists(@"C:\Excalinest\"+item.Titulo+".zip"))
+                if (File.Exists(@"C:\Excalinest\VideojuegosExcalinest\"+item.Titulo+".exe"))
                 {
                     Source.Add(item);
                 }
