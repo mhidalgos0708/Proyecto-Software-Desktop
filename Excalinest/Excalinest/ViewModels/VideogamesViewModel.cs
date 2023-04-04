@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Drawing.Printing;
 using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -10,6 +11,10 @@ using Excalinest.Contracts.ViewModels;
 using Excalinest.Core.Contracts.Services;
 using Excalinest.Core.Models;
 using Excalinest.Core.Services;
+using Excalinest.Views;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.VisualBasic.Logging;
 
 namespace Excalinest.ViewModels;
 
@@ -26,6 +31,10 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
 
     public ObservableCollection<Videojuego> Source { get; } = new ObservableCollection<Videojuego>();
     public ObservableCollection<Tag> Tags { get; } = new ObservableCollection<Tag>();
+
+
+    public String path = @"C:/Excalinest/Videojuegos/";
+
 
     public VideogamesViewModel(INavigationService navigationService, ISampleDataService sampleDataService)
     {
@@ -57,7 +66,10 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         var data = await _videojuegoService.GetVideojuegos();
         foreach (var item in data)
         {
-            Source.Add(item);
+            if (Directory.Exists(path+item.Titulo))
+            {
+                Source.Add(item);
+            }
         }
     }
 
@@ -83,7 +95,10 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
             var data = await _videojuegoService.GetVideojuegos();
             foreach (var item in data)
             {
-                Source.Add(item);
+                if (Directory.Exists(path+item.Titulo))
+                {
+                    Source.Add(item);
+                }
             }
         }
         else
@@ -93,7 +108,10 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
             var data = await _videojuegoService.GetVideojuegosByTagID(ID);
             foreach (var item in data)
             {
-                Source.Add(item);
+                if (Directory.Exists(path+item.Titulo))
+                {
+                    Source.Add(item);
+                }
             }
         }
     }

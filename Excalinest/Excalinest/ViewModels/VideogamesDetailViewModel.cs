@@ -45,7 +45,7 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
                 Item = await servicioVideojuego.GetVideojuegoPorTitulo(titulo);
                 NombreVideojuego = Item.Titulo;
             }
-            RutaJuego = @"..\..\VideojuegosExcalinest\";
+            RutaJuego = @"C:/Excalinest/Videojuegos/";
         }
     }
 
