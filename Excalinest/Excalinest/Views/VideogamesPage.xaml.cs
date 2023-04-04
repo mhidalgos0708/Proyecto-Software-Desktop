@@ -22,6 +22,10 @@ public sealed partial class VideogamesPage : Page
         ViewModel = App.GetService<VideogamesViewModel>();
         InitializeComponent();
 
+        /*if (GridView.DataFetchSize ==0)
+        {
+            gamesOrNot.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+        }*/
         // taglist.ItemsSource = ViewModel.Tags;
     }
 
@@ -60,7 +64,7 @@ public sealed partial class VideogamesPage : Page
     {
         ComboBox tag = (ComboBox)sender;
         Tag chosenTag = tag.SelectedItem as Tag;
-        Debug.WriteLine(chosenTag.ID);
+        
         await ViewModel.GetVideojuegosByTag(chosenTag.ID);
     }
 

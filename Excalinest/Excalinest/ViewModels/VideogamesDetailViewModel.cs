@@ -61,7 +61,7 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
         // Esta línea se utiliza debido a que las rutas relativas en c# se establecen desde system32
         // Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory); // Establece a CurrentDirectory la ruta donde se buscan los archivos ensamblador y se encuentran los videojuegos ejecutables
 
-        var RutaJuego = @"C:\Excalinest\VideojuegosExcalinest\" + NombreVideojuego;
+        var RutaJuego = @"C:/Excalinest/Videojuegos" + NombreVideojuego;
 
         try
         {
