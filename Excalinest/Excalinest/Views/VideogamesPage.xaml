@@ -38,7 +38,24 @@
                 StretchContentForSingleRow="False">
                 <controls:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="models:Videojuego">
-                        <Grid x:Name="itemThumbnail" Padding="{StaticResource XSmallLeftTopRightBottomMargin}">
+                        <Grid x:Name="itemThumbnail" Padding="{StaticResource XSmallLeftTopRightBottomMargin}" >
+                            <StackPanel
+                                Name="ZonaCheckBoxSeleccion"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <SymbolIcon Symbol="Download" HorizontalAlignment="Left" />
+                                    <CheckBox IsChecked="False" HorizontalAlignment="Left" />
+                                </Grid>
+                            </StackPanel>
                             <StackPanel
                                 Name="myStackPanel"
                                 HorizontalAlignment="Center"
