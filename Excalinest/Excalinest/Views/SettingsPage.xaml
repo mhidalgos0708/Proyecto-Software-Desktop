@@ -11,23 +11,81 @@
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
     <Grid>
-        <StackPanel
-            x:Name="ContentArea">
 
-            <TextBlock x:Uid="Settings_Salir" Style="{ThemeResource SubtitleTextBlockStyle}" />
-            
+        <StackPanel x:Name="ContentArea" Margin="{StaticResource MediumTopMargin}">
+
+
+            <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="Configuración de parámetros" />
+
+            <TextBlock
+                Margin="{StaticResource LargeTopMargin}"
+                Style="{ThemeResource BaseTextBlockStyle}"
+                Text="Seleccione la cantidad de minutos de inactividad" />
+
+            <NumberBox
+                x:Name="NumberBoxMinutos"
+                Width="150"
+                Margin="{StaticResource MediumTopMargin}"
+                HorizontalAlignment="Left"
+                LargeChange="1"
+                Minimum="1"
+                SmallChange="1"
+                SpinButtonPlacementMode="Inline"
+                Value="1" />
+
+            <TextBlock
+                Margin="{StaticResource LargeTopMargin}"
+                Style="{ThemeResource BaseTextBlockStyle}"
+                Text="Seleccione la carpeta donde se almacenarán los videojuegos" />
+
             <StackPanel
-            x:Name="grupoSalir"
-            Margin="{StaticResource SmallTopMargin}"
-            HorizontalAlignment="Left">
-                        <Button
-                Width="100"
+                Margin="{StaticResource MediumTopMargin}"
+                VerticalAlignment="Top"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="PickFolderButton"
+                    Width="150"
+                    Margin="0,0,0,10"
+                    Click="PickFolderButton_Click"
+                    Content="Open a folder" />
+                <TextBlock
+                    x:Name="PickFolderOutputTextBlock"
+                    Padding="20,5,0,0"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+
+            <Button
+                x:Name="GuardarButton"
+                Width="150"
                 Height="40"
-                Content="Salir"
-                Style="{StaticResource AccentButtonStyle}" 
-                Click="ViewModel.SalirApp"
-                ClickMode="Press"/>
-                    </StackPanel>
+                Margin="{StaticResource LargeTopBottomMargin}"
+                Click="ShowDialog_Click"
+                ClickMode="Press"
+                Content="Guardar cambios"
+                Style="{StaticResource AccentButtonStyle}" />
+
+
+            <TextBlock
+                x:Uid="Settings_Salir"
+                Margin="{StaticResource LargeTopMargin}"
+                Style="{ThemeResource SubtitleTextBlockStyle}" />
+
+            <StackPanel
+                x:Name="grupoSalir"
+                Margin="{StaticResource SmallTopMargin}"
+                HorizontalAlignment="Left">
+                <Button
+                    Width="150"
+                    Height="40"
+                    Click="ViewModel.SalirApp"
+                    ClickMode="Press"
+                    Content="Salir"
+                    Style="{StaticResource AccentButtonStyle}" />
+            </StackPanel>
         </StackPanel>
+
     </Grid>
+
+
+
 </Page>
