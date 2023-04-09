@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -6,7 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 
 using Excalinest.Contracts.Services;
 using Excalinest.Helpers;
-
+using Excalinest.Services;
 using Microsoft.UI.Xaml;
 
 using Windows.ApplicationModel;
@@ -19,8 +20,12 @@ public class SettingsViewModel : ObservableRecipient
     private ElementTheme _elementTheme;
     private string _versionDescription;
 
+    private string RutaArchivoConfig = @"..\..\Excalinest\VideojuegosExcalinest\config.txt";
+
     public string _rutaArchivo;
-    public int _minutosInactividad;
+    public int _segundosInactividad;
+
+    ManejoArchivos _manejoArchivos = new ManejoArchivos();
 
     public ElementTheme ElementTheme
     {
@@ -76,17 +81,33 @@ public class SettingsViewModel : ObservableRecipient
 
     public void SalirApp(object sender, RoutedEventArgs e)
     {
-        Application.Current.Exit();
+        Microsoft.UI.Xaml.Application.Current.Exit();
     }
 
-    public void GetValues()
+    public bool GetValues()
     {
-        var RutaArchivoConfig = @"..\..\VideojuegosExcalinest\config.txt";
+        bool operacionExitosa = _manejoArchivos.LeerDeArchivoConfig(RutaArchivoConfig);
+        if (operacionExitosa)
+        {
+            _rutaArchivo = _manejoArchivos._rutaArchivoService;
+            _segundosInactividad = _manejoArchivos._segundosInactividadService;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
 
-        string[] lines = File.ReadAllLines(RutaArchivoConfig);
+    public bool GuardarDatos(string rutaSeleccionada, double tiempoSegundos)
+    {
+        int segundosInactividad = Convert.ToInt32(tiempoSegundos);
+        var contenido = Convert.ToString(tiempoSegundos) + Environment.NewLine + rutaSeleccionada;
 
-        _minutosInactividad = int.Parse(lines[0]);
-        _rutaArchivo = lines[1];
+        bool operacionExitosa = _manejoArchivos.EscribirEnArchivo(RutaArchivoConfig, contenido);
+
+        return operacionExitosa;
     }
 
 }

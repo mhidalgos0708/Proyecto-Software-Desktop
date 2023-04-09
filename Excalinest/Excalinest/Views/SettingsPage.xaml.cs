@@ -15,6 +15,7 @@ public sealed partial class SettingsPage : Page
 {
 
     private bool _carpetaValida = false;
+    private string _carpetaSeleccionada = "";
 
 
     public SettingsViewModel ViewModel
@@ -30,35 +31,26 @@ public sealed partial class SettingsPage : Page
         GetValues();
     }
 
-
-
     private async void PickFolderButton_Click(object sender, RoutedEventArgs e)
     {
-        // Clear previous returned file name, if it exists, between iterations of this scenario
         PickFolderOutputTextBlock.Text = "";
 
-        // Create a folder picker
         FolderPicker openPicker = new FolderPicker();
-
-        // Retrieve the window handle (HWND) of the current WinUI 3 window.
 
         var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
 
-
-        // Initialize the folder picker with the window handle (HWND).
         WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
 
-        // Set options for your folder picker
         openPicker.SuggestedStartLocation = PickerLocationId.Desktop;
         openPicker.FileTypeFilter.Add("*");
 
-        // Open the picker for the user to pick a folder
         StorageFolder folder = await openPicker.PickSingleFolderAsync();
         if (folder != null)
         {
             _carpetaValida = true;
             StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", folder);
             PickFolderOutputTextBlock.Text = "Carpeta seleccionada: " + folder.Path;
+            _carpetaSeleccionada = folder.Path;
         }
         else
         {
@@ -79,10 +71,14 @@ public sealed partial class SettingsPage : Page
         dialog.DefaultButton = ContentDialogButton.Primary;
 
 
-        if (_carpetaValida && NumberBoxMinutos.Value != null)
+        if (_carpetaValida && NumberBoxSegundos.Value >= 1)
         {
-            string message = "Los cambios se han guardado exitosamente";
-            dialog.Content = new SettingsDialogGuardarExitoso(message);
+            bool guardarExitoso = ViewModel.GuardarDatos(_carpetaSeleccionada, NumberBoxSegundos.Value);
+            if (guardarExitoso)
+            {
+                string message = "Los cambios se han guardado exitosamente";
+                dialog.Content = new SettingsDialogGuardarExitoso(message);
+            }
         }
         else
         {
@@ -96,10 +92,11 @@ public sealed partial class SettingsPage : Page
 
     private void GetValues()
     {
-        ViewModel.GetValues();
-        PickFolderOutputTextBlock.Text = "Carpeta seleccionada: " + ViewModel._rutaArchivo;
-        if(ViewModel._rutaArchivo != null)
+        bool result = ViewModel.GetValues();
+        if (result)
         {
+            PickFolderOutputTextBlock.Text = "Carpeta seleccionada: " + ViewModel._rutaArchivo;
+            _carpetaSeleccionada = ViewModel._rutaArchivo;
             _carpetaValida = true;
         }
         else

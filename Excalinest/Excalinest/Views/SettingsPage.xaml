@@ -20,18 +20,18 @@
             <TextBlock
                 Margin="{StaticResource LargeTopMargin}"
                 Style="{ThemeResource BaseTextBlockStyle}"
-                Text="Seleccione la cantidad de minutos de inactividad" />
+                Text="Seleccione la cantidad de segundos de inactividad" />
 
             <NumberBox
-                x:Name="NumberBoxMinutos"
-                Width="150"
+                x:Name="NumberBoxSegundos"
+                Width="180"
                 Margin="{StaticResource MediumTopMargin}"
                 HorizontalAlignment="Left"
                 LargeChange="1"
                 Minimum="1"
                 SmallChange="1"
                 SpinButtonPlacementMode="Inline"
-                Value="{x:Bind ViewModel._minutosInactividad}" />
+                Value="{x:Bind ViewModel._segundosInactividad}" />
 
             <TextBlock
                 Margin="{StaticResource LargeTopMargin}"
@@ -44,7 +44,7 @@
                 Orientation="Horizontal">
                 <Button
                     x:Name="PickFolderButton"
-                    Width="150"
+                    Width="180"
                     Margin="0,0,0,10"
                     Click="PickFolderButton_Click"
                     Content="Open a folder" />
@@ -56,7 +56,7 @@
 
             <Button
                 x:Name="GuardarButton"
-                Width="150"
+                Width="180"
                 Height="40"
                 Margin="{StaticResource LargeTopBottomMargin}"
                 Click="Guardar_Click"
@@ -75,7 +75,7 @@
                 Margin="{StaticResource SmallTopMargin}"
                 HorizontalAlignment="Left">
                 <Button
-                    Width="150"
+                    Width="180"
                     Height="40"
                     Click="ViewModel.SalirApp"
                     ClickMode="Press"
