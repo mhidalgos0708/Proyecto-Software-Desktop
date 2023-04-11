@@ -32,11 +32,13 @@
             x:Name="NavigationViewControl"
             Canvas.ZIndex="0"
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
+            PaneDisplayMode="LeftCompact"
             ExpandedModeThresholdWidth="1280"
             Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}"
             IsBackButtonVisible="Visible"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
             IsSettingsVisible="True"
+            IsPaneToggleButtonVisible="False"
             SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
             <NavigationView.MenuItems>
                 <!--
