@@ -33,9 +33,6 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
     public ObservableCollection<Tag> Tags { get; } = new ObservableCollection<Tag>();
 
 
-    public String path = @"C:/Excalinest/Videojuegos/";
-
-
     public VideogamesViewModel(INavigationService navigationService, ISampleDataService sampleDataService)
     {
         _navigationService = navigationService;
@@ -66,10 +63,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         var data = await _videojuegoService.GetVideojuegos();
         foreach (var item in data)
         {
-            if (Directory.Exists(path+item.Titulo))
-            {
-                Source.Add(item);
-            }
+            Source.Add(item);
         }
     }
 
@@ -95,10 +89,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
             var data = await _videojuegoService.GetVideojuegos();
             foreach (var item in data)
             {
-                if (Directory.Exists(path+item.Titulo))
-                {
-                    Source.Add(item);
-                }
+                Source.Add(item);
             }
         }
         else
@@ -108,10 +99,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
             var data = await _videojuegoService.GetVideojuegosByTagID(ID);
             foreach (var item in data)
             {
-                if (Directory.Exists(path+item.Titulo))
-                {
-                    Source.Add(item);
-                }
+                Source.Add(item);
             }
         }
     }
