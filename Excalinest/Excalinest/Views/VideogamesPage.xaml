@@ -18,13 +18,35 @@
 
             <ComboBox
                 Width="400"
+                Height="35"
                 DisplayMemberPath="Nombre"
                 ItemsSource="{x:Bind ViewModel.Tags}"
                 SelectedValuePath="Nombre"
                 SelectionChanged="TagComboBox_SelectionChanged" />
 
+            <Button
+                Margin="20,0,0,0"
+                Visibility="Collapsed"
+                Name="BotonDescargar"
+                Width="130"
+                Height="35"
+                Click="DescargarVideojuegos"
+                ClickMode="Press"
+                Style="{StaticResource AccentButtonStyle}"
+                HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon 
+                        HorizontalAlignment="Left"
+                        Symbol="Download" />
+                        <TextBlock 
+                        HorizontalAlignment="Right"
+                        Margin="10,0,0,0"
+                        Text="Descargar" />
+                    </StackPanel>
+            </Button>
         </StackPanel>
-
+        
+        
         <Grid x:Name="ContentArea">
             <controls:AdaptiveGridView
                 animations:Connected.ListItemElementName="itemThumbnail"
@@ -41,7 +63,7 @@
                         <Grid x:Name="itemThumbnail" Padding="{StaticResource XSmallLeftTopRightBottomMargin}" >
                             <!--Vista Administrador-->
                             <StackPanel
-                                Name="ZonaCheckBoxSeleccion"
+                                x:Name="ZonaCheckBoxSeleccion"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top">
                                 <Grid>
@@ -54,7 +76,13 @@
                                     </Grid.ColumnDefinitions>
 
                                     <SymbolIcon Symbol="Download" HorizontalAlignment="Left" Grid.Column="0"/>
-                                    <CheckBox IsChecked="False" HorizontalAlignment="Left" Grid.Column="1"/>
+                                    <CheckBox x:Name="CheckBoxSeleccion" 
+                                        IsChecked="False" 
+                                        HorizontalAlignment="Left" 
+                                        Grid.Column="1" 
+                                        Tag="{x:Bind}" 
+                                        Checked="CheckBoxSeleccion_Checked"
+                                        Unchecked="CheckBoxSeleccion_UnChecked"/>
                                 </Grid>
                             </StackPanel>
                             <!--Vista Administrador-->

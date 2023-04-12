@@ -1,15 +1,21 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
+using CommunityToolkit.WinUI.UI;
+using CommunityToolkit.WinUI.UI.Controls;
 using Excalinest.Contracts.Services;
 using Excalinest.Contracts.ViewModels;
 using Excalinest.Core.Contracts.Services;
 using Excalinest.Core.Models;
 using Excalinest.Core.Services;
+using Microsoft.Graph;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 
 namespace Excalinest.ViewModels;
 
@@ -17,7 +23,11 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
 {
     private readonly INavigationService _navigationService;
     private readonly ISampleDataService _sampleDataService;
-    public ServicioVideojuego _videojuegoService;
+    public static ServicioVideojuego _videojuegoService;
+
+    private static readonly string RutaJuego = @"..\..\VideojuegosExcalinest\";
+
+    private static List<Videojuego> _videojuegosSeleccionados;
 
     public ICommand ItemClickCommand
     {
@@ -32,6 +42,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         _navigationService = navigationService;
         _sampleDataService = sampleDataService;
         _videojuegoService = new ServicioVideojuego(new MongoConnection());
+        _videojuegosSeleccionados = new List<Videojuego>();
 
         ItemClickCommand = new RelayCommand<Videojuego>(OnItemClick);
     }
@@ -63,7 +74,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
 
     public void OnNavigatedFrom()
     {
-    }
+    } 
 
     private void OnItemClick(Videojuego? clickedItem)
     {
@@ -96,5 +107,37 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
                 Source.Add(item);
             }
         }
+    }
+
+
+    // Métodos de administración de lista de videojuegos seleccionados
+    public static void AgregarJuegoListaDescarga(Videojuego videojuego)
+    {
+        _videojuegosSeleccionados.Add(videojuego);
+    }
+
+    public static void QuitarJuegoListaDescarga(Videojuego videojuego)
+    {
+        _videojuegosSeleccionados.Remove(videojuego);
+    }
+
+    public static int CantidadVideojuegosSeleccionados()
+    {
+        return _videojuegosSeleccionados.Count;
+    }
+
+    public static async Task<bool> DescargarVideojuegos()
+    {
+        await Task.CompletedTask;
+        if (_videojuegoService != null)
+        {
+            foreach (var videojuego in _videojuegosSeleccionados)
+            {
+                var res = await _videojuegoService.DownloadVideojuego(RutaJuego, videojuego.Titulo + ".zip");
+                MessageBox.Show(res, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            return true;
+        }
+        return true;
     }
 }
