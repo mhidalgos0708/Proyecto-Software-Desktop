@@ -33,7 +33,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
     public ObservableCollection<Tag> Tags { get; } = new ObservableCollection<Tag>();
 
 
-    public String path = @"C:/Excalinest/Videojuegos/";
+    public String path = "";
 
 
     public MainViewModel(INavigationService navigationService, ISampleDataService sampleDataService)
@@ -61,6 +61,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
             Tags.Add(item);
         }
 
+        path = File.ReadLines(@"C:/Excalinest/VideojuegosExcalinest/config.txt").Last();
         
         // TODO: Replace with real data.
         var data = await _videojuegoService.GetVideojuegos();
@@ -68,7 +69,6 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         {
             if (Directory.Exists(path+item.Titulo))
             {
-                Debug.WriteLine("Anything");
                 Source.Add(item);
             }
         }
@@ -89,7 +89,8 @@ public class MainViewModel : ObservableRecipient, INavigationAware
 
     public async Task GetVideojuegosByTag(int ID)
     {
-        if(ID == -1)
+        path = File.ReadLines(@"C:/Excalinest/VideojuegosExcalinest/config.txt").Last();
+        if (ID == -1)
         {
             Source.Clear();
 

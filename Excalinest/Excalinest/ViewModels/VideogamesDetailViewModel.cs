@@ -33,7 +33,7 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
     {
         _sampleDataService = sampleDataService;
         servicioVideojuego = new ServicioVideojuego(new MongoConnection());
-        SegundosInactividad = 60;
+        SegundosInactividad = int.Parse(File.ReadLines(@"C:/Excalinest/VideojuegosExcalinest/config.txt").First());
     }
 
     public async void OnNavigatedTo(object parameter)
@@ -45,7 +45,7 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
                 Item = await servicioVideojuego.GetVideojuegoPorTitulo(titulo);
                 NombreVideojuego = Item.Titulo;
             }
-            RutaJuego = @"C:/Excalinest/Videojuegos/";
+            RutaJuego = @"C:/Excalinest/VideojuegosExcalinest/";
         }
     }
 
