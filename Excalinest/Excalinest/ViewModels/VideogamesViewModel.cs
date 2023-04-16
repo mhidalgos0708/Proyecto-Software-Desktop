@@ -138,7 +138,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
     }
 
     // Métodos para buscar videjuegos descargados
-    public static List<bool> BuscarVideojuego(ItemCollection videojuegos)
+    public static List<bool> BuscarVideojuegos(ItemCollection videojuegos)
     {
         var estanDescargados = new List<bool>();    
 
@@ -155,6 +155,11 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         }
 
         return estanDescargados;
+    }
+
+    public static bool BuscarVideojuego(Videojuego videojuego)
+    {
+        return Directory.Exists(RutaJuego + videojuego.Titulo);
     }
 
     public static async Task<bool> DescargarVideojuegos()

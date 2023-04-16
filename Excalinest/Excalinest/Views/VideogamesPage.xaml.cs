@@ -17,6 +17,9 @@ using Windows.Foundation.Collections;
 using static System.Net.Mime.MediaTypeNames;
 using CommunityToolkit.WinUI.UI;
 
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI;
+
 namespace Excalinest.Views;
 
 public sealed partial class VideogamesPage : Page
@@ -96,7 +99,6 @@ public sealed partial class VideogamesPage : Page
     // Quitar videojuego de lista de videojuegos por descargar al desactivar su respectiva casilla de selección múltiple
     public void CheckBoxSeleccion_UnChecked(object sender, RoutedEventArgs e)
     {
-        
         var checkbox = (CheckBox)sender;
         var videojuegoActual = (Videojuego)checkbox.Tag;
 
@@ -112,6 +114,7 @@ public sealed partial class VideogamesPage : Page
         }
     }
 
+    //Método para buscar elementos visuales de un contenedor generado por AdaptativeGridView
     private T? BuscarItemsVisuales<T>(DependencyObject elementoVisualPadre, string nombreElementoVisualHijo) where T : FrameworkElement
     {
         for (var i = 0; i < VisualTreeHelper.GetChildrenCount(elementoVisualPadre); i++) 
@@ -141,7 +144,7 @@ public sealed partial class VideogamesPage : Page
         // Desactivar checkboxes de juegos descargados
         var gridVideojuegos = FindName("GridVideojuegos") as AdaptiveGridView;
 
-        if(gridVideojuegos != null)
+        if (gridVideojuegos != null)
         {
             var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
 
@@ -149,53 +152,79 @@ public sealed partial class VideogamesPage : Page
             {
                 var contenedorVideojuego = gridVideojuegos.ContainerFromItem(videojuego);
 
-                if(contenedorVideojuego != null)
+                if (contenedorVideojuego != null)
                 {
                     var zonaCheckBoxSeleccion = BuscarItemsVisuales<StackPanel>(contenedorVideojuego, "ZonaCheckBoxSeleccion");
                     if (zonaCheckBoxSeleccion != null)
                     {
                         zonaCheckBoxSeleccion.Visibility = Visibility.Collapsed;
-                    }
-
-                    var descargado = BuscarItemsVisuales<SymbolIcon>(contenedorVideojuego, "Descargado");
-                    if (descargado != null)
-                    {
-                        descargado.Visibility = Visibility.Visible;
                     }
                 }
             }
         }
+
         VideogamesViewModel.LimpiarVideojuegosSeleccionados();
     }
 
-    // Mostrar el check si los videojuegos estan descargados
-    public void VideogamesPage_Loaded(object sender, RoutedEventArgs e)
+    private void CajaVideojuego_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
-        var gridVideojuegos = FindName("GridVideojuegos") as AdaptiveGridView;
+        var cajaVideojuego = (Border)sender;
 
-        if (gridVideojuegos != null)
+        cajaVideojuego.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 230, 230, 230));
+
+        // Mostrar CheckBox o signo de Check dependiendo de si esta descargado o no
+        var zonaCheckBoxSeleccion = cajaVideojuego.FindName("ZonaCheckBoxSeleccion") as StackPanel;
+
+        if (zonaCheckBoxSeleccion != null)
         {
-            var estanDescargados = VideogamesViewModel.BuscarVideojuego(gridVideojuegos.Items);
+            var estaDescargado = VideogamesViewModel.BuscarVideojuego((Videojuego)zonaCheckBoxSeleccion.Tag);
 
-            for(var i = 0; i < estanDescargados.Count; i++)
+            if (estaDescargado)
             {
-                var contenedorVideojuego = gridVideojuegos.ContainerFromIndex(i);
-
-                if (contenedorVideojuego != null && estanDescargados[i])
+                var descargado = cajaVideojuego.FindName("Descargado") as SymbolIcon;
+                if (descargado != null)
                 {
-                    var zonaCheckBoxSeleccion = BuscarItemsVisuales<StackPanel>(contenedorVideojuego, "ZonaCheckBoxSeleccion");
-                    if (zonaCheckBoxSeleccion != null)
-                    {
-                        zonaCheckBoxSeleccion.Visibility = Visibility.Collapsed;
-                    }
-
-                    var descargado = BuscarItemsVisuales<SymbolIcon>(contenedorVideojuego, "Descargado");
-                    if (descargado != null)
-                    {
-                        descargado.Visibility = Visibility.Visible;
-                    }
+                    descargado.Visibility = Visibility.Visible;
                 }
             }
-        } 
+            else
+            {
+                zonaCheckBoxSeleccion.Visibility = Visibility.Visible;
+            }
+        }
+    }
+
+    private void CajaVideojuego_PointerExited(object sender, PointerRoutedEventArgs e)
+    {
+        var cajaVideojuego = (Border)sender;
+
+        cajaVideojuego.Background = new SolidColorBrush(Colors.Transparent);
+
+        // Esconder CheckBox o signo de Check dependiendo de si esta descargado o no
+        var zonaCheckBoxSeleccion = cajaVideojuego.FindName("ZonaCheckBoxSeleccion") as StackPanel;
+
+        var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
+
+        if (zonaCheckBoxSeleccion != null)
+        {
+            var videojuego = (Videojuego) zonaCheckBoxSeleccion.Tag;
+            var estaDescargado = VideogamesViewModel.BuscarVideojuego(videojuego);
+
+            if (!videojuegosSeleccionados.Contains(videojuego))
+            {
+                if (estaDescargado)
+                {
+                    var descargado = cajaVideojuego.FindName("Descargado") as SymbolIcon;
+                    if (descargado != null)
+                    {
+                        descargado.Visibility = Visibility.Collapsed;
+                    }
+                }
+                else
+                {
+                    zonaCheckBoxSeleccion.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
     }
 }

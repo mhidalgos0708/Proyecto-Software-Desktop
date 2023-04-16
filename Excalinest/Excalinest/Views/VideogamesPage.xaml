@@ -7,8 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Excalinest.Core.Models"
-    mc:Ignorable="d"
-    Loaded="VideogamesPage_Loaded">
+    mc:Ignorable="d">
 
     <StackPanel>
         <StackPanel Margin="50" Orientation="Horizontal">
@@ -62,47 +61,51 @@
                 StretchContentForSingleRow="False">
                 <controls:AdaptiveGridView.ItemTemplate>
                     <DataTemplate x:DataType="models:Videojuego">
-                        <Grid x:Name="itemThumbnail" Padding="{StaticResource XSmallLeftTopRightBottomMargin}" >
-                            <!--Vista Administrador-->
-                            <StackPanel
+                        <Border Background="Transparent" PointerEntered="CajaVideojuego_PointerEntered" PointerExited="CajaVideojuego_PointerExited">
+                            <Grid x:Name="itemThumbnail" Padding="{StaticResource XSmallLeftTopRightBottomMargin}">
+                                <!--Vista Administrador-->
+                                <StackPanel
                                 x:Name="ZonaCheckBoxSeleccion"
                                 HorizontalAlignment="Left"
-                                VerticalAlignment="Top">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                                VerticalAlignment="Top"
+                                Visibility="Collapsed"
+                                Tag="{x:Bind}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
 
-                                    <SymbolIcon Symbol="Download" HorizontalAlignment="Left" Grid.Column="0"/>
-                                    
-                                    <CheckBox x:Name="CheckBoxSeleccion" 
+                                        <SymbolIcon Symbol="Download" HorizontalAlignment="Left" Grid.Column="0"/>
+
+                                        <CheckBox x:Name="CheckBoxSeleccion" 
                                         IsChecked="False" 
                                         HorizontalAlignment="Left" 
                                         Grid.Column="1" 
                                         Tag="{x:Bind}" 
                                         Checked="CheckBoxSeleccion_Checked"
                                         Unchecked="CheckBoxSeleccion_UnChecked"/>
-                                </Grid>
-                            </StackPanel>
-                            <SymbolIcon x:Name="Descargado" Symbol="Accept" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Collapsed"/>
-                            <!--Vista Administrador-->
-                            <StackPanel
+                                    </Grid>
+                                </StackPanel>
+                                <SymbolIcon x:Name="Descargado" Symbol="Accept" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Collapsed"/>
+                                <!--Vista Administrador-->
+                                <StackPanel
                                 Name="myStackPanel"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
-                                <!-- <FontIcon AutomationProperties.Name="{x:Bind Titulo}" FontSize="20" Glyph="{x:Bind Symbol}"  /> -->
-                                <TextBlock
+                                    <!-- <FontIcon AutomationProperties.Name="{x:Bind Titulo}" FontSize="20" Glyph="{x:Bind Symbol}"  /> -->
+                                    <TextBlock
                                     Margin="{StaticResource XXSmallTopMargin}"
                                     HorizontalAlignment="Center"
                                     FontSize="20"
                                     Style="{ThemeResource BodyTextStyle}"
-                                    Text="{x:Bind Titulo}" />
-                            </StackPanel>
-                        </Grid>
+                                    Text="{x:Bind Titulo}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </controls:AdaptiveGridView.ItemTemplate>
             </controls:AdaptiveGridView>
