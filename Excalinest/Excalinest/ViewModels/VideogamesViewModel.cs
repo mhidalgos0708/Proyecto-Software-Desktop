@@ -16,6 +16,7 @@ using Microsoft.Graph;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Directory = System.IO.Directory;
 
 namespace Excalinest.ViewModels;
 
@@ -124,6 +125,36 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
     public static int CantidadVideojuegosSeleccionados()
     {
         return _videojuegosSeleccionados.Count;
+    }
+
+    public static List<Videojuego> ObtenerVideojuegosSeleccionados()
+    {
+        return _videojuegosSeleccionados;
+    }
+
+    public static void LimpiarVideojuegosSeleccionados()
+    {
+        _videojuegosSeleccionados.Clear();
+    }
+
+    // Métodos para buscar videjuegos descargados
+    public static List<bool> BuscarVideojuego(ItemCollection videojuegos)
+    {
+        var estanDescargados = new List<bool>();    
+
+        foreach(var videojuego in videojuegos.Cast<Videojuego>()) 
+        {
+            if(Directory.Exists(RutaJuego + videojuego.Titulo))
+            {
+                estanDescargados.Add(true);
+            }
+            else
+            {
+                estanDescargados.Add(false);
+            }
+        }
+
+        return estanDescargados;
     }
 
     public static async Task<bool> DescargarVideojuegos()

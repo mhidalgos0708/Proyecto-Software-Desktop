@@ -12,6 +12,10 @@ using Microsoft.UI.Xaml.Media;
 using MessageBox = System.Windows.Forms.MessageBox;
 using MessageBoxButtons = System.Windows.Forms.MessageBoxButtons;
 using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;
+using CommunityToolkit.WinUI.UI.Controls;
+using Windows.Foundation.Collections;
+using static System.Net.Mime.MediaTypeNames;
+using CommunityToolkit.WinUI.UI;
 
 namespace Excalinest.Views;
 
@@ -108,8 +112,90 @@ public sealed partial class VideogamesPage : Page
         }
     }
 
+    private T? BuscarItemsVisuales<T>(DependencyObject elementoVisualPadre, string nombreElementoVisualHijo) where T : FrameworkElement
+    {
+        for (var i = 0; i < VisualTreeHelper.GetChildrenCount(elementoVisualPadre); i++) 
+        {
+            var elementoVisualHijo = VisualTreeHelper.GetChild(elementoVisualPadre, i); // Obtener el elemento visual hijo en la posición i
+            if (elementoVisualHijo is T hijoActual && hijoActual.Name == nombreElementoVisualHijo)
+            {
+                return hijoActual;
+            }
+
+            // Si el hijo actual no coincide con el nombre deseado, busca recursivamente en los hijos del elemento hijo actual
+            var result = BuscarItemsVisuales<T>(elementoVisualHijo, nombreElementoVisualHijo);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+
+        // Si no se encuentra el elemento visual deseado, se devuelve null
+        return null;
+    }
+
     public async void DescargarVideojuegos(object sender, RoutedEventArgs e)
     {
         await VideogamesViewModel.DescargarVideojuegos();
+
+        // Desactivar checkboxes de juegos descargados
+        var gridVideojuegos = FindName("GridVideojuegos") as AdaptiveGridView;
+
+        if(gridVideojuegos != null)
+        {
+            var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
+
+            foreach (var videojuego in videojuegosSeleccionados)
+            {
+                var contenedorVideojuego = gridVideojuegos.ContainerFromItem(videojuego);
+
+                if(contenedorVideojuego != null)
+                {
+                    var zonaCheckBoxSeleccion = BuscarItemsVisuales<StackPanel>(contenedorVideojuego, "ZonaCheckBoxSeleccion");
+                    if (zonaCheckBoxSeleccion != null)
+                    {
+                        zonaCheckBoxSeleccion.Visibility = Visibility.Collapsed;
+                    }
+
+                    var descargado = BuscarItemsVisuales<SymbolIcon>(contenedorVideojuego, "Descargado");
+                    if (descargado != null)
+                    {
+                        descargado.Visibility = Visibility.Visible;
+                    }
+                }
+            }
+        }
+        VideogamesViewModel.LimpiarVideojuegosSeleccionados();
+    }
+
+    // Mostrar el check si los videojuegos estan descargados
+    public void VideogamesPage_Loaded(object sender, RoutedEventArgs e)
+    {
+        var gridVideojuegos = FindName("GridVideojuegos") as AdaptiveGridView;
+
+        if (gridVideojuegos != null)
+        {
+            var estanDescargados = VideogamesViewModel.BuscarVideojuego(gridVideojuegos.Items);
+
+            for(var i = 0; i < estanDescargados.Count; i++)
+            {
+                var contenedorVideojuego = gridVideojuegos.ContainerFromIndex(i);
+
+                if (contenedorVideojuego != null && estanDescargados[i])
+                {
+                    var zonaCheckBoxSeleccion = BuscarItemsVisuales<StackPanel>(contenedorVideojuego, "ZonaCheckBoxSeleccion");
+                    if (zonaCheckBoxSeleccion != null)
+                    {
+                        zonaCheckBoxSeleccion.Visibility = Visibility.Collapsed;
+                    }
+
+                    var descargado = BuscarItemsVisuales<SymbolIcon>(contenedorVideojuego, "Descargado");
+                    if (descargado != null)
+                    {
+                        descargado.Visibility = Visibility.Visible;
+                    }
+                }
+            }
+        } 
     }
 }

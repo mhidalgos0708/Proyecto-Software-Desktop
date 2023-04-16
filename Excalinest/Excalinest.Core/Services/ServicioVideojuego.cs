@@ -89,12 +89,12 @@ public class ServicioVideojuego
             }
             catch (Exception ex)
             {
-                return ex.Message + "A";
+                return ex.Message;
             }
         }
         catch (Exception ex)
         {
-            return ex.Message + "B";
+            return ex.Message;
         }
     }
 }
