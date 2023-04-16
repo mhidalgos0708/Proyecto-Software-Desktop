@@ -23,6 +23,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
     private readonly INavigationService _navigationService;
     private readonly ISampleDataService _sampleDataService;
     public ServicioVideojuego _videojuegoService;
+    public ServicioEtiqueta _etiquetaService;
 
     public ICommand ItemClickCommand
     {
@@ -41,6 +42,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         _navigationService = navigationService;
         _sampleDataService = sampleDataService;
         _videojuegoService = new ServicioVideojuego(new MongoConnection());
+        _etiquetaService = new ServicioEtiqueta(new MongoConnection());
 
         ItemClickCommand = new RelayCommand<Videojuego>(OnItemClick);
     }
@@ -55,7 +57,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
 
         Tags.Add(defaultValue);
 
-        var tags = await _videojuegoService.GetTags();
+        var tags = await _etiquetaService.GetTags();
         foreach (var item in tags)
         {
             Tags.Add(item);

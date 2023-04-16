@@ -20,13 +20,7 @@ public class ServicioVideojuego
         collection_tags = database.GetCollection<Tag>("tags");
     }
 
-    public async Task<IEnumerable<Tag>> GetTags()
-    {
-        await Task.CompletedTask;
-        var filter = Builders<Tag>.Filter.Empty;
-        return collection_tags.Find(filter).ToList();
-
-    }
+    
     public async Task<IEnumerable<Videojuego>> GetVideojuegos()
     {
         await Task.CompletedTask;
