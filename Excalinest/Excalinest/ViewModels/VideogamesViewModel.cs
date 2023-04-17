@@ -29,7 +29,6 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
 {
     private readonly INavigationService _navigationService;
     private readonly ISampleDataService _sampleDataService;
-    public ServicioVideojuego _videojuegoService;
     public ServicioEtiqueta _etiquetaService;
     public static ServicioVideojuego _videojuegoService;
 
