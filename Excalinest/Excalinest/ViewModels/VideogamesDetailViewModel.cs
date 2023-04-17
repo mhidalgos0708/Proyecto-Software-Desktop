@@ -68,9 +68,16 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
                     .AsEnumerable()
                     .ToArray();
 
-            NotificadorTiempoInac = new PublisherTiempoInac(SegundosInactividad * 1000);
-            ObservadorTiempoInac = new SubscriberTiempoInac(VideojuegoEjecutable[0]);
-            NotificadorTiempoInac.Suscribirse(ObservadorTiempoInac);
+            if(VideojuegoEjecutable.Length > 0)
+            {
+                NotificadorTiempoInac = new PublisherTiempoInac(SegundosInactividad * 1000);
+                ObservadorTiempoInac = new SubscriberTiempoInac(VideojuegoEjecutable[0]);
+                NotificadorTiempoInac.Suscribirse(ObservadorTiempoInac);
+            }
+            else
+            {
+                throw new Exception("El archivo zip proporcionado no posee un videojuego ejecutable");
+            }
         }
         catch (Exception ex)
         {
