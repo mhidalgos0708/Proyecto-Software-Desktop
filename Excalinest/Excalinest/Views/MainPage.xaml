@@ -6,8 +6,12 @@
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:Excalinest.Core.Models"
+    xmlns:models="using:Excalinest.Core.Models" xmlns:local="using:Excalinest.Converters"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <local:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
+    </Page.Resources>
 
     <StackPanel>
         <StackPanel Margin="50" Orientation="Horizontal">
@@ -53,6 +57,12 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
                                 <!-- <FontIcon AutomationProperties.Name="{x:Bind Titulo}" FontSize="20" Glyph="{x:Bind Symbol}"  /> -->
+                                <Image
+                                    Name="Cover"
+                                    Width="180"
+                                    Height="Auto"
+                                    Source="{Binding Portada.Data, Converter={StaticResource ByteArrayToImageConverter}}"/>
+                                
                                 <TextBlock
                                     Margin="{StaticResource XXSmallTopMargin}"
                                     HorizontalAlignment="Center"
