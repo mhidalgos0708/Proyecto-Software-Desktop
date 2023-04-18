@@ -30,11 +30,6 @@ public sealed partial class VideogamesDetailPage : Page
         base.OnNavigatedTo(e);
         this.RegisterElementForConnectedAnimation("animationKeyContentGrid", itemHero);
 
-        GetImageCover();
-        GetImageFacebook();
-        GetImageInstagram();
-        GetImageTwitter();
-
         if (ViewModel.Item != null)
         {
             tagsList.ItemsSource = ViewModel.Item.Etiquetas;
@@ -56,58 +51,6 @@ public sealed partial class VideogamesDetailPage : Page
             {
                 executeGroup.Visibility = Visibility.Collapsed;
             }
-        }
-    }
-
-    private async void GetImageCover()
-    {
-        if (ViewModel.Item != null)
-        {
-            using var memoryStream = new MemoryStream(ViewModel.Item.Portada.Data);
-            var bitmapImage = new BitmapImage();
-            await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
-
-            var imageControl = new Image();
-            Cover.Source = bitmapImage;
-        }
-    }
-
-    private async void GetImageTwitter()
-    {
-        if (ViewModel.Item != null)
-        {
-            using var memoryStream = new MemoryStream(ViewModel.Item.Twitter.Data);
-            var bitmapImage = new BitmapImage();
-            await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
-
-            var imageControl = new Image();
-            Twitter.Source = bitmapImage;
-        }
-    }
-
-    private async void GetImageFacebook()
-    {
-        if (ViewModel.Item != null)
-        {
-            using var memoryStream = new MemoryStream(ViewModel.Item.Facebook.Data);
-            var bitmapImage = new BitmapImage();
-            await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
-
-            var imageControl = new Image();
-            Facebook.Source = bitmapImage;
-        }
-    }
-
-    private async void GetImageInstagram()
-    {
-        if (ViewModel.Item != null)
-        {
-            using var memoryStream = new MemoryStream(ViewModel.Item.Instagram.Data);
-            var bitmapImage = new BitmapImage();
-            await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
-
-            var imageControl = new Image();
-            Instagram.Source = bitmapImage;
         }
     }
 

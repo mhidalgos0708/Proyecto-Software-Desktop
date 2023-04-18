@@ -4,11 +4,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Excalinest.Converters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Excalinest.Core.Models"
     xmlns:viewmodels="using:Excalinest.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewmodels:VideogamesDetailViewModel}"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <local:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
+    </Page.Resources>
 
     <Grid x:Name="ContentArea">
         <ScrollViewer IsTabStop="True">
@@ -27,7 +32,8 @@
                         <Image
                             Name="Cover"
                             Width="Auto"
-                            Height="Auto" />
+                            Height="Auto"
+                            Source="{x:Bind ViewModel.Item.Portada.Data, Converter={StaticResource ByteArrayToImageConverter}}" />
                     </Grid>
 
                     <TextBlock
@@ -56,17 +62,15 @@
                             <Button
                                 Width="130"
                                 Height="40"
+                                HorizontalAlignment="Right"
                                 Click="DescargarVideojuego"
                                 ClickMode="Press"
-                                Style="{StaticResource AccentButtonStyle}"
-                                HorizontalAlignment="Right">
+                                Style="{StaticResource AccentButtonStyle}">
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon 
-                                        HorizontalAlignment="Left"
-                                        Symbol="Download" />
-                                    <TextBlock 
-                                        HorizontalAlignment="Right"
+                                    <SymbolIcon HorizontalAlignment="Left" Symbol="Download" />
+                                    <TextBlock
                                         Margin="10,0,0,0"
+                                        HorizontalAlignment="Right"
                                         Text="Descargar" />
                                 </StackPanel>
                             </Button>
@@ -80,35 +84,31 @@
                             <Button
                                 Width="130"
                                 Height="40"
+                                HorizontalAlignment="Left"
                                 Click="EjecutarVideojuego"
                                 ClickMode="Press"
-                                Style="{StaticResource AccentButtonStyle}"
-                                HorizontalAlignment="Left">
+                                Style="{StaticResource AccentButtonStyle}">
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon 
-                                        HorizontalAlignment="Left"
-                                        Symbol="Play" />
-                                    <TextBlock 
-                                        HorizontalAlignment="Right"
+                                    <SymbolIcon HorizontalAlignment="Left" Symbol="Play" />
+                                    <TextBlock
                                         Margin="10,0,0,0"
+                                        HorizontalAlignment="Right"
                                         Text="Ejecutar" />
                                 </StackPanel>
                             </Button>
                             <Button
                                 Width="130"
                                 Height="40"
+                                Margin="15,0,0,0"
+                                HorizontalAlignment="Right"
                                 Click="EliminarVideojuego"
                                 ClickMode="Press"
-                                Style="{StaticResource AccentButtonStyle}"
-                                HorizontalAlignment="Right"
-                                Margin="15,0,0,0">
+                                Style="{StaticResource AccentButtonStyle}">
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon 
-                                        HorizontalAlignment="Left"
-                                        Symbol="Delete" />
-                                    <TextBlock 
-                                        HorizontalAlignment="Right"
+                                    <SymbolIcon HorizontalAlignment="Left" Symbol="Delete" />
+                                    <TextBlock
                                         Margin="10,0,0,0"
+                                        HorizontalAlignment="Right"
                                         Text="Eliminar" />
                                 </StackPanel>
                             </Button>
@@ -177,7 +177,8 @@
                         <Image
                             Name="Facebook"
                             Width="200"
-                            Height="200" />
+                            Height="200"
+                            Source="{x:Bind ViewModel.Item.Facebook.Data, Converter={StaticResource ByteArrayToImageConverter}}" />
                     </StackPanel>
 
                     <StackPanel x:Name="igGroup" Margin="{StaticResource SmallTopMargin}">
@@ -188,7 +189,8 @@
                         <Image
                             Name="Instagram"
                             Width="200"
-                            Height="200" />
+                            Height="200"
+                            Source="{x:Bind ViewModel.Item.Instagram.Data, Converter={StaticResource ByteArrayToImageConverter}}" />
                     </StackPanel>
 
                     <StackPanel x:Name="twitterGroup" Margin="{StaticResource SmallTopMargin}">
@@ -199,7 +201,8 @@
                         <Image
                             Name="Twitter"
                             Width="200"
-                            Height="200" />
+                            Height="200"
+                            Source="{x:Bind ViewModel.Item.Twitter.Data, Converter={StaticResource ByteArrayToImageConverter}}" />
                     </StackPanel>
 
                 </StackPanel>
