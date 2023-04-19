@@ -11,6 +11,7 @@ using Excalinest.Contracts.ViewModels;
 using Excalinest.Core.Contracts.Services;
 using Excalinest.Core.Models;
 using Excalinest.Core.Services;
+using Excalinest.Services;
 using Excalinest.Views;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.UI.Xaml.Controls;
@@ -24,6 +25,8 @@ public class MainViewModel : ObservableRecipient, INavigationAware
     private readonly ISampleDataService _sampleDataService;
     public ServicioVideojuego _videojuegoService;
     public ServicioEtiqueta _etiquetaService;
+
+    ManejoArchivos _manejoArchivos = new ManejoArchivos();
 
     public ICommand ItemClickCommand
     {
@@ -63,7 +66,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
             Tags.Add(item);
         }
 
-        path = File.ReadLines(@"C:/Excalinest/VideojuegosExcalinest/config.txt").Last();
+        path = _manejoArchivos.leerRutaArchivos();
         
         // TODO: Replace with real data.
         var data = await _videojuegoService.GetVideojuegos();
@@ -91,7 +94,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
 
     public async Task GetVideojuegosByTag(int ID)
     {
-        path = File.ReadLines(@"C:/Excalinest/VideojuegosExcalinest/config.txt").Last();
+        path =  _manejoArchivos.leerRutaArchivos(); ;
         if (ID == -1)
         {
             Source.Clear();

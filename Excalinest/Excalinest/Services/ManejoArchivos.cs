@@ -44,4 +44,30 @@ internal class ManejoArchivos
             return false;
         }
     }
+
+    public int leerSegundosInactividad()
+    {
+        try
+        {
+            return int.Parse(File.ReadLines(@"C:/Excalinest/VideojuegosExcalinest/config.txt").First());
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return 0;
+        }
+    }
+
+    public String leerRutaArchivos()
+    {
+        try
+        {
+            return File.ReadLines(@"C:/Excalinest/VideojuegosExcalinest/config.txt").Last();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return "";
+        }
+    }
 }

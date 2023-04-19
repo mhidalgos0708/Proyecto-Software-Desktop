@@ -6,6 +6,7 @@ using Excalinest.Core.Contracts.Services;
 using Excalinest.Core.Models;
 using Excalinest.Core.Services;
 using Excalinest.PatronesDiseño.ObserverTiempoInac;
+using Excalinest.Services;
 
 namespace Excalinest.ViewModels;
 
@@ -23,6 +24,8 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
     private static int SegundosInactividad = 0;
     private static string RutaJuego = "";
 
+    ManejoArchivos _manejoArchivos = new ManejoArchivos();
+
     public Videojuego? Item
     {
         get => _item;
@@ -33,7 +36,7 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
     {
         _sampleDataService = sampleDataService;
         servicioVideojuego = new ServicioVideojuego(new MongoConnection());
-        SegundosInactividad = int.Parse(File.ReadLines(@"C:/Excalinest/VideojuegosExcalinest/config.txt").First());
+        SegundosInactividad = _manejoArchivos.leerSegundosInactividad();
     }
 
     public async void OnNavigatedTo(object parameter)
@@ -45,7 +48,7 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
                 Item = await servicioVideojuego.GetVideojuegoPorTitulo(titulo);
                 NombreVideojuego = Item.Titulo;
             }
-            RutaJuego = File.ReadLines(@"C:/Excalinest/VideojuegosExcalinest/config.txt").Last();
+            RutaJuego = _manejoArchivos.leerRutaArchivos();
         }
     }
 
