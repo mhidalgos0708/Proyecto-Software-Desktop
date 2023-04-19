@@ -32,13 +32,13 @@
             x:Name="NavigationViewControl"
             Canvas.ZIndex="0"
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
-            PaneDisplayMode="LeftCompact"
             ExpandedModeThresholdWidth="1280"
             Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}"
             IsBackButtonVisible="Visible"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
-            IsSettingsVisible="True"
             IsPaneToggleButtonVisible="False"
+            IsSettingsVisible="True"
+            PaneDisplayMode="LeftCompact"
             SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
             <NavigationView.MenuItems>
                 <!--
@@ -50,7 +50,7 @@
                 -->
                 <NavigationViewItem x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="Excalinest.ViewModels.MainViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;" />
+                        <FontIcon Glyph="&#xE80F;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem x:Uid="Shell_Videogames" helpers:NavigationHelper.NavigateTo="Excalinest.ViewModels.VideogamesViewModel">
