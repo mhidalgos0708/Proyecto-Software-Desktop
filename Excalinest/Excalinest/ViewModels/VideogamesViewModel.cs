@@ -23,6 +23,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
     private readonly ISampleDataService _sampleDataService;
     public ServicioEtiqueta _etiquetaService;
     public static ServicioVideojuego _videojuegoService;
+    public static ServicioVideojuegoEtiqueta _videojuegoEtiquetaService;
 
     private static readonly string RutaJuego = File.ReadLines(@"C:/Excalinest/VideojuegosExcalinest/config.txt").Last();
 
@@ -43,6 +44,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         _videojuegoService = new ServicioVideojuego(new MongoConnection());
         _etiquetaService = new ServicioEtiqueta(new MongoConnection());
         _videojuegosSeleccionados = new List<Videojuego>();
+        _videojuegoEtiquetaService = new ServicioVideojuegoEtiqueta(new MongoConnection());
 
         ItemClickCommand = new RelayCommand<Videojuego>(OnItemClick);
     }
@@ -101,7 +103,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         {
             Source.Clear();
 
-            var data = await _videojuegoService.GetVideojuegosByTagID(ID);
+            var data = await _videojuegoEtiquetaService.GetVideojuegosByTagId(ID);
             foreach (var item in data)
             {
                 Source.Add(item);
