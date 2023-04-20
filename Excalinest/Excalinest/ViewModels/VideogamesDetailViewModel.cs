@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Diagnostics;
+using System.Windows.Forms;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 using Excalinest.Contracts.ViewModels;
@@ -9,12 +10,15 @@ using Excalinest.PatronesDiseño.ObserverTiempoInac;
 using Excalinest.Services;
 
 namespace Excalinest.ViewModels;
+using Tag = Excalinest.Core.Models.Tag;
 
 public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
 {
     private readonly ISampleDataService _sampleDataService;
     private static ServicioVideojuego? servicioVideojuego;
+    private static ServicioVideojuegoEtiqueta _servicioVideojuegoEtiqueta;
     private Videojuego? _item;
+    public List<Tag> _listaEtiquetas;
 
     private static PublisherTiempoInac? NotificadorTiempoInac;
     private static ISubscriberTiempoInac? ObservadorTiempoInac;
@@ -37,16 +41,26 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
         _sampleDataService = sampleDataService;
         servicioVideojuego = new ServicioVideojuego(new MongoConnection());
         SegundosInactividad = _manejoArchivos.leerSegundosInactividad();
+        _servicioVideojuegoEtiqueta = new ServicioVideojuegoEtiqueta(new MongoConnection());
+
+        _listaEtiquetas = new List<Tag>();
     }
 
     public async void OnNavigatedTo(object parameter)
     {
+        _listaEtiquetas.Clear();
         if (parameter is string titulo)
         {
             if (servicioVideojuego != null)
             {
                 Item = await servicioVideojuego.GetVideojuegoPorTitulo(titulo);
                 NombreVideojuego = Item.Titulo;
+
+                var data = await _servicioVideojuegoEtiqueta.GetEtiquetasByVideojuego(Item.ID);
+                foreach (var item in data)
+                {
+                    _listaEtiquetas.Add(item);
+                }
             }
             RutaJuego = _manejoArchivos.leerRutaArchivos();
         }
