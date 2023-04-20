@@ -16,9 +16,9 @@
     <StackPanel>
         <StackPanel Margin="50" Orientation="Horizontal">
             <TextBlock
-                Width="200"
+                Width="250"
                 FontSize="14"
-                Text="Seleccione un tag" />
+                Text="Seleccione un filtro por etiqueta" />
 
             <ComboBox
                 Width="400"
