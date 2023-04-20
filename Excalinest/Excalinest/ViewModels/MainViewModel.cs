@@ -25,6 +25,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
     private readonly ISampleDataService _sampleDataService;
     public ServicioVideojuego _videojuegoService;
     public ServicioEtiqueta _etiquetaService;
+    public ServicioVideojuegoEtiqueta _videojuegoEtiquetaService;
 
     ManejoArchivos _manejoArchivos = new ManejoArchivos();
 
@@ -46,6 +47,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         _sampleDataService = sampleDataService;
         _videojuegoService = new ServicioVideojuego(new MongoConnection());
         _etiquetaService = new ServicioEtiqueta(new MongoConnection());
+        _videojuegoEtiquetaService = new ServicioVideojuegoEtiqueta(new MongoConnection());
 
         ItemClickCommand = new RelayCommand<Videojuego>(OnItemClick);
     }
@@ -112,7 +114,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         {
             Source.Clear();
 
-            var data = await _videojuegoService.GetVideojuegosByTagID(ID);
+            var data = await _videojuegoEtiquetaService.GetVideojuegosByTagId(ID);
             foreach (var item in data)
             {
                 if (Directory.Exists(path+item.Titulo))
