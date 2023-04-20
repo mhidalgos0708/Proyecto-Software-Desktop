@@ -14,6 +14,26 @@ internal class ManejoArchivos
     public string _rutaArchivoService;
     public int _segundosInactividadService;
 
+    public ManejoArchivos()
+    {
+        if (!Directory.Exists(@"C:/Excalinest/"))
+        {
+            Directory.CreateDirectory(@"C:/Excalinest/");
+        }
+        if (!Directory.Exists(@"C:/Excalinest/VideojuegosExcalinest"))
+        {
+            Directory.CreateDirectory(@"C:/Excalinest/VideojuegosExcalinest");
+        }
+        if (!File.Exists(_archivoConfigRuta))
+        {
+            using (StreamWriter sw = File.CreateText(_archivoConfigRuta))
+            {
+                sw.WriteLine(10);
+                sw.WriteLine(@"C:/Excalinest/VideojuegosExcalinest/");
+            }
+        }
+    }
+
     public bool EscribirEnArchivo(string rutaArchivoConfig, string contenido)
     {
         try
@@ -37,21 +57,11 @@ internal class ManejoArchivos
     {
         try
         {
-            if(File.Exists(rutaArchivoConfig))
-            {
-                string[] lines = File.ReadAllLines(rutaArchivoConfig);
+            string[] lines = File.ReadAllLines(rutaArchivoConfig);
 
-                _segundosInactividadService = int.Parse(lines[0]);
-                _rutaArchivoService = lines[1];
-                return true;
-            }
-
-            else
-            {
-                _segundosInactividadService = 0;
-                _rutaArchivoService = "";
-                return false;
-            }
+            _segundosInactividadService = int.Parse(lines[0]);
+            _rutaArchivoService = lines[1];
+            return true;
             
         }
         catch (Exception ex)
@@ -63,53 +73,11 @@ internal class ManejoArchivos
 
     public int leerSegundosInactividad()
     {
-        try
-        {
-            if (File.Exists(_archivoConfigRuta))
-            {
-                return int.Parse(File.ReadLines(_archivoConfigRuta).First());
-            }
-            else
-            {
-                using (StreamWriter sw = File.CreateText(_archivoConfigRuta))
-                {
-                    sw.WriteLine(10);
-                    sw.WriteLine(@"C:/Excalinest/VideojuegosExcalinest/");
-                }
-                return 0;
-            }
-            
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return 0;
-        }
+        return int.Parse(File.ReadLines(_archivoConfigRuta).First());
     }
 
     public String leerRutaArchivos()
     {
-        try
-        {
-            if (File.Exists(_archivoConfigRuta))
-            {
-                return File.ReadLines(_archivoConfigRuta).Last();
-            }
-            else
-            {
-                using (StreamWriter sw = File.CreateText(_archivoConfigRuta))
-                {
-                    sw.WriteLine(10);
-                    sw.WriteLine(@"C:/Excalinest/VideojuegosExcalinest/");
-                }
-                return "";
-            }
-            
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return "";
-        }
+        return File.ReadLines(_archivoConfigRuta).Last();
     }
 }
