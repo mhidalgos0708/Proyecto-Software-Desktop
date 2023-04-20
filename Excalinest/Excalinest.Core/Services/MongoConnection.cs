@@ -21,7 +21,8 @@ public class MongoConnection
     // Conexión a mongo funcionando correctamente
     public MongoConnection()
     {
-        settings = MongoClientSettings.FromConnectionString("mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/?retryWrites=true&w=majority");
+        settings = MongoClientSettings.FromConnectionString("mongodb://aketech:ake123@140.84.184.137:27017/ExcalinestDB");
+        //settings = MongoClientSettings.FromConnectionString("mongodb+srv://excalinest:AcWqA5Ez6LNGUiKF@excalinestcluster.auytmua.mongodb.net/?retryWrites=true&w=majority");
         client = new MongoClient(settings);
         database = client.GetDatabase("ExcalinestDB");
     }
