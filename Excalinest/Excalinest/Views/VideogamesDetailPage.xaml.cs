@@ -32,7 +32,7 @@ public sealed partial class VideogamesDetailPage : Page
 
         if (ViewModel.Item != null)
         {
-            tagsList.ItemsSource = ViewModel.Item.Etiquetas;
+            tagsList.ItemsSource = ViewModel._listaEtiquetas;
         }
         
         var downloadGroup = FindName("downloadGroup") as StackPanel;
