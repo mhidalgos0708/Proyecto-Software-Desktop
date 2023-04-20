@@ -10,7 +10,7 @@ namespace Excalinest.Services;
 
 internal class ManejoArchivos
 {
-
+    public string _archivoConfigRuta = @"C:/Excalinest/VideojuegosExcalinest/config.txt";
     public string _rutaArchivoService;
     public int _segundosInactividadService;
 
@@ -18,8 +18,13 @@ internal class ManejoArchivos
     {
         try
         {
-            File.WriteAllText(rutaArchivoConfig, contenido);
-            return true;
+            if (File.Exists(rutaArchivoConfig))
+            {
+                File.WriteAllText(rutaArchivoConfig, contenido);
+                return true;
+            }
+            return false;
+            
         }
         catch (Exception ex)
         {
@@ -32,11 +37,22 @@ internal class ManejoArchivos
     {
         try
         {
-            string[] lines = File.ReadAllLines(rutaArchivoConfig);
+            if(File.Exists(rutaArchivoConfig))
+            {
+                string[] lines = File.ReadAllLines(rutaArchivoConfig);
 
-            _segundosInactividadService = int.Parse(lines[0]);
-            _rutaArchivoService = lines[1];
-            return true;
+                _segundosInactividadService = int.Parse(lines[0]);
+                _rutaArchivoService = lines[1];
+                return true;
+            }
+
+            else
+            {
+                _segundosInactividadService = 0;
+                _rutaArchivoService = "";
+                return false;
+            }
+            
         }
         catch (Exception ex)
         {
@@ -49,7 +65,20 @@ internal class ManejoArchivos
     {
         try
         {
-            return int.Parse(File.ReadLines(@"C:/Excalinest/VideojuegosExcalinest/config.txt").First());
+            if (File.Exists(_archivoConfigRuta))
+            {
+                return int.Parse(File.ReadLines(_archivoConfigRuta).First());
+            }
+            else
+            {
+                using (StreamWriter sw = File.CreateText(_archivoConfigRuta))
+                {
+                    sw.WriteLine(10);
+                    sw.WriteLine(@"C:/Excalinest/VideojuegosExcalinest/");
+                }
+                return 0;
+            }
+            
         }
         catch (Exception ex)
         {
@@ -62,7 +91,20 @@ internal class ManejoArchivos
     {
         try
         {
-            return File.ReadLines(@"C:/Excalinest/VideojuegosExcalinest/config.txt").Last();
+            if (File.Exists(_archivoConfigRuta))
+            {
+                return File.ReadLines(_archivoConfigRuta).Last();
+            }
+            else
+            {
+                using (StreamWriter sw = File.CreateText(_archivoConfigRuta))
+                {
+                    sw.WriteLine(10);
+                    sw.WriteLine(@"C:/Excalinest/VideojuegosExcalinest/");
+                }
+                return "";
+            }
+            
         }
         catch (Exception ex)
         {

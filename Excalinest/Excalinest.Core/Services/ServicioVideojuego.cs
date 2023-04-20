@@ -12,13 +12,11 @@ public class ServicioVideojuego
 {
     public readonly IMongoDatabase database;
     private readonly IMongoCollection<Videojuego> collection;
-    private readonly IMongoCollection<Tag> collection_tags;
 
     public ServicioVideojuego(MongoConnection mongoConnection)
     {
         database = mongoConnection.database;
         collection = database.GetCollection<Videojuego>("videogames");
-        collection_tags = database.GetCollection<Tag>("tags");
     }
 
     
