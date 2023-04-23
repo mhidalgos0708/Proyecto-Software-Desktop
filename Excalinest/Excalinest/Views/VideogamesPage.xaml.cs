@@ -152,7 +152,7 @@ public sealed partial class VideogamesPage : Page
 
             if (estaDescargado)
             {
-                var descargado = cajaVideojuego.FindName("Descargado") as SymbolIcon;
+                var descargado = cajaVideojuego.FindName("Descargado") as StackPanel;
                 if (descargado != null)
                 {
                     descargado.Visibility = Visibility.Visible;
@@ -185,7 +185,7 @@ public sealed partial class VideogamesPage : Page
             {
                 if (estaDescargado)
                 {
-                    var descargado = cajaVideojuego.FindName("Descargado") as SymbolIcon;
+                    var descargado = cajaVideojuego.FindName("Descargado") as StackPanel;
                     if (descargado != null)
                     {
                         descargado.Visibility = Visibility.Collapsed;

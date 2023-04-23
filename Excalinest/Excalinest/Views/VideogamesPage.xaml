@@ -99,7 +99,7 @@
                                     VerticalAlignment="Top"
                                     Visibility="Collapsed"
                                     Tag="{x:Bind}">
-                                    <Grid Background="#C8FFFFFF" CornerRadius="10">
+                                    <Grid Background="#C8C0C0C0" CornerRadius="10">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
@@ -125,15 +125,7 @@
                                     VerticalAlignment="Top"
                                     Visibility="Collapsed"
                                     Tag="{x:Bind}">
-                                    <Grid Background="#C8FFFFFF" CornerRadius="10">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
+                                    <Grid Background="#C8CCCCCC" CornerRadius="4">
                                         <SymbolIcon Symbol="Accept" HorizontalAlignment="Left" Grid.Column="0"/>
                                     </Grid>
                                 </StackPanel>
