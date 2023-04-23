@@ -22,6 +22,7 @@
     <EmbeddedResource Remove="Properties\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Views\LoadingBar.xaml" />
     <None Remove="Views\SettingsDialogGuardarExitoso.xaml" />
     <None Remove="Views\TestPage.xaml" />
   </ItemGroup>
@@ -50,6 +51,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\LoadingBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\SettingsDialogGuardarExitoso.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
