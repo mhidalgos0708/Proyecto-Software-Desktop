@@ -58,7 +58,7 @@
                 Visibility="Collapsed"
                 Style="{ThemeResource BodyTextStyle}"
                 Text= "No se han encontrado videojuegos" />
-        
+
         <Grid x:Name="ContentArea">
             <controls:AdaptiveGridView
                 x:Name="GridVideojuegos"
@@ -75,14 +75,57 @@
                     <DataTemplate x:DataType="models:Videojuego">
                         <Border Background="Transparent" PointerEntered="CajaVideojuego_PointerEntered" PointerExited="CajaVideojuego_PointerExited">
                             <Grid x:Name="itemThumbnail" Padding="{StaticResource XSmallLeftTopRightBottomMargin}">
-                                <!--Vista Administrador-->
                                 <StackPanel
-                                x:Name="ZonaCheckBoxSeleccion"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Visibility="Collapsed"
-                                Tag="{x:Bind}">
-                                    <Grid>
+                                    Name="myStackPanel"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Width="180"
+                                    Height="Auto">
+                                    <!-- <FontIcon AutomationProperties.Name="{x:Bind Titulo}" FontSize="20" Glyph="{x:Bind Symbol}"  /> -->
+                                    <Image
+                                        Name="Cover"
+                                        Source="{Binding Portada.Data, Converter={StaticResource ByteArrayToImageConverter}}"/>
+
+                                    <TextBlock
+                                        Margin="{StaticResource XXSmallTopMargin}"
+                                        HorizontalAlignment="Center"
+                                        FontSize="20"
+                                        Style="{ThemeResource BodyTextStyle}"
+                                        Text="{x:Bind Titulo}"/>
+                                </StackPanel>
+                                <StackPanel
+                                    x:Name="ZonaCheckBoxSeleccion"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Visibility="Collapsed"
+                                    Tag="{x:Bind}">
+                                    <Grid Background="#C8FFFFFF" CornerRadius="10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="25" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <SymbolIcon Symbol="Download" HorizontalAlignment="Left" Grid.Column="0"/>
+
+                                        <CheckBox x:Name="CheckBoxSeleccion" 
+                                            IsChecked="False" 
+                                            HorizontalAlignment="Left" 
+                                            Grid.Column="1" 
+                                            Tag="{x:Bind}" 
+                                            Checked="CheckBoxSeleccion_Checked"
+                                            Unchecked="CheckBoxSeleccion_UnChecked"/>
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel
+                                    x:Name="Descargado"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Visibility="Collapsed"
+                                    Tag="{x:Bind}">
+                                    <Grid Background="#C8FFFFFF" CornerRadius="10">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
@@ -91,36 +134,8 @@
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
 
-                                        <SymbolIcon Symbol="Download" HorizontalAlignment="Left" Grid.Column="0"/>
-
-                                        <CheckBox x:Name="CheckBoxSeleccion" 
-                                        IsChecked="False" 
-                                        HorizontalAlignment="Left" 
-                                        Grid.Column="1" 
-                                        Tag="{x:Bind}" 
-                                        Checked="CheckBoxSeleccion_Checked"
-                                        Unchecked="CheckBoxSeleccion_UnChecked"/>
+                                        <SymbolIcon Symbol="Accept" HorizontalAlignment="Left" Grid.Column="0"/>
                                     </Grid>
-                                </StackPanel>
-                                <SymbolIcon x:Name="Descargado" Symbol="Accept" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Collapsed"/>
-                                <!--Vista Administrador-->
-                                <StackPanel
-                                Name="myStackPanel"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
-                                    <!-- <FontIcon AutomationProperties.Name="{x:Bind Titulo}" FontSize="20" Glyph="{x:Bind Symbol}"  /> -->
-                                    <Image
-                                    Name="Cover"
-                                    Width="180"
-                                    Height="Auto"
-                                    Source="{Binding Portada.Data, Converter={StaticResource ByteArrayToImageConverter}}"/>
-
-                                    <TextBlock
-                                    Margin="{StaticResource XXSmallTopMargin}"
-                                    HorizontalAlignment="Center"
-                                    FontSize="20"
-                                    Style="{ThemeResource BodyTextStyle}"
-                                    Text="{x:Bind Titulo}"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
