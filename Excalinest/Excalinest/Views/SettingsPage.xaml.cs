@@ -73,7 +73,7 @@ public sealed partial class SettingsPage : Page
 
         if (_carpetaValida && NumberBoxSegundos.Value >= 1)
         {
-            bool guardarExitoso = ViewModel.GuardarDatos(_carpetaSeleccionada, NumberBoxSegundos.Value);
+            bool guardarExitoso = ViewModel.GuardarDatos(_carpetaSeleccionada + "/", NumberBoxSegundos.Value);
             if (guardarExitoso)
             {
                 string message = "Los cambios se han guardado exitosamente";
