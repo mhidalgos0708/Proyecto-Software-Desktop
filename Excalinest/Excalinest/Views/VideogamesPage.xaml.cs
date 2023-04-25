@@ -42,12 +42,48 @@ public sealed partial class VideogamesPage : Page
         // taglist.ItemsSource = ViewModel.Tags;
     }
 
+    public void DesactivarCheckboxes(List<Videojuego> videojuegos)
+    {
+        var gridVideojuegos = FindName("GridVideojuegos") as AdaptiveGridView;
+
+        if (gridVideojuegos != null)
+        {
+            foreach (var videojuego in videojuegos)
+            {
+                var contenedorVideojuego = gridVideojuegos.ContainerFromItem(videojuego);
+
+                if (contenedorVideojuego != null)
+                {
+                    var zonaCheckBoxSeleccion = BuscarItemsVisuales<StackPanel>(contenedorVideojuego, "ZonaCheckBoxSeleccion");
+                    if (zonaCheckBoxSeleccion != null)
+                    {
+                        zonaCheckBoxSeleccion.Visibility = Visibility.Collapsed;
+                    }
+                }
+            }
+        }
+
+        VideogamesViewModel.LimpiarVideojuegosSeleccionados();
+    }
+
     public async void TagComboBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
     {
         ComboBox tag = (ComboBox)sender;
         Tag chosenTag = tag.SelectedItem as Tag;
         
         await ViewModel.GetVideojuegosByTag(chosenTag.ID);
+
+        // Limpiar selección de videojuegos al filtrar por etiqueta
+
+        var botonDescargar = FindName("BotonDescargar") as Button;
+        if (botonDescargar != null)
+        {
+            botonDescargar.Visibility = Visibility.Collapsed;
+        }
+
+        var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
+
+        DesactivarCheckboxes(videojuegosSeleccionados);
     }
 
     // Agregar videojuego a lista de videojuegos por descargar al activar su respectiva casilla de selección múltiple
@@ -113,28 +149,10 @@ public sealed partial class VideogamesPage : Page
         await VideogamesViewModel.DescargarVideojuegos();
 
         // Desactivar checkboxes de juegos descargados
-        var gridVideojuegos = FindName("GridVideojuegos") as AdaptiveGridView;
+        
+        var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
 
-        if (gridVideojuegos != null)
-        {
-            var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
-
-            foreach (var videojuego in videojuegosSeleccionados)
-            {
-                var contenedorVideojuego = gridVideojuegos.ContainerFromItem(videojuego);
-
-                if (contenedorVideojuego != null)
-                {
-                    var zonaCheckBoxSeleccion = BuscarItemsVisuales<StackPanel>(contenedorVideojuego, "ZonaCheckBoxSeleccion");
-                    if (zonaCheckBoxSeleccion != null)
-                    {
-                        zonaCheckBoxSeleccion.Visibility = Visibility.Collapsed;
-                    }
-                }
-            }
-        }
-
-        VideogamesViewModel.LimpiarVideojuegosSeleccionados();
+        DesactivarCheckboxes(videojuegosSeleccionados);
     }
 
     private void CajaVideojuego_PointerEntered(object sender, PointerRoutedEventArgs e)
