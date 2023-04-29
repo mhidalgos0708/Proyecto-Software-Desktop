@@ -74,6 +74,16 @@
                                         Text="Descargar" />
                                 </StackPanel>
                             </Button>
+                            <StackPanel x:Name="LayoutRoot">
+                                <StackPanel BorderBrush="Black" BorderThickness="4" Padding="12">
+                                    <TextBlock Text="Value-Based Progress Bar"/>
+                                    <ProgressBar x:Name="progressBar1" Value="0" Maximum="200" Margin="0,12"/>
+                                </StackPanel>
+                                <StackPanel BorderThickness="4" BorderBrush="Black" Padding="12">
+                                    <TextBlock Text="Indeterminate Progress Bar"/>
+                                    <ProgressBar IsIndeterminate="True" Margin="0,12"/>
+                                </StackPanel>
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel
