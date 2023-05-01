@@ -98,6 +98,7 @@ public sealed partial class VideogamesDetailPage : Page
         {
             downloadGroup.Visibility = Visibility.Collapsed;
             executeGroup.Visibility = Visibility.Visible;
+            //layoutRoot.Visibility = Visibility.Visible;
         }
     }
 
