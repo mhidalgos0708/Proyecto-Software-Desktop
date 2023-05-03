@@ -80,6 +80,10 @@
                             x:Name="layoutRoot"
                             Visibility="Collapsed"
                             Margin="{StaticResource SmallTopMargin}">
+                            <TextBlock
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Right"
+                                        Text="Descargando..." />
                             <ProgressBar IsIndeterminate="True" Margin="0,12"/>
                         </StackPanel>
 

@@ -97,16 +97,27 @@ public sealed partial class VideogamesDetailPage : Page
 
     private void DescargarVideojuego(object sender, RoutedEventArgs e)
     {
+        var downloadGroup = FindName("downloadGroup") as StackPanel;
+        var executeGroup = FindName("executeGroup") as StackPanel;
+        var layoutRoot = FindName("layoutRoot") as StackPanel;
+
+        if (downloadGroup != null && layoutRoot != null)
+        {
+            downloadGroup.Visibility = Visibility.Collapsed;
+            layoutRoot.Visibility = Visibility.Visible;
+        }
+
+        System.Threading.Thread.Sleep(1000);
+
         Task.Run(() => VideogamesDetailViewModel.DescargarVideojuego()).ContinueWith((t) => {
             TheDispatcher.TryEnqueue(() =>
             {
-                var downloadGroup = FindName("downloadGroup") as StackPanel;
-                var executeGroup = FindName("executeGroup") as StackPanel;
-
-                if (downloadGroup != null && executeGroup != null)
+                
+               
+                if (executeGroup != null && layoutRoot != null)
                 {
-                    downloadGroup.Visibility = Visibility.Collapsed;
                     executeGroup.Visibility = Visibility.Visible;
+                    layoutRoot.Visibility = Visibility.Collapsed;
                 }
             });
         });
