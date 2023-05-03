@@ -15,6 +15,10 @@ namespace Excalinest.Views;
 
 public sealed partial class VideogamesDetailPage : Page
 {
+    public Microsoft.UI.Dispatching.DispatcherQueue TheDispatcher
+    {
+        get; set;
+    }
 
     public VideogamesDetailViewModel ViewModel
     {
@@ -25,6 +29,7 @@ public sealed partial class VideogamesDetailPage : Page
     {
         ViewModel = App.GetService<VideogamesDetailViewModel>();
         InitializeComponent();
+        TheDispatcher = this.DispatcherQueue;
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -90,27 +95,21 @@ public sealed partial class VideogamesDetailPage : Page
         }
     }
 
-    private async void DescargarVideojuego(object sender, RoutedEventArgs e)
+    private void DescargarVideojuego(object sender, RoutedEventArgs e)
     {
-        var downloadGroup = FindName("downloadGroup") as StackPanel;
-        var executeGroup = FindName("executeGroup") as StackPanel;
-        var layoutRoot = FindName("layoutRoot") as StackPanel;
-        
+        Task.Run(() => VideogamesDetailViewModel.DescargarVideojuego()).ContinueWith((t) => {
+            TheDispatcher.TryEnqueue(() =>
+            {
+                var downloadGroup = FindName("downloadGroup") as StackPanel;
+                var executeGroup = FindName("executeGroup") as StackPanel;
 
-        if (downloadGroup != null && layoutRoot != null)
-        {
-            downloadGroup.Visibility = Visibility.Collapsed;
-            layoutRoot.Visibility = Visibility.Visible;
-        }
-        
-        await VideogamesDetailViewModel.DescargarVideojuego();
-        
-
-        if (executeGroup != null && layoutRoot != null) 
-        {
-            layoutRoot.Visibility = Visibility.Collapsed;
-            executeGroup.Visibility = Visibility.Visible;
-        }
+                if (downloadGroup != null && executeGroup != null)
+                {
+                    downloadGroup.Visibility = Visibility.Collapsed;
+                    executeGroup.Visibility = Visibility.Visible;
+                }
+            });
+        });
     }
 
 }

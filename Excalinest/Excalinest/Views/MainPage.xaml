@@ -5,8 +5,9 @@
     xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Excalinest.Converters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:Excalinest.Core.Models" xmlns:local="using:Excalinest.Converters"
+    xmlns:models="using:Excalinest.Core.Models"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -30,13 +31,13 @@
         </StackPanel>
 
         <TextBlock
-                Name="gamesOrNot"
-                Margin="{StaticResource XXSmallTopMargin}"
-                HorizontalAlignment="Center"
-                FontSize="20"
-                Visibility="Collapsed"
-                Style="{ThemeResource BodyTextStyle}"
-                Text= "No se han encontrado videojuegos" />
+            Name="gamesOrNot"
+            Margin="{StaticResource XXSmallTopMargin}"
+            HorizontalAlignment="Center"
+            FontSize="20"
+            Style="{ThemeResource BodyTextStyle}"
+            Text="No se han encontrado videojuegos"
+            Visibility="Collapsed" />
         <Grid x:Name="ContentArea">
             <controls:AdaptiveGridView
                 animations:Connected.ListItemElementName="itemThumbnail"
@@ -60,8 +61,8 @@
                                     Name="Cover"
                                     Width="180"
                                     Height="Auto"
-                                    Source="{Binding Portada.Data, Converter={StaticResource ByteArrayToImageConverter}}"/>
-                                
+                                    Source="{Binding Portada.Data, Converter={StaticResource ByteArrayToImageConverter}}" />
+
                                 <TextBlock
                                     Margin="{StaticResource XXSmallTopMargin}"
                                     HorizontalAlignment="Center"

@@ -24,7 +24,10 @@ namespace Excalinest.Views;
 
 public sealed partial class VideogamesPage : Page
 {
-
+    public Microsoft.UI.Dispatching.DispatcherQueue TheDispatcher
+    {
+        get; set;
+    }
     public VideogamesViewModel ViewModel
     {
         get;
@@ -34,6 +37,8 @@ public sealed partial class VideogamesPage : Page
     {
         ViewModel = App.GetService<VideogamesViewModel>();
         InitializeComponent();
+
+        TheDispatcher = this.DispatcherQueue;
 
         /*if (GridView.DataFetchSize ==0)
         {
@@ -144,15 +149,20 @@ public sealed partial class VideogamesPage : Page
         return null;
     }
 
-    public async void DescargarVideojuegos(object sender, RoutedEventArgs e)
+    public void DescargarVideojuegos(object sender, RoutedEventArgs e)
+    {
+        Task.Run(() => DescargarVideoJuegoSegundoPlano()).ContinueWith((t) => {
+            TheDispatcher.TryEnqueue(() =>
+            {
+                var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
+                DesactivarCheckboxes(videojuegosSeleccionados);
+            });
+             });
+    }
+
+    public async void DescargarVideoJuegoSegundoPlano()
     {
         await VideogamesViewModel.DescargarVideojuegos();
-
-        // Desactivar checkboxes de juegos descargados
-        
-        var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
-
-        DesactivarCheckboxes(videojuegosSeleccionados);
     }
 
     private void CajaVideojuego_PointerEntered(object sender, PointerRoutedEventArgs e)
