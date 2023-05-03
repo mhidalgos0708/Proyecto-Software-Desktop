@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.WinUI.UI.Animations;
+﻿using System.Diagnostics;
+using System.Windows.Forms;
+using CommunityToolkit.WinUI.UI.Animations;
 
 using Excalinest.Contracts.Services;
 using Excalinest.ViewModels;
@@ -90,15 +92,24 @@ public sealed partial class VideogamesDetailPage : Page
 
     private async void DescargarVideojuego(object sender, RoutedEventArgs e)
     {
-        await VideogamesDetailViewModel.DescargarVideojuego();
         var downloadGroup = FindName("downloadGroup") as StackPanel;
         var executeGroup = FindName("executeGroup") as StackPanel;
+        var layoutRoot = FindName("layoutRoot") as StackPanel;
+        
 
-        if (downloadGroup != null && executeGroup != null)
+        if (downloadGroup != null && layoutRoot != null)
         {
             downloadGroup.Visibility = Visibility.Collapsed;
+            layoutRoot.Visibility = Visibility.Visible;
+        }
+        
+        await VideogamesDetailViewModel.DescargarVideojuego();
+        
+
+        if (executeGroup != null && layoutRoot != null) 
+        {
+            layoutRoot.Visibility = Visibility.Collapsed;
             executeGroup.Visibility = Visibility.Visible;
-            //layoutRoot.Visibility = Visibility.Visible;
         }
     }
 

@@ -39,7 +39,6 @@
                 Text= "No se han encontrado videojuegos" />
         <Grid x:Name="ContentArea">
             <controls:AdaptiveGridView
-                Name="GridView"
                 animations:Connected.ListItemElementName="itemThumbnail"
                 animations:Connected.ListItemKey="animationKeyContentGrid"
                 DesiredWidth="270"
