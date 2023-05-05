@@ -54,6 +54,7 @@ internal class DesactivadorComandos
     private DesactivadorComandos(){ }
 
     private static DesactivadorComandos? _instancia;
+    private static bool ctrlPressed = false;
 
     public static DesactivadorComandos ObtenerHookTeclado()
     {
@@ -61,9 +62,7 @@ internal class DesactivadorComandos
         return _instancia;
     }
 
-    private const int WM_KEYDOWN = 0x0100;
     private const int LLKHF_ALTDOWN = 0x20;
-    private const int LLKHF_EXTENDED = 0x01;
 
     //nCode: Un entero que indica el tipo de mensaje del teclado. Si es menor que 0 se retorna el valor resultado de invocar a CallNextHookEx
     //wp: La tecla virtual presionada que activo el evento.
@@ -83,20 +82,32 @@ internal class DesactivadorComandos
 
                 if (altPressed && infoTecla.tecla == Keys.F4)
                 {
-                    return (IntPtr)1;
-                } else if (altPressed && infoTecla.tecla == Keys.Escape) 
-                { 
-                    return (IntPtr)1;
+                    return new IntPtr(1);
                 }
-                /*
-                if (infoTecla.tecla == Keys.RShiftKey || infoTecla.tecla == Keys.ShiftKey || infoTecla.tecla == Keys.Shift || 
-                    infoTecla.tecla == Keys.LShiftKey || infoTecla.tecla == Keys.RControlKey || infoTecla.tecla == Keys.LControlKey || 
-                    infoTecla.tecla == Keys.F4 || infoTecla.tecla == Keys.LMenu || infoTecla.tecla == Keys.Menu || infoTecla.tecla == Keys.Alt || 
-                    infoTecla.tecla == Keys.RMenu || infoTecla.tecla == Keys.Tab || infoTecla.tecla == Keys.Delete || infoTecla.tecla == Keys.RWin || 
-                    infoTecla.tecla == Keys.LWin || infoTecla.tecla == Keys.Control || infoTecla.tecla == Keys.ControlKey) 
+                else if (altPressed && infoTecla.tecla == Keys.Escape)
                 {
-                    return (IntPtr)1; //Permite marcar el evento como "Handled"
-                }*/
+                    return new IntPtr(1);
+                }
+                else if (altPressed && infoTecla.tecla == Keys.Tab)
+                {
+                    return new IntPtr(1);
+                }
+                else if (infoTecla.tecla == Keys.LWin || infoTecla.tecla == Keys.RWin)
+                {
+                    return new IntPtr(1);
+                }
+                else if (infoTecla.tecla == Keys.LControlKey || infoTecla.tecla == Keys.RControlKey)
+                {
+                    ctrlPressed = true;
+                }
+                else if (ctrlPressed && infoTecla.tecla == Keys.Escape)
+                {
+                    return new IntPtr(1);
+                }
+                else if (infoTecla.tecla != Keys.LControlKey && infoTecla.tecla != Keys.RControlKey)
+                {
+                    ctrlPressed = false;
+                }
             }
         }
         return CallNextHookEx(ptrHook, nCode, wp, lp);
