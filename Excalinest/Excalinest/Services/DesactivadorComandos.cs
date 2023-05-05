@@ -54,12 +54,15 @@ internal class DesactivadorComandos
     private DesactivadorComandos(){ }
 
     private static DesactivadorComandos? _instancia;
+    private static bool ctrlPressed = false;
 
     public static DesactivadorComandos ObtenerHookTeclado()
     {
         _instancia ??= new DesactivadorComandos(); // ?? significa "instancia no es null"
         return _instancia;
     }
+
+    private const int LLKHF_ALTDOWN = 0x20;
 
     //nCode: Un entero que indica el tipo de mensaje del teclado. Si es menor que 0 se retorna el valor resultado de invocar a CallNextHookEx
     //wp: La tecla virtual presionada que activo el evento.
@@ -68,17 +71,43 @@ internal class DesactivadorComandos
     {
         if (nCode >= 0)
         {
-            // Se establece una estructura para administrar los datos de la tecla
-            var infoTecla = (TCDLLHOOKSTRUCT)Marshal.PtrToStructure(lp, typeof(TCDLLHOOKSTRUCT));
-
-            // Desabilitar comandos: Alt + F4, Alt + Esc, Ctrl + Esc, Alt + Tab, botón Windows
-            if (infoTecla.tecla == Keys.RShiftKey || infoTecla.tecla == Keys.ShiftKey || infoTecla.tecla == Keys.Shift || 
-                infoTecla.tecla == Keys.LShiftKey || infoTecla.tecla == Keys.RControlKey || infoTecla.tecla == Keys.LControlKey || 
-                infoTecla.tecla == Keys.F4 || infoTecla.tecla == Keys.LMenu || infoTecla.tecla == Keys.Menu || infoTecla.tecla == Keys.Alt || 
-                infoTecla.tecla == Keys.RMenu || infoTecla.tecla == Keys.Tab || infoTecla.tecla == Keys.Delete || infoTecla.tecla == Keys.RWin || 
-                infoTecla.tecla == Keys.LWin || infoTecla.tecla == Keys.Control || infoTecla.tecla == Keys.ControlKey) 
+            if (lp != IntPtr.Zero)
             {
-                return (IntPtr)1; //Permite marcar el evento como "Handled"
+                // Se establece una estructura para administrar los datos de la tecla
+                var infoTecla = (TCDLLHOOKSTRUCT)Marshal.PtrToStructure(lp, typeof(TCDLLHOOKSTRUCT));
+
+                // Deshabilitar comandos: Alt + F4, Alt + Esc, Ctrl + Esc, Alt + Tab, botón Windows
+                var flags = infoTecla.banderas;
+                var altPressed = (flags & LLKHF_ALTDOWN) != 0;
+
+                if (altPressed && infoTecla.tecla == Keys.F4)
+                {
+                    return new IntPtr(1);
+                }
+                else if (altPressed && infoTecla.tecla == Keys.Escape)
+                {
+                    return new IntPtr(1);
+                }
+                else if (altPressed && infoTecla.tecla == Keys.Tab)
+                {
+                    return new IntPtr(1);
+                }
+                else if (infoTecla.tecla == Keys.LWin || infoTecla.tecla == Keys.RWin)
+                {
+                    return new IntPtr(1);
+                }
+                else if (infoTecla.tecla == Keys.LControlKey || infoTecla.tecla == Keys.RControlKey)
+                {
+                    ctrlPressed = true;
+                }
+                else if (ctrlPressed && infoTecla.tecla == Keys.Escape)
+                {
+                    return new IntPtr(1);
+                }
+                else if (infoTecla.tecla != Keys.LControlKey && infoTecla.tecla != Keys.RControlKey)
+                {
+                    ctrlPressed = false;
+                }
             }
         }
         return CallNextHookEx(ptrHook, nCode, wp, lp);

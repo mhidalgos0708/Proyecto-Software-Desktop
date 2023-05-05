@@ -28,8 +28,8 @@ public class SubscriberTiempoInac : ISubscriberTiempoInac
         Videojuego.Start();
 
         // Quitar hook del teclado
-        _desactivador = DesactivadorComandos.ObtenerHookTeclado();
-        _desactivador.DesactivarHookTeclado();
+        //_desactivador = DesactivadorComandos.ObtenerHookTeclado();
+        //_desactivador.DesactivarHookTeclado();
     }
 
     public void Actualizar()
@@ -40,6 +40,6 @@ public class SubscriberTiempoInac : ISubscriberTiempoInac
     ~SubscriberTiempoInac()
     {
         Videojuego.Dispose();
-        _desactivador.ActivarHookTeclado();
+        //_desactivador.ActivarHookTeclado();
     }
 }
