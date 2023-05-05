@@ -28,6 +28,18 @@
                 SelectedValuePath="Nombre"
                 SelectionChanged="TagComboBox_SelectionChanged" />
 
+            <StackPanel
+                x:Name="layoutRoot"
+                Visibility="Collapsed"
+                Margin="{StaticResource SmallTopMargin}">
+                <TextBlock
+                                Style="{ThemeResource SubtitleTextBlockStyle}"
+                                Margin="20,-20,0,0"
+                                HorizontalAlignment="Right"
+                                Text="Descargando..." />
+                <ProgressBar IsIndeterminate="True" Margin="10,10,0,0"/>
+            </StackPanel>
+            
             <Button
                 Margin="20,0,0,0"
                 Visibility="Collapsed"
@@ -48,6 +60,8 @@
                         Text="Descargar" />
                     </StackPanel>
             </Button>
+
+            
         </StackPanel>
 
         <TextBlock

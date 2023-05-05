@@ -151,11 +151,19 @@ public sealed partial class VideogamesPage : Page
 
     public void DescargarVideojuegos(object sender, RoutedEventArgs e)
     {
+        var botonDescargar = FindName("BotonDescargar") as Button;
+        var progressBar = FindName("layoutRoot") as StackPanel;
+        if (botonDescargar != null && progressBar != null)
+        {
+            botonDescargar.Visibility = Visibility.Collapsed;
+            progressBar.Visibility = Visibility.Visible;
+        }
         Task.Run(() => DescargarVideoJuegoSegundoPlano()).ContinueWith((t) => {
             TheDispatcher.TryEnqueue(() =>
             {
                 var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
                 DesactivarCheckboxes(videojuegosSeleccionados);
+                progressBar.Visibility = Visibility.Collapsed;
             });
              });
     }

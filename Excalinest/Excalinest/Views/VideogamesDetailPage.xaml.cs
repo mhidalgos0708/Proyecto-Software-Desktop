@@ -107,13 +107,11 @@ public sealed partial class VideogamesDetailPage : Page
             layoutRoot.Visibility = Visibility.Visible;
         }
 
-        System.Threading.Thread.Sleep(1000);
+        System.Threading.Thread.Sleep(0000);
 
         Task.Run(() => VideogamesDetailViewModel.DescargarVideojuego()).ContinueWith((t) => {
             TheDispatcher.TryEnqueue(() =>
             {
-                
-               
                 if (executeGroup != null && layoutRoot != null)
                 {
                     executeGroup.Visibility = Visibility.Visible;
