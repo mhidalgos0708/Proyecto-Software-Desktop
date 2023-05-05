@@ -61,6 +61,10 @@ internal class DesactivadorComandos
         return _instancia;
     }
 
+    private const int WM_KEYDOWN = 0x0100;
+    private const int LLKHF_ALTDOWN = 0x20;
+    private const int LLKHF_EXTENDED = 0x01;
+
     //nCode: Un entero que indica el tipo de mensaje del teclado. Si es menor que 0 se retorna el valor resultado de invocar a CallNextHookEx
     //wp: La tecla virtual presionada que activo el evento.
     //lp: Puntero a la estructura KBDLLHOOKSTRUCT para manejar la información del evento.
@@ -68,17 +72,28 @@ internal class DesactivadorComandos
     {
         if (nCode >= 0)
         {
-            // Se establece una estructura para administrar los datos de la tecla
-            var infoTecla = (TCDLLHOOKSTRUCT)Marshal.PtrToStructure(lp, typeof(TCDLLHOOKSTRUCT));
-
-            // Desabilitar comandos: Alt + F4, Alt + Esc, Ctrl + Esc, Alt + Tab, botón Windows
-            if (infoTecla.tecla == Keys.RShiftKey || infoTecla.tecla == Keys.ShiftKey || infoTecla.tecla == Keys.Shift || 
-                infoTecla.tecla == Keys.LShiftKey || infoTecla.tecla == Keys.RControlKey || infoTecla.tecla == Keys.LControlKey || 
-                infoTecla.tecla == Keys.F4 || infoTecla.tecla == Keys.LMenu || infoTecla.tecla == Keys.Menu || infoTecla.tecla == Keys.Alt || 
-                infoTecla.tecla == Keys.RMenu || infoTecla.tecla == Keys.Tab || infoTecla.tecla == Keys.Delete || infoTecla.tecla == Keys.RWin || 
-                infoTecla.tecla == Keys.LWin || infoTecla.tecla == Keys.Control || infoTecla.tecla == Keys.ControlKey) 
+            if (lp != IntPtr.Zero)
             {
-                return (IntPtr)1; //Permite marcar el evento como "Handled"
+                // Se establece una estructura para administrar los datos de la tecla
+                var infoTecla = (TCDLLHOOKSTRUCT)Marshal.PtrToStructure(lp, typeof(TCDLLHOOKSTRUCT));
+
+                // Deshabilitar comandos: Alt + F4, Alt + Esc, Ctrl + Esc, Alt + Tab, botón Windows
+                var flags = infoTecla.banderas;
+                var altPressed = (flags & LLKHF_ALTDOWN) != 0;
+
+                if (altPressed && infoTecla.tecla == Keys.F4)
+                {
+                    return (IntPtr)1;
+                }
+                /*
+                if (infoTecla.tecla == Keys.RShiftKey || infoTecla.tecla == Keys.ShiftKey || infoTecla.tecla == Keys.Shift || 
+                    infoTecla.tecla == Keys.LShiftKey || infoTecla.tecla == Keys.RControlKey || infoTecla.tecla == Keys.LControlKey || 
+                    infoTecla.tecla == Keys.F4 || infoTecla.tecla == Keys.LMenu || infoTecla.tecla == Keys.Menu || infoTecla.tecla == Keys.Alt || 
+                    infoTecla.tecla == Keys.RMenu || infoTecla.tecla == Keys.Tab || infoTecla.tecla == Keys.Delete || infoTecla.tecla == Keys.RWin || 
+                    infoTecla.tecla == Keys.LWin || infoTecla.tecla == Keys.Control || infoTecla.tecla == Keys.ControlKey) 
+                {
+                    return (IntPtr)1; //Permite marcar el evento como "Handled"
+                }*/
             }
         }
         return CallNextHookEx(ptrHook, nCode, wp, lp);
