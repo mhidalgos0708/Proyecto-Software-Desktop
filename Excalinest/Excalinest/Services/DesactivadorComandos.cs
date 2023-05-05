@@ -84,6 +84,9 @@ internal class DesactivadorComandos
                 if (altPressed && infoTecla.tecla == Keys.F4)
                 {
                     return (IntPtr)1;
+                } else if (altPressed && infoTecla.tecla == Keys.Escape) 
+                { 
+                    return (IntPtr)1;
                 }
                 /*
                 if (infoTecla.tecla == Keys.RShiftKey || infoTecla.tecla == Keys.ShiftKey || infoTecla.tecla == Keys.Shift || 
