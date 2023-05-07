@@ -20,7 +20,7 @@ public class SettingsViewModel : ObservableRecipient
     private ElementTheme _elementTheme;
     private string _versionDescription;
 
-    private string RutaArchivoConfig = @"..\..\Excalinest\VideojuegosExcalinest\config.txt";
+    private string RutaArchivoConfig = @"C:\Excalinest\VideojuegosExcalinest\config.txt";
 
     public string _rutaArchivo;
     public int _segundosInactividad;
