@@ -73,11 +73,6 @@ public sealed partial class VideogamesPage : Page
 
     public async void TagComboBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
     {
-        ComboBox tag = (ComboBox)sender;
-        Tag chosenTag = tag.SelectedItem as Tag;
-        
-        await ViewModel.GetVideojuegosByTag(chosenTag.ID);
-
         // Limpiar selección de videojuegos al filtrar por etiqueta
 
         var botonDescargar = FindName("BotonDescargar") as Button;
@@ -89,6 +84,11 @@ public sealed partial class VideogamesPage : Page
         var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
 
         DesactivarCheckboxes(videojuegosSeleccionados);
+
+        ComboBox tag = (ComboBox)sender;
+        Tag chosenTag = tag.SelectedItem as Tag;
+        
+        await ViewModel.GetVideojuegosByTag(chosenTag.ID);
     }
 
     // Agregar videojuego a lista de videojuegos por descargar al activar su respectiva casilla de selección múltiple
