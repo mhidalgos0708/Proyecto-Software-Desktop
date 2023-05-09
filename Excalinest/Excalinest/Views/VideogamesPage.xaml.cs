@@ -1,23 +1,10 @@
-﻿using System.Diagnostics;
-using Excalinest.Core.Models;
+﻿using Excalinest.Core.Models;
 using Excalinest.ViewModels;
-using Excalinest.Services;
-
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media.Animation;
-using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Media;
-using MessageBox = System.Windows.Forms.MessageBox;
-using MessageBoxButtons = System.Windows.Forms.MessageBoxButtons;
-using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;
 using CommunityToolkit.WinUI.UI.Controls;
-using Windows.Foundation.Collections;
-using static System.Net.Mime.MediaTypeNames;
-using CommunityToolkit.WinUI.UI;
-
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI;
 
 namespace Excalinest.Views;
@@ -39,12 +26,6 @@ public sealed partial class VideogamesPage : Page
         InitializeComponent();
 
         TheDispatcher = this.DispatcherQueue;
-
-        /*if (GridView.DataFetchSize ==0)
-        {
-            gamesOrNot.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
-        }*/
-        // taglist.ItemsSource = ViewModel.Tags;
     }
 
     public void DesactivarCheckboxes(List<Videojuego> videojuegos)
@@ -74,21 +55,37 @@ public sealed partial class VideogamesPage : Page
     public async void TagComboBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
     {
         ComboBox tag = (ComboBox)sender;
-        Tag chosenTag = tag.SelectedItem as Tag;
-        
-        await ViewModel.GetVideojuegosByTag(chosenTag.ID);
+        Tag chosenTag = (Tag)tag.SelectedItem;
 
-        // Limpiar selección de videojuegos al filtrar por etiqueta
-
-        var botonDescargar = FindName("BotonDescargar") as Button;
-        if (botonDescargar != null)
+        try 
         {
-            botonDescargar.Visibility = Visibility.Collapsed;
+            await ViewModel.GetVideojuegosByTag(chosenTag.ID);
+
+            // Limpiar selección de videojuegos al filtrar por etiqueta
+
+            var botonDescargar = FindName("BotonDescargar") as Button;
+            if (botonDescargar != null)
+            {
+                botonDescargar.Visibility = Visibility.Collapsed;
+            }
+
+            var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
+
+            DesactivarCheckboxes(videojuegosSeleccionados);
+        } 
+        catch (Exception ex) 
+        {
+            ContentDialog dialog = new ContentDialog();
+            dialog.XamlRoot = this.XamlRoot;
+            dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            dialog.Title = "Atención";
+            dialog.PrimaryButtonText = "Ok";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+
+            var message = "Error: " + ex;
+            dialog.Content = new Dialog(message);
+            await dialog.ShowAsync();
         }
-
-        var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
-
-        DesactivarCheckboxes(videojuegosSeleccionados);
     }
 
     // Agregar videojuego a lista de videojuegos por descargar al activar su respectiva casilla de selección múltiple
@@ -165,12 +162,28 @@ public sealed partial class VideogamesPage : Page
                 DesactivarCheckboxes(videojuegosSeleccionados);
                 progressBar.Visibility = Visibility.Collapsed;
             });
-             });
+        });
     }
 
     public async void DescargarVideoJuegoSegundoPlano()
     {
-        await VideogamesViewModel.DescargarVideojuegos();
+        try 
+        {
+            await VideogamesViewModel.DescargarVideojuegos();
+        }
+        catch (Exception ex) 
+        {
+            ContentDialog dialog = new ContentDialog();
+            dialog.XamlRoot = this.XamlRoot;
+            dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            dialog.Title = "Atención";
+            dialog.PrimaryButtonText = "Ok";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+
+            var message = "Error: " + ex;
+            dialog.Content = new Dialog(message);
+            await dialog.ShowAsync();
+        }
     }
 
     private void CajaVideojuego_PointerEntered(object sender, PointerRoutedEventArgs e)
