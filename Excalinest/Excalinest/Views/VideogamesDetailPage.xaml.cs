@@ -1,15 +1,11 @@
-﻿using System.Diagnostics;
-using System.Windows.Forms;
-using CommunityToolkit.WinUI.UI.Animations;
+﻿using CommunityToolkit.WinUI.UI.Animations;
 
 using Excalinest.Contracts.Services;
 using Excalinest.ViewModels;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
-using Image = Microsoft.UI.Xaml.Controls.Image;
 
 namespace Excalinest.Views;
 
@@ -95,7 +91,7 @@ public sealed partial class VideogamesDetailPage : Page
         }
     }
 
-    private void DescargarVideojuego(object sender, RoutedEventArgs e)
+    private async void DescargarVideojuego(object sender, RoutedEventArgs e)
     {
         var downloadGroup = FindName("downloadGroup") as StackPanel;
         var executeGroup = FindName("executeGroup") as StackPanel;
@@ -109,16 +105,33 @@ public sealed partial class VideogamesDetailPage : Page
 
         System.Threading.Thread.Sleep(0000);
 
-        Task.Run(() => VideogamesDetailViewModel.DescargarVideojuego()).ContinueWith((t) => {
-            TheDispatcher.TryEnqueue(() =>
+        try
+        {
+            _ = Task.Run(() => VideogamesDetailViewModel.DescargarVideojuego()).ContinueWith((t) =>
             {
-                if (executeGroup != null && layoutRoot != null)
+                TheDispatcher.TryEnqueue(() =>
                 {
-                    executeGroup.Visibility = Visibility.Visible;
-                    layoutRoot.Visibility = Visibility.Collapsed;
-                }
+                    if (executeGroup != null && layoutRoot != null)
+                    {
+                        executeGroup.Visibility = Visibility.Visible;
+                        layoutRoot.Visibility = Visibility.Collapsed;
+                    }
+                });
             });
-        });
+        }
+        catch (Exception ex) 
+        {
+            ContentDialog dialog = new ContentDialog();
+            dialog.XamlRoot = this.XamlRoot;
+            dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            dialog.Title = "Atención";
+            dialog.PrimaryButtonText = "Ok";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+
+            var message = "Error: " + ex;
+            dialog.Content = new Dialog(message);
+            await dialog.ShowAsync();
+        }
     }
 
 }

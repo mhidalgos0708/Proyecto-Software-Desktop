@@ -146,7 +146,7 @@ public sealed partial class VideogamesPage : Page
         return null;
     }
 
-    public void DescargarVideojuegos(object sender, RoutedEventArgs e)
+    public async void DescargarVideojuegos(object sender, RoutedEventArgs e)
     {
         var botonDescargar = FindName("BotonDescargar") as Button;
         var progressBar = FindName("layoutRoot") as StackPanel;
@@ -155,14 +155,31 @@ public sealed partial class VideogamesPage : Page
             botonDescargar.Visibility = Visibility.Collapsed;
             progressBar.Visibility = Visibility.Visible;
         }
-        Task.Run(() => DescargarVideoJuegoSegundoPlano()).ContinueWith((t) => {
-            TheDispatcher.TryEnqueue(() =>
+        try
+        {
+            _ = Task.Run(() => DescargarVideoJuegoSegundoPlano()).ContinueWith((t) =>
             {
-                var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
-                DesactivarCheckboxes(videojuegosSeleccionados);
-                progressBar.Visibility = Visibility.Collapsed;
+                TheDispatcher.TryEnqueue(() =>
+                {
+                    var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
+                    DesactivarCheckboxes(videojuegosSeleccionados);
+                    progressBar.Visibility = Visibility.Collapsed;
+                });
             });
-        });
+        }
+        catch (Exception ex) 
+        {
+            ContentDialog dialog = new ContentDialog();
+            dialog.XamlRoot = this.XamlRoot;
+            dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            dialog.Title = "Atención";
+            dialog.PrimaryButtonText = "Ok";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+
+            var message = "Error: " + ex;
+            dialog.Content = new Dialog(message);
+            await dialog.ShowAsync();
+        }
     }
 
     public async void DescargarVideoJuegoSegundoPlano()
