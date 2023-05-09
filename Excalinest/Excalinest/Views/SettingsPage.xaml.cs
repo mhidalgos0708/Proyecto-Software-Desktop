@@ -8,6 +8,7 @@ using Windows.UI.Core;
 using Microsoft.Graph;
 using Microsoft.UI.Xaml.Input;
 using Windows.System;
+using System.Diagnostics;
 
 namespace Excalinest.Views;
 
@@ -106,5 +107,32 @@ public sealed partial class SettingsPage : Page
             _carpetaValida = false;
         }
     }
-    
+
+    private async void OnAutenticarse(object sender, RoutedEventArgs e)
+    {
+        string textValue = string.Empty;
+
+        ContentDialog dialog = new ContentDialog();
+
+        // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
+        dialog.XamlRoot = this.XamlRoot;
+        dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+        dialog.Title = "Atención";
+        dialog.PrimaryButtonText = "Autenticar";
+        dialog.CloseButtonText = "Cancelar";
+        dialog.DefaultButton = ContentDialogButton.Primary;
+
+        AutenticacionDialog autDialog = new AutenticacionDialog();
+        dialog.Content = autDialog;
+
+
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary) {
+            textValue = autDialog.TextValue;
+            Console.WriteLine(textValue);
+            Debug.WriteLine(textValue);
+        }
+        else { }
+    }
 }
