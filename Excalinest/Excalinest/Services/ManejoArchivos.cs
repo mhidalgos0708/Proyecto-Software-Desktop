@@ -14,6 +14,7 @@ internal class ManejoArchivos
     public string _rutaArchivoService;
     public int _segundosInactividadService;
 
+
     public ManejoArchivos()
     {
         if (!Directory.Exists(@"C:/Excalinest/"))
@@ -30,6 +31,8 @@ internal class ManejoArchivos
             {
                 sw.WriteLine(10);
                 sw.WriteLine(@"C:/Excalinest/VideojuegosExcalinest/");
+                _segundosInactividadService  = 10;
+                _rutaArchivoService = @"C:/Excalinest/VideojuegosExcalinest/";
             }
         }
     }
@@ -78,6 +81,6 @@ internal class ManejoArchivos
 
     public String leerRutaArchivos()
     {
-        return File.ReadLines(_archivoConfigRuta).Last();
+        return File.ReadLines(_archivoConfigRuta).Last() + '\\';
     }
 }

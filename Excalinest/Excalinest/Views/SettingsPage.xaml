@@ -22,16 +22,29 @@
                 Style="{ThemeResource BaseTextBlockStyle}"
                 Text="Seleccione la cantidad de segundos de inactividad" />
 
-            <NumberBox
-                x:Name="NumberBoxSegundos"
-                Width="180"
+            <StackPanel
                 Margin="{StaticResource MediumTopMargin}"
-                HorizontalAlignment="Left"
-                LargeChange="1"
-                Minimum="1"
-                SmallChange="1"
-                SpinButtonPlacementMode="Inline"
-                Value="{x:Bind ViewModel._segundosInactividad}" />
+                VerticalAlignment="Top"
+                Orientation="Horizontal">
+
+                <NumberBox
+                    x:Name="NumberBoxSegundos"
+                    Width="180"
+                    HorizontalAlignment="Left"
+                    LargeChange="1"
+                    Minimum="1"
+                    SmallChange="1"
+                    SpinButtonPlacementMode="Inline"
+                    Value="{x:Bind ViewModel._segundosInactividad, Mode=TwoWay}" />
+
+                <TextBlock
+                    x:Name="Note"
+                    Padding="20,5,0,0"
+                    Text="Presione Enter para guardar el valor ingresado"
+                    TextWrapping="Wrap" />
+
+            </StackPanel>
+
 
             <TextBlock
                 Margin="{StaticResource LargeTopMargin}"

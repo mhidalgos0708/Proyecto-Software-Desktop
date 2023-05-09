@@ -13,6 +13,7 @@ using Excalinest.Contracts.ViewModels;
 using Excalinest.Core.Contracts.Services;
 using Excalinest.Core.Models;
 using Excalinest.Core.Services;
+using Excalinest.Services;
 using Microsoft.UI.Xaml.Controls;
 
 namespace Excalinest.ViewModels;
@@ -25,9 +26,12 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
     public static ServicioVideojuego _videojuegoService;
     public static ServicioVideojuegoEtiqueta _videojuegoEtiquetaService;
 
-    private static readonly string RutaJuego = File.ReadLines(@"C:/Excalinest/VideojuegosExcalinest/config.txt").Last();
+    ManejoArchivos _manejoArchivos = new ManejoArchivos();
 
     private static List<Videojuego> _videojuegosSeleccionados;
+    private static string RutaJuego = "";
+
+
     public ICommand ItemClickCommand
     {
         get;
@@ -72,6 +76,8 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         {
             Source.Add(item);
         }
+
+        RutaJuego = _manejoArchivos.leerRutaArchivos();
     }
 
     public void OnNavigatedFrom()
