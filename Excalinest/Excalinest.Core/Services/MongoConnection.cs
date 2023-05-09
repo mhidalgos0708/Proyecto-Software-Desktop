@@ -27,7 +27,6 @@ public class MongoConnection
         database = client.GetDatabase("ExcalinestDB");
     }
 
-    //Métodos incompletos
     public async Task<IEnumerable<string>> GetCollectionsFrom()
     {
         var cursor = await database.ListCollectionNamesAsync();

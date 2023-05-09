@@ -4,10 +4,6 @@ using Microsoft.UI.Xaml.Controls;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 using Windows.Storage;
-using Windows.UI.Core;
-using Microsoft.Graph;
-using Microsoft.UI.Xaml.Input;
-using Windows.System;
 
 namespace Excalinest.Views;
 
@@ -71,30 +67,30 @@ public sealed partial class SettingsPage : Page
         dialog.PrimaryButtonText = "Ok";
         dialog.DefaultButton = ContentDialogButton.Primary;
 
-        double latestValue = NumberBoxSegundos.Value;
+        var latestValue = NumberBoxSegundos.Value;
 
         if (_carpetaValida && NumberBoxSegundos.Value >= 1)
         {
-            bool guardarExitoso = ViewModel.GuardarDatos(_carpetaSeleccionada, latestValue);
+            var guardarExitoso = ViewModel.GuardarDatos(_carpetaSeleccionada, latestValue);
             if (guardarExitoso)
             {
-                string message = "Los cambios se han guardado exitosamente";
-                dialog.Content = new SettingsDialogGuardarExitoso(message);
+                var message = "Los cambios se han guardado exitosamente";
+                dialog.Content = new Dialog(message);
             }
         }
         else
         {
-            string message = "Hay campos inválidos";
-            dialog.Content = new SettingsDialogGuardarExitoso(message);
+            var message = "Hay campos inválidos";
+            dialog.Content = new Dialog(message);
         }
 
-        var result = await dialog.ShowAsync(); 
+        await dialog.ShowAsync(); 
         
     }
 
     private void GetValues()
     {
-        bool result = ViewModel.GetValues();
+        var result = ViewModel.GetValues();
         if (result)
         {
             PickFolderOutputTextBlock.Text = "Carpeta seleccionada: " + ViewModel._rutaArchivo;

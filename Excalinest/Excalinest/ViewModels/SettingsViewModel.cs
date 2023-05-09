@@ -86,7 +86,7 @@ public class SettingsViewModel : ObservableRecipient
 
     public bool GetValues()
     {
-        bool operacionExitosa = _manejoArchivos.LeerDeArchivoConfig(RutaArchivoConfig);
+        var operacionExitosa = _manejoArchivos.LeerDeArchivoConfig(RutaArchivoConfig);
         if (operacionExitosa)
         {
             _rutaArchivo = _manejoArchivos._rutaArchivoService;
@@ -102,10 +102,9 @@ public class SettingsViewModel : ObservableRecipient
 
     public bool GuardarDatos(string rutaSeleccionada, double tiempoSegundos)
     {
-        int segundosInactividad = Convert.ToInt32(tiempoSegundos);
         var contenido = Convert.ToString(tiempoSegundos) + Environment.NewLine + rutaSeleccionada;
 
-        bool operacionExitosa = _manejoArchivos.EscribirEnArchivo(RutaArchivoConfig, contenido);
+        var operacionExitosa = _manejoArchivos.EscribirEnArchivo(RutaArchivoConfig, contenido);
 
         return operacionExitosa;
     }

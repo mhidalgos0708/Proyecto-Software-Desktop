@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using Excalinest.Core.Models;
 using Excalinest.ViewModels;
-
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml;
 
 namespace Excalinest.Views;
 
@@ -21,20 +21,30 @@ public sealed partial class MainPage : Page
     {
         ViewModel = App.GetService<MainViewModel>();
         InitializeComponent();
-
-        /*if (GridView.DataFetchSize ==0)
-        {
-            gamesOrNot.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
-        }*/
-        // taglist.ItemsSource = ViewModel.Tags;
     }
     public async void TagComboBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
     {
-        ComboBox tag = (ComboBox)sender;
-        Tag chosenTag = tag.SelectedItem as Tag;
+        ComboBox tag = (ComboBox) sender;
+        if (tag.SelectedItem is Tag chosenTag)
+        {
+            try 
+            {
+                await ViewModel.GetVideojuegosByTag(chosenTag.ID);
+            }
+            catch (Exception ex) 
+            {
+                ContentDialog dialog = new ContentDialog();
+                dialog.XamlRoot = this.XamlRoot;
+                dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                dialog.Title = "Atención";
+                dialog.PrimaryButtonText = "Ok";
+                dialog.DefaultButton = ContentDialogButton.Primary;
 
-        await ViewModel.GetVideojuegosByTag(chosenTag.ID);
+                var message = "Error: "+ex;
+                dialog.Content = new Dialog(message);
+                await dialog.ShowAsync();
+            }
+        }
     }
-
 
 }
