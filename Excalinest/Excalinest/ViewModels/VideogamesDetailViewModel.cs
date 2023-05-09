@@ -102,7 +102,7 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
         }
     }
 
-    public static void EliminarVideojuego()
+    public static bool EliminarVideojuego()
     {
         try
         {
@@ -136,13 +136,14 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
                     Thread.Sleep(100);
                 }
 
-                MessageBox.Show("Videojuego eliminado localmente con éxito.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
             }
         }
-        catch (Exception ex) 
+        catch (Exception)
         {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
         }
+        return true;
     }
 
     public static bool EsVideojuegoDescargado()
