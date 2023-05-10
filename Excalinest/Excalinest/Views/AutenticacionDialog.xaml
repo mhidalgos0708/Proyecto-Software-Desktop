@@ -2,7 +2,7 @@
 <!--  Licensed under the MIT License.  -->
 
 <Page
-    x:Class="Excalinest.Views.Dialog"
+    x:Class="Excalinest.Views.AutenticacionDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,7 +12,10 @@
 
     <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <!--  Content body  -->
-        <TextBlock TextWrapping="Wrap" Text="{x:Bind _dialogMessage}" />
+        <TextBlock Name="HeaderTextBox" />
+        <PasswordBox
+            Name="pwdAdmin"
+            Width="Auto"
+            Margin="{StaticResource SmallTopMargin}" />
     </StackPanel>
-
 </Page>

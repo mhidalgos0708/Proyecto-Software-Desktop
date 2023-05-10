@@ -25,6 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\Dialog.xaml" />
+    <None Remove="Views\AutenticacionDialog.xaml" />
     <None Remove="Views\LoadingBar.xaml" />
     <None Remove="Views\TestPage.xaml" />
   </ItemGroup>
@@ -54,6 +55,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Page Update="Views\Dialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\AutenticacionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\LoadingBar.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\LoadingBar.xaml">

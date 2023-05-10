@@ -79,6 +79,24 @@
 
 
             <TextBlock
+                Margin="{StaticResource LargeTopMargin}"
+                Style="{ThemeResource SubtitleTextBlockStyle}"
+                Text="Autenticación administrador" />
+
+            <StackPanel
+                x:Name="grupoAutenticacion"
+                Margin="{StaticResource SmallTopMargin}"
+                HorizontalAlignment="Left">
+                <Button
+                    Width="180"
+                    Height="40"
+                    Click="OnAutenticarse"
+                    ClickMode="Press"
+                    Content="Ingresar credenciales"
+                    Style="{StaticResource AccentButtonStyle}" />
+            </StackPanel>
+
+            <TextBlock
                 x:Uid="Settings_Salir"
                 Margin="{StaticResource LargeTopMargin}"
                 Style="{ThemeResource SubtitleTextBlockStyle}" />
