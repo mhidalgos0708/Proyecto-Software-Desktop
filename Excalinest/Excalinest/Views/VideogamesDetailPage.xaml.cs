@@ -124,30 +124,35 @@ public sealed partial class VideogamesDetailPage : Page
 
         System.Threading.Thread.Sleep(0000);
 
+        var message = "";
+        ContentDialog dialog = new ContentDialog();
+        dialog.XamlRoot = this.XamlRoot;
+        dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+        dialog.Title = "Atención";
+        dialog.PrimaryButtonText = "Ok";
+        dialog.DefaultButton = ContentDialogButton.Primary;
+
         try
         {
-            _ = Task.Run(() => VideogamesDetailViewModel.DescargarVideojuego()).ContinueWith((t) =>
+            var res = Task.Run(() => message = VideogamesDetailViewModel.DescargarVideojuego().Result).ContinueWith((t) =>
             {
-                TheDispatcher.TryEnqueue(() =>
+                TheDispatcher.TryEnqueue(async () =>
                 {
                     if (executeGroup != null && layoutRoot != null)
                     {
                         executeGroup.Visibility = Visibility.Visible;
                         layoutRoot.Visibility = Visibility.Collapsed;
+
+                        dialog.Content = new Dialog(message);
+                        await dialog.ShowAsync();
                     }
                 });
             });
         }
         catch (Exception ex) 
         {
-            ContentDialog dialog = new ContentDialog();
-            dialog.XamlRoot = this.XamlRoot;
-            dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            dialog.Title = "Atención";
-            dialog.PrimaryButtonText = "Ok";
-            dialog.DefaultButton = ContentDialogButton.Primary;
+            message = "Error: " + ex;
 
-            var message = "Error: " + ex;
             dialog.Content = new Dialog(message);
             await dialog.ShowAsync();
         }

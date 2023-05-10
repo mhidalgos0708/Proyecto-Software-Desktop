@@ -151,15 +151,13 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
         return Directory.Exists(RutaJuego + NombreVideojuego);
     }
 
-    public static async Task<bool> DescargarVideojuego()
+    public static async Task<string> DescargarVideojuego()
     {
         await Task.CompletedTask;
         if (servicioVideojuego != null)
         {
-            var res = await servicioVideojuego.DownloadVideojuego(RutaJuego, NombreVideojuego + ".zip");
-            MessageBox.Show(res, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            return true;
+            return await servicioVideojuego.DownloadVideojuego(RutaJuego, NombreVideojuego + ".zip");
         }
-        return true;
+        return "";
     } 
 }
