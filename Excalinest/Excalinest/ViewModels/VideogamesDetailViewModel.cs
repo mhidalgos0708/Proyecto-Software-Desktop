@@ -158,6 +158,6 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
         {
             return await servicioVideojuego.DownloadVideojuego(RutaJuego, NombreVideojuego + ".zip");
         }
-        return "";
+        return "Error al descargar el videojuego.";
     } 
 }

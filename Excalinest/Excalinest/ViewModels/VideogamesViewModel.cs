@@ -169,18 +169,19 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         return Directory.Exists(RutaJuego + videojuego.Titulo);
     }
 
-    public static async Task<bool> DescargarVideojuegos()
+    public static async Task<string> DescargarVideojuegos()
     {
         await Task.CompletedTask;
+        var message_string = "";
         if (_videojuegoService != null)
         {
             foreach (var videojuego in _videojuegosSeleccionados)
             {
                 var res = await _videojuegoService.DownloadVideojuego(RutaJuego, videojuego.Titulo + ".zip");
-                MessageBox.Show(res, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                message_string += res + "\n";
             }
-            return true;
+            return message_string;
         }
-        return true;
+        return "Error al descargar los videojuegos";
     }
 }

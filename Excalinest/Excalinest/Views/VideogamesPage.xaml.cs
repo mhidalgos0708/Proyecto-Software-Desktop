@@ -150,56 +150,54 @@ public sealed partial class VideogamesPage : Page
     {
         var botonDescargar = FindName("BotonDescargar") as Button;
         var progressBar = FindName("layoutRoot") as StackPanel;
+
         if (botonDescargar != null && progressBar != null)
         {
             botonDescargar.Visibility = Visibility.Collapsed;
             progressBar.Visibility = Visibility.Visible;
         }
+
+        ContentDialog dialog = new ContentDialog();
+        dialog.XamlRoot = this.XamlRoot;
+        dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+        dialog.Title = "Atención";
+        dialog.PrimaryButtonText = "Ok";
+        dialog.DefaultButton = ContentDialogButton.Primary;
+
+        var message = "";
+
         try
         {
-            _ = Task.Run(() => DescargarVideoJuegoSegundoPlano()).ContinueWith((t) =>
+            _ = Task.Run(() => message = DescargarVideoJuegoSegundoPlano().Result).ContinueWith((t) =>
             {
-                TheDispatcher.TryEnqueue(() =>
+                TheDispatcher.TryEnqueue(async () =>
                 {
                     var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
                     DesactivarCheckboxes(videojuegosSeleccionados);
                     progressBar.Visibility = Visibility.Collapsed;
+                    dialog.Content = new Dialog(message);
+                    await dialog.ShowAsync();
                 });
             });
         }
         catch (Exception ex) 
         {
-            ContentDialog dialog = new ContentDialog();
-            dialog.XamlRoot = this.XamlRoot;
-            dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            dialog.Title = "Atención";
-            dialog.PrimaryButtonText = "Ok";
-            dialog.DefaultButton = ContentDialogButton.Primary;
-
-            var message = "Error: " + ex;
+            message = "Error: " + ex;
             dialog.Content = new Dialog(message);
             await dialog.ShowAsync();
         }
     }
 
-    public async void DescargarVideoJuegoSegundoPlano()
+    public async Task<string> DescargarVideoJuegoSegundoPlano()
     {
+        await Task.CompletedTask;
         try 
         {
-            await VideogamesViewModel.DescargarVideojuegos();
+            return await VideogamesViewModel.DescargarVideojuegos();
         }
         catch (Exception ex) 
         {
-            ContentDialog dialog = new ContentDialog();
-            dialog.XamlRoot = this.XamlRoot;
-            dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            dialog.Title = "Atención";
-            dialog.PrimaryButtonText = "Ok";
-            dialog.DefaultButton = ContentDialogButton.Primary;
-
-            var message = "Error: " + ex;
-            dialog.Content = new Dialog(message);
-            await dialog.ShowAsync();
+            return "Error: " + ex;
         }
     }
 

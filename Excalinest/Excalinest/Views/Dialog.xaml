@@ -13,7 +13,7 @@
 
     <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <!--  Content body  -->
-        <TextBlock Text="{x:Bind _dialogMessage}" />
+        <TextBlock TextWrapping="Wrap" Text="{x:Bind _dialogMessage}" />
     </StackPanel>
 
 </Page>
