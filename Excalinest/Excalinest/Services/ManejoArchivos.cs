@@ -11,8 +11,10 @@ namespace Excalinest.Services;
 internal class ManejoArchivos
 {
     public string _archivoConfigRuta = @"C:/Excalinest/VideojuegosExcalinest/config.txt";
+    public string _archivoPwdRuta = @"C:/Excalinest/VideojuegosExcalinest/pwd.txt";
     public string _rutaArchivoService;
     public int _segundosInactividadService;
+    public string _pwdService;
 
 
     public ManejoArchivos()
@@ -33,6 +35,14 @@ internal class ManejoArchivos
                 sw.WriteLine(@"C:/Excalinest/VideojuegosExcalinest/");
                 _segundosInactividadService  = 10;
                 _rutaArchivoService = @"C:/Excalinest/VideojuegosExcalinest/";
+            }
+        }
+        if (!File.Exists(_archivoPwdRuta))
+        {
+            using (StreamWriter sw = File.CreateText(_archivoPwdRuta))
+            {
+                sw.WriteLine("admin");
+                _pwdService = "admin";
             }
         }
     }
@@ -82,5 +92,10 @@ internal class ManejoArchivos
     public String leerRutaArchivos()
     {
         return File.ReadLines(_archivoConfigRuta).Last() + '\\';
+    }
+
+    public string leerPwd()
+    {
+        return File.ReadLines(_archivoPwdRuta).First();    
     }
 }

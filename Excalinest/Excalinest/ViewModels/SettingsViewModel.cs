@@ -109,4 +109,9 @@ public class SettingsViewModel : ObservableRecipient
         return operacionExitosa;
     }
 
+    public string GetPwd()
+    {
+        return _manejoArchivos.leerPwd();
+    }
+
 }

@@ -131,8 +131,9 @@ public sealed partial class SettingsPage : Page
 
         if (result == ContentDialogResult.Primary) {
             textValue = autDialog.TextValue;
-            Console.WriteLine(textValue);
-            Debug.WriteLine(textValue);
+            if(textValue == ViewModel.GetPwd())
+            {
+            }
         }
         else { }
     }
