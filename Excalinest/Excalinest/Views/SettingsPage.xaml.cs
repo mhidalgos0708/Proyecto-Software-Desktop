@@ -51,7 +51,7 @@ public sealed partial class SettingsPage : Page
         if (folder != null)
         {
             _carpetaValida = true;
-            StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", folder);
+            //StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", folder);
             PickFolderOutputTextBlock.Text = "Carpeta seleccionada: " + folder.Path;
             _carpetaSeleccionada = folder.Path;
         }
