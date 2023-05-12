@@ -51,6 +51,8 @@ public sealed partial class VideogamesPage : Page
     {
         var gridVideojuegos = FindName("GridVideojuegos") as AdaptiveGridView;
 
+        var checkBoxesList = new List<CheckBox>();
+
         if (gridVideojuegos != null)
         {
             foreach (var videojuego in videojuegos)
@@ -63,8 +65,20 @@ public sealed partial class VideogamesPage : Page
                     if (zonaCheckBoxSeleccion != null)
                     {
                         zonaCheckBoxSeleccion.Visibility = Visibility.Collapsed;
+
+                        var checkBoxSeleccion = BuscarItemsVisuales<CheckBox>(contenedorVideojuego, "CheckBoxSeleccion");
+
+                        if(checkBoxSeleccion != null)
+                        {
+                            checkBoxesList.Add(checkBoxSeleccion);
+                        }
                     }
                 }
+            }
+
+            foreach (var checkbox in checkBoxesList)
+            {
+                checkbox.IsChecked = false;
             }
         }
 
