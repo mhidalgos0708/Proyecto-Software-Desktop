@@ -48,7 +48,7 @@
                 TODO: Update item icons by updating FontIcon.Glyph properties.
                 https://docs.microsoft.com/windows/apps/design/style/segoe-fluent-icons-font#icon-list
                 -->
-                <NavigationViewItem x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="Excalinest.ViewModels.MainViewModel" Visibility="">
+                <NavigationViewItem x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="Excalinest.ViewModels.MainViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE80F;" />
                     </NavigationViewItem.Icon>
@@ -56,6 +56,11 @@
                 <NavigationViewItem x:Uid="Shell_Videogames" helpers:NavigationHelper.NavigateTo="Excalinest.ViewModels.VideogamesViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE7FC;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Uid="Shell_Autentication" helpers:NavigationHelper.NavigateTo="Excalinest.ViewModels.AutenticationViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE72E;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>

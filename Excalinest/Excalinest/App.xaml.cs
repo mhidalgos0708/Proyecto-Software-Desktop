@@ -53,7 +53,7 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
-
+        
         Host = Microsoft.Extensions.Hosting.Host.
         CreateDefaultBuilder().
         UseContentRoot(AppContext.BaseDirectory).
@@ -78,6 +78,8 @@ public partial class App : Application
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
+            services.AddTransient<AutenticationViewModel>();
+            services.AddTransient<AutenticationPage>();
             services.AddTransient<VideogamesDetailViewModel>();
             services.AddTransient<VideogamesDetailPage>();
             services.AddTransient<VideogamesViewModel>();

@@ -5,7 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Excalinest.Strings;
-public static class GlobalVariables
+public class GlobalVariables
 {
-    public static bool adminAutenticado = false;
+    public static bool adminAutenticado
+    {
+        get; set;
+    }
+
+    public GlobalVariables()
+    {
+        adminAutenticado = false;
+    }
 }
