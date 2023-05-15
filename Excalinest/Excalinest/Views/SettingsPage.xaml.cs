@@ -112,11 +112,11 @@ public sealed partial class SettingsPage : Page
 
     private void PruebaVariableGlobal(object sender, RoutedEventArgs e)
     {
-        if (GlobalVariables.adminAutenticado) { 
-            GlobalVariables.adminAutenticado = false; 
+        if (GlobalVariables.AdminAutenticado) { 
+            GlobalVariables.AdminAutenticado = false; 
         }
         else { 
-            GlobalVariables.adminAutenticado = true; 
+            GlobalVariables.AdminAutenticado = true; 
 
         }
         ReloadPage();

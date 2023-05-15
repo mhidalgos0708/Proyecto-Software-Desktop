@@ -26,7 +26,7 @@ public class BoolToVisibilityConverter
     {
         if (!(value is bool))
             return null;
-        return (bool)GlobalVariables.adminAutenticado ? TrueValue : FalseValue;
+        return GlobalVariables.AdminAutenticado ? TrueValue : FalseValue;
     }
 
     public object ConvertBack(object value, Type targetType,

@@ -1,12 +1,18 @@
-﻿using Excalinest.ViewModels;
+﻿using System.Diagnostics;
+using Excalinest.Strings;
+using Excalinest.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
+
+
 
 namespace Excalinest.Views;
 
 public sealed partial class AutenticationPage : Page
 {
-    public AutenticationViewModel ViewModel
+
+public AutenticationViewModel ViewModel
     {
         get;
     }
@@ -16,9 +22,15 @@ public sealed partial class AutenticationPage : Page
         ViewModel = App.GetService<AutenticationViewModel>();
         InitializeComponent();
         HeaderTextBox.Text = "Ingrese la contraseña de administrador";
-        btnLogIn.Visibility = Visibility.Visible;
-        btnLogOut.Visibility = Visibility.Collapsed;
 
+        CheckButtonsVisibility();
+    }
+
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        base.OnNavigatedTo(e);
+
+        CheckButtonsVisibility();
     }
 
     private async void OnAutenticarse(object sender, RoutedEventArgs e)
@@ -31,7 +43,7 @@ public sealed partial class AutenticationPage : Page
         dialog.Title = "Atención";
         dialog.PrimaryButtonText = "Aceptar";
         dialog.DefaultButton = ContentDialogButton.Primary;
-        
+
         if (pwdAdmin.Password != null) {
             if (pwdAdmin.Password == ViewModel.GetPwd())
             {
@@ -39,6 +51,10 @@ public sealed partial class AutenticationPage : Page
                 pwdAdmin.Password = "";
                 btnLogIn.Visibility = Visibility.Collapsed;
                 btnLogOut.Visibility = Visibility.Visible;
+
+                GlobalVariables.AdminAutenticado = true;
+
+                ReloadPage();
             }
             else
             {
@@ -67,6 +83,10 @@ public sealed partial class AutenticationPage : Page
                 pwdAdmin.Password = "";
                 btnLogOut.Visibility = Visibility.Collapsed;
                 btnLogIn.Visibility = Visibility.Visible;
+
+                GlobalVariables.AdminAutenticado = false;
+                
+                ReloadPage();
             }
             else
             {
@@ -74,5 +94,28 @@ public sealed partial class AutenticationPage : Page
             }
         }
         await dialog.ShowAsync();
+
+    }
+
+    private void ReloadPage()
+    {
+        Frame.Navigate(typeof(AutenticationPage));
+        Debug.WriteLine(GlobalVariables.AdminAutenticado);
+    }
+
+    private void CheckButtonsVisibility()
+    {
+        if (GlobalVariables.AdminAutenticado)
+        {
+            btnLogIn.Visibility = Visibility.Collapsed;
+            btnLogOut.Visibility = Visibility.Visible;
+        }
+        else
+        {
+            btnLogIn.Visibility = Visibility.Visible;
+            btnLogOut.Visibility = Visibility.Collapsed;
+        }
+        
+
     }
 }

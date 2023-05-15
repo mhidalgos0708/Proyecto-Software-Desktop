@@ -1,5 +1,7 @@
-﻿using Excalinest.Contracts.Services;
+﻿using CommunityToolkit.WinUI.UI;
+using Excalinest.Contracts.Services;
 using Excalinest.Helpers;
+using Excalinest.Strings;
 using Excalinest.ViewModels;
 
 using Microsoft.UI.Xaml;
@@ -80,5 +82,10 @@ public sealed partial class ShellPage : Page
         var result = navigationService.GoBack();
 
         args.Handled = result;
+    }
+
+    public void UpdateLayoutNavView()
+    {
+        NavigationViewControl.UpdateLayout();
     }
 }

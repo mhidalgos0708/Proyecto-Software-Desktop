@@ -97,7 +97,7 @@
                     Click="ViewModel.SalirApp"
                     ClickMode="Press"
                     Content="Salir"
-                    IsEnabled="{x:Bind global:GlobalVariables.adminAutenticado}"
+                    IsEnabled="{x:Bind global:GlobalVariables.AdminAutenticado}"
                     Style="{StaticResource AccentButtonStyle}"
                     Visibility="{Binding isVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
             </StackPanel>
