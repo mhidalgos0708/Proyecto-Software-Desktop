@@ -50,7 +50,7 @@
                     Name="MainMenuItem"
                     x:Uid="Shell_Main"
                     helpers:NavigationHelper.NavigateTo="Excalinest.ViewModels.MainViewModel"
-                    IsEnabled="{x:Bind global:GlobalVariables.getNoAutenticado()}">
+                    IsEnabled="{x:Bind global:GlobalVariables.getNoAutenticado(), Mode=OneWay}">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE80F;" />
                     </NavigationViewItem.Icon>
@@ -59,7 +59,7 @@
                     Name="VideogamesMenuItem"
                     x:Uid="Shell_Videogames"
                     helpers:NavigationHelper.NavigateTo="Excalinest.ViewModels.VideogamesViewModel"
-                    IsEnabled="{Binding Source={StaticResource myClass}, Path=AdminAutenticado}">
+                    IsEnabled="{Binding Source={StaticResource myClass}, Path=AdminAutenticado, Mode=OneWay}">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE7FC;" />
                     </NavigationViewItem.Icon>
