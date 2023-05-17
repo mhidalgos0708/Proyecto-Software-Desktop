@@ -10,6 +10,7 @@ using Microsoft.Graph;
 using Microsoft.UI.Xaml.Input;
 using Windows.System;
 using System.Diagnostics;
+using Excalinest.Strings;
 
 namespace Excalinest.Views;
 
@@ -19,8 +20,7 @@ public sealed partial class SettingsPage : Page
 
     private bool _carpetaValida = false;
     private string _carpetaSeleccionada = "";
-
-
+    public readonly bool isVisible = false;
     public SettingsViewModel ViewModel
     {
         get;
@@ -90,8 +90,8 @@ public sealed partial class SettingsPage : Page
             dialog.Content = new Dialog(message);
         }
 
-        await dialog.ShowAsync(); 
-        
+        await dialog.ShowAsync();
+
     }
 
     private void GetValues()
@@ -109,31 +109,8 @@ public sealed partial class SettingsPage : Page
         }
     }
 
-    private async void OnAutenticarse(object sender, RoutedEventArgs e)
+    private void ReloadPage()
     {
-        string textValue = string.Empty;
-
-        ContentDialog dialog = new ContentDialog();
-
-        // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
-        dialog.XamlRoot = this.XamlRoot;
-        dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-        dialog.Title = "Atención";
-        dialog.PrimaryButtonText = "Autenticar";
-        dialog.CloseButtonText = "Cancelar";
-        dialog.DefaultButton = ContentDialogButton.Primary;
-
-        AutenticacionDialog autDialog = new AutenticacionDialog();
-        dialog.Content = autDialog;
-
-
-        var result = await dialog.ShowAsync();
-
-        if (result == ContentDialogResult.Primary) {
-            textValue = autDialog.TextValue;
-            Console.WriteLine(textValue);
-            Debug.WriteLine(textValue);
-        }
-        else { }
+        Frame.Navigate(typeof(SettingsPage));
     }
 }

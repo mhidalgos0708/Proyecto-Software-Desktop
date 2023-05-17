@@ -4,10 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:Excalinest.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:global="using:Excalinest.Strings"
     xmlns:helpers="using:Excalinest.Helpers"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Loaded="OnLoaded">
+
+    <Page.Resources>
+        <global:GlobalVariables x:Key="myClass" />
+    </Page.Resources>
 
     <Grid>
         <Grid
@@ -37,25 +42,31 @@
             IsBackButtonVisible="Visible"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
             IsPaneToggleButtonVisible="False"
-            IsSettingsVisible="True"
+            IsSettingsVisible="False"
             PaneDisplayMode="LeftCompact"
             SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
             <NavigationView.MenuItems>
-                <!--
-                TODO: Update item titles by updating <x:Uid>.Content entries in Strings/en-us/Resources.resw.
-                https://docs.microsoft.com/windows/uwp/app-resources/localize-strings-ui-manifest#refer-to-a-string-resource-identifier-from-xaml
-
-                TODO: Update item icons by updating FontIcon.Glyph properties.
-                https://docs.microsoft.com/windows/apps/design/style/segoe-fluent-icons-font#icon-list
-                -->
-                <NavigationViewItem x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="Excalinest.ViewModels.MainViewModel">
+                <NavigationViewItem
+                    Name="MainMenuItem"
+                    x:Uid="Shell_Main"
+                    helpers:NavigationHelper.NavigateTo="Excalinest.ViewModels.MainViewModel"
+                    IsEnabled="{x:Bind global:GlobalVariables.getNoAutenticado(), Mode=OneWay}">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE80F;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Videogames" helpers:NavigationHelper.NavigateTo="Excalinest.ViewModels.VideogamesViewModel">
+                <NavigationViewItem
+                    Name="VideogamesMenuItem"
+                    x:Uid="Shell_Videogames"
+                    helpers:NavigationHelper.NavigateTo="Excalinest.ViewModels.VideogamesViewModel"
+                    IsEnabled="{Binding Source={StaticResource myClass}, Path=AdminAutenticado, Mode=OneWay}">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE7FC;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Uid="Shell_Autentication" helpers:NavigationHelper.NavigateTo="Excalinest.ViewModels.AutenticationViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE72E;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>

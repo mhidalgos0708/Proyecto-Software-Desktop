@@ -108,5 +108,4 @@ public class SettingsViewModel : ObservableRecipient
 
         return operacionExitosa;
     }
-
 }

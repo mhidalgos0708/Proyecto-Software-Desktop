@@ -18,6 +18,7 @@ public class PageService : IPageService
         Configure<SettingsViewModel, SettingsPage>();
         Configure<VideogamesViewModel, VideogamesPage>();
         Configure<VideogamesDetailViewModel, VideogamesDetailPage>();
+        Configure<AutenticationViewModel, AutenticationPage>();
     }
 
     public Type GetPageType(string key)
