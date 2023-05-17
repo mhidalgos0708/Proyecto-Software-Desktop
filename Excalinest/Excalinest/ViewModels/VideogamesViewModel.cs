@@ -169,7 +169,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         return Directory.Exists(RutaJuego + videojuego.Titulo);
     }
 
-    public static async Task<string> DescargarVideojuegos()
+    /*public static async Task<string> DescargarVideojuegos()
     {
         await Task.CompletedTask;
         var message_string = "";
@@ -183,5 +183,15 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
             return message_string;
         }
         return "Error al descargar los videojuegos";
+    }*/
+
+    public static async Task<string> DescargarVideojuego(string NombreVideojuego)
+    {
+        await Task.CompletedTask;
+        if (_videojuegoService != null)
+        {
+            return await _videojuegoService.DownloadVideojuego(RutaJuego, NombreVideojuego + ".zip");
+        }
+        return "Error al descargar el videojuego.";
     }
 }

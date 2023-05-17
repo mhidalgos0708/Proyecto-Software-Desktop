@@ -66,6 +66,25 @@ public sealed partial class VideogamesPage : Page
         VideogamesViewModel.LimpiarVideojuegosSeleccionados();
     }
 
+    public void DesactivarCheckbox(Videojuego videojuego)
+    {
+        var gridVideojuegos = FindName("GridVideojuegos") as AdaptiveGridView;
+
+        if (gridVideojuegos != null)
+        {
+            var contenedorVideojuego = gridVideojuegos.ContainerFromItem(videojuego);
+
+            if (contenedorVideojuego != null)
+            {
+                var zonaCheckBoxSeleccion = BuscarItemsVisuales<StackPanel>(contenedorVideojuego, "ZonaCheckBoxSeleccion");
+                if (zonaCheckBoxSeleccion != null)
+                {
+                    zonaCheckBoxSeleccion.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+    }
+
     public async void TagComboBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
     {
         ComboBox tag = (ComboBox)sender;
@@ -182,17 +201,33 @@ public sealed partial class VideogamesPage : Page
 
         try
         {
-            _ = Task.Run(() => message = DescargarVideoJuegoSegundoPlano().Result).ContinueWith((t) =>
+            var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
+
+            foreach(var videojuego in videojuegosSeleccionados)
             {
-                TheDispatcher.TryEnqueue(async () =>
+                var progressBarText = FindName("ProgressBarText") as TextBlock;
+                if(progressBarText != null)
                 {
-                    var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
-                    DesactivarCheckboxes(videojuegosSeleccionados);
-                    progressBar.Visibility = Visibility.Collapsed;
-                    dialog.Content = new Dialog(message);
-                    await dialog.ShowAsync();
+                    progressBarText.Text = "Descargando " + videojuego.Titulo + "...";
+                }
+
+                await Task.Run(() => message = DescargarVideoJuegoSegundoPlano(videojuego.Titulo).Result).ContinueWith((t) =>
+                {
+                    TheDispatcher.TryEnqueue(async () =>
+                    {
+                        if(videojuego.Titulo == videojuegosSeleccionados.Last().Titulo)
+                        {
+                            progressBarText.Visibility = Visibility.Collapsed;
+                        }
+
+                        DesactivarCheckbox(videojuego);
+                        dialog.Content = new Dialog(message);
+                        await dialog.ShowAsync();
+                    });
                 });
-            });
+            }
+
+            VideogamesViewModel.LimpiarVideojuegosSeleccionados();
         }
         catch (Exception ex) 
         {
@@ -202,12 +237,12 @@ public sealed partial class VideogamesPage : Page
         }
     }
 
-    public async Task<string> DescargarVideoJuegoSegundoPlano()
+    public async Task<string> DescargarVideoJuegoSegundoPlano(string NombreVideojuego)
     {
         await Task.CompletedTask;
         try 
         {
-            return await VideogamesViewModel.DescargarVideojuegos();
+            return await VideogamesViewModel.DescargarVideojuego(NombreVideojuego);
         }
         catch (Exception ex) 
         {

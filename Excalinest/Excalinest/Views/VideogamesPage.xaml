@@ -33,10 +33,11 @@
                 Visibility="Collapsed"
                 Margin="{StaticResource SmallTopMargin}">
                 <TextBlock
-                                Style="{ThemeResource SubtitleTextBlockStyle}"
-                                Margin="20,-20,0,0"
-                                HorizontalAlignment="Right"
-                                Text="Descargando..." />
+                    Name="ProgressBarText"       
+                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                    Margin="20,-20,0,0"
+                    HorizontalAlignment="Right"
+                    Text="Descargando..." />
                 <ProgressBar IsIndeterminate="True" Margin="10,10,0,0"/>
             </StackPanel>
             
