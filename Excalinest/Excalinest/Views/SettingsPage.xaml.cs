@@ -109,19 +109,6 @@ public sealed partial class SettingsPage : Page
         }
     }
 
-
-    private void PruebaVariableGlobal(object sender, RoutedEventArgs e)
-    {
-        if (GlobalVariables.AdminAutenticado) { 
-            GlobalVariables.AdminAutenticado = false; 
-        }
-        else { 
-            GlobalVariables.AdminAutenticado = true; 
-
-        }
-        ReloadPage();
-    }
-
     private void ReloadPage()
     {
         Frame.Navigate(typeof(SettingsPage));

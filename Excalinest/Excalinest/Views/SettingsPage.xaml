@@ -101,18 +101,6 @@
                     Style="{StaticResource AccentButtonStyle}"
                     Visibility="{Binding isVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
             </StackPanel>
-            <StackPanel
-                x:Name="grupoPrueba"
-                Margin="{StaticResource SmallTopMargin}"
-                HorizontalAlignment="Left">
-                <Button
-                    Width="180"
-                    Height="40"
-                    Click="PruebaVariableGlobal"
-                    ClickMode="Press"
-                    Content="Probar"
-                    Style="{StaticResource AccentButtonStyle}" />
-            </StackPanel>
         </StackPanel>
 
     </Grid>

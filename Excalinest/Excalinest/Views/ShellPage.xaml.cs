@@ -16,6 +16,8 @@ namespace Excalinest.Views;
 // TODO: Update NavigationViewItem titles and icons in ShellPage.xaml.
 public sealed partial class ShellPage : Page
 {
+
+    
     public ShellViewModel ViewModel
     {
         get;
@@ -35,6 +37,8 @@ public sealed partial class ShellPage : Page
         App.MainWindow.SetTitleBar(AppTitleBar);
         App.MainWindow.Activated += MainWindow_Activated;
         AppTitleBarText.Text = "AppDisplayName".GetLocalized();
+
+        GlobalVariables.StaticPropertyChanged += Global_StaticPropertyChanged;
     }
 
     private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -87,5 +91,23 @@ public sealed partial class ShellPage : Page
     public void UpdateLayoutNavView()
     {
         NavigationViewControl.UpdateLayout();
+    }
+
+    private void Global_StaticPropertyChanged(object sender, MyEventArgs e)
+    {
+        if (e.AdminAutenticado == nameof(GlobalVariables.AdminAutenticado))
+        {
+            MainMenuItem.IsEnabled = !GlobalVariables.AdminAutenticado;
+            VideogamesMenuItem.IsEnabled = GlobalVariables.AdminAutenticado;
+
+            if (GlobalVariables.AdminAutenticado)
+            {
+                NavigationViewControl.IsSettingsVisible = true;
+            }
+            else
+            {
+                NavigationViewControl.IsSettingsVisible = false;
+            }
+        }
     }
 }

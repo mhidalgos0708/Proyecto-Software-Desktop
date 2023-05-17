@@ -18,7 +18,7 @@ public class GlobalVariables
             if (_adminAutenticado != value)
             {
                 _adminAutenticado = value;
-                OnGlobalPropertyChanged("adminAutenticado");
+                OnStaticPropertyChanged(nameof(AdminAutenticado));
             }
         }
     }
@@ -28,7 +28,9 @@ public class GlobalVariables
         _adminAutenticado=false;
     }
 
-    static event PropertyChangedEventHandler GlobalPropertyChanged = delegate { };
+    public static event PropertyChangedEventHandler GlobalPropertyChanged = delegate { };
+    public static event EventHandler<MyEventArgs> StaticPropertyChanged;
+
 
     public static bool getNoAutenticado()
     {
@@ -42,4 +44,22 @@ public class GlobalVariables
             new PropertyChangedEventArgs(propertyName));
     }
 
+    private static void OnStaticPropertyChanged(string propertyName)
+    {
+        StaticPropertyChanged?.Invoke(null, new MyEventArgs(propertyName));
+    }
+
+}
+
+public class MyEventArgs : EventArgs
+{
+    public string AdminAutenticado
+    {
+        get;
+    }
+
+    public MyEventArgs(string adminAutenticado)
+    {
+        AdminAutenticado = adminAutenticado;
+    }
 }
