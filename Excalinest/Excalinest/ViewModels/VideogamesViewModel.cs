@@ -68,16 +68,31 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         {
             Tags.Add(item);
         }
-
-        
+        var message = "";
         // TODO: Replace with real data.
-        var data = await _videojuegoService.GetVideojuegos();
-        foreach (var item in data)
+        await Task.Run(() => message = getVideojuegos().Result).ContinueWith((t) =>
         {
-            Source.Add(item);
-        }
+            RutaJuego = _manejoArchivos.leerRutaArchivos();
+        });
+    }
 
-        RutaJuego = _manejoArchivos.leerRutaArchivos();
+
+    public async Task<string> getVideojuegos()
+    {
+        await Task.CompletedTask;
+        try
+        {
+            var data = await _videojuegoService.GetVideojuegos();
+            foreach (var item in data)
+            {
+                Source.Add(item);
+            }
+            return "";
+        }
+        catch (Exception ex)
+        {
+            return "Error: " + ex;
+        }
     }
 
     public void OnNavigatedFrom()

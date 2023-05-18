@@ -19,7 +19,6 @@ using CommunityToolkit.WinUI.UI;
 
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI;
-
 namespace Excalinest.Views;
 
 public sealed partial class VideogamesPage : Page
@@ -36,17 +35,17 @@ public sealed partial class VideogamesPage : Page
     public VideogamesPage()
     {
         ViewModel = App.GetService<VideogamesViewModel>();
+        
         InitializeComponent();
-
         TheDispatcher = this.DispatcherQueue;
-
+        
         /*if (GridView.DataFetchSize ==0)
         {
             gamesOrNot.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
         }*/
         // taglist.ItemsSource = ViewModel.Tags;
     }
-
+    
     public void DesactivarCheckboxes(List<Videojuego> videojuegos)
     {
         var gridVideojuegos = FindName("GridVideojuegos") as AdaptiveGridView;
@@ -165,10 +164,10 @@ public sealed partial class VideogamesPage : Page
                 DesactivarCheckboxes(videojuegosSeleccionados);
                 progressBar.Visibility = Visibility.Collapsed;
             });
-             });
+        });
     }
 
-    public async void DescargarVideoJuegoSegundoPlano()
+    public async Task DescargarVideoJuegoSegundoPlano()
     {
         await VideogamesViewModel.DescargarVideojuegos();
     }
