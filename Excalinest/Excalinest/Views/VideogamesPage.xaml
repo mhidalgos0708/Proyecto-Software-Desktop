@@ -74,9 +74,17 @@
                 Style="{ThemeResource BodyTextStyle}"
                 Text= "No se han encontrado videojuegos" />
 
+        <StackPanel 
+            Name="progressRing" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center">
+            <ProgressRing x:Name="progress1" Width="70" Height="70" MinWidth="70" MinHeight="70"/>
+        </StackPanel>
+
         <Grid x:Name="ContentArea">
             <controls:AdaptiveGridView
                 x:Name="GridVideojuegos"
+                ContainerContentChanging="GridVideojuegos_ContainerContentChanging"
                 animations:Connected.ListItemElementName="itemThumbnail"
                 animations:Connected.ListItemKey="animationKeyContentGrid"
                 DesiredWidth="270"

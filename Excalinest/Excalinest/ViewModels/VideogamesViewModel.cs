@@ -14,6 +14,7 @@ using Excalinest.Core.Contracts.Services;
 using Excalinest.Core.Models;
 using Excalinest.Core.Services;
 using Excalinest.Services;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace Excalinest.ViewModels;
@@ -63,21 +64,44 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
 
         Tags.Add(defaultValue);
 
-        var tags = await _etiquetaService.GetTags();
-        foreach (var item in tags)
+        var tags = new ObservableCollection<Tag>();
+        await Task.Run(() => tags = getTags().Result);
+
+        foreach (var tag in tags)
         {
-            Tags.Add(item);
+            Tags.Add(tag);
         }
 
-        
-        // TODO: Replace with real data.
+        var videojuegos = new ObservableCollection<Videojuego>();
+        await Task.Run(() => videojuegos = getVideojuegos().Result);
+
+        foreach (var videogame in videojuegos)
+        {
+            Source.Add(videogame);
+        }
+        RutaJuego = _manejoArchivos.leerRutaArchivos();
+    }
+
+    public async Task<ObservableCollection<Tag>> getTags()
+    {
+        var tags = new ObservableCollection<Tag>();
+        var data = await _etiquetaService.GetTags();
+        foreach (var item in data)
+        {
+            tags.Add(item);
+        }
+        return tags;
+    }
+
+    public async Task<ObservableCollection<Videojuego>> getVideojuegos()
+    {
+        var videojuegos = new ObservableCollection<Videojuego>();
         var data = await _videojuegoService.GetVideojuegos();
         foreach (var item in data)
         {
-            Source.Add(item);
+            videojuegos.Add(item);
         }
-
-        RutaJuego = _manejoArchivos.leerRutaArchivos();
+        return videojuegos;
     }
 
     public void OnNavigatedFrom()

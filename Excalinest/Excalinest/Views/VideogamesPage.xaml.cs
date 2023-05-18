@@ -6,6 +6,8 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI;
+using CommunityToolkit.WinUI.UI.Animations;
+using Microsoft.UI.Xaml.Navigation;
 
 namespace Excalinest.Views;
 
@@ -23,11 +25,11 @@ public sealed partial class VideogamesPage : Page
     public VideogamesPage()
     {
         ViewModel = App.GetService<VideogamesViewModel>();
+        
         InitializeComponent();
-
         TheDispatcher = this.DispatcherQueue;
     }
-
+    
     public void DesactivarCheckboxes(List<Videojuego> videojuegos)
     {
         var gridVideojuegos = FindName("GridVideojuegos") as AdaptiveGridView;
@@ -309,6 +311,24 @@ public sealed partial class VideogamesPage : Page
                     zonaCheckBoxSeleccion.Visibility = Visibility.Collapsed;
                 }
             }
+        }
+    }
+
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        var progressRing = FindName("progressRing") as StackPanel;
+
+        if(progressRing != null)
+        {
+            progressRing.Visibility = Visibility.Visible;
+        }
+    }
+
+    private void GridVideojuegos_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+    {
+        if (progressRing != null)
+        {
+            progressRing.Visibility = Visibility.Collapsed;
         }
     }
 }
