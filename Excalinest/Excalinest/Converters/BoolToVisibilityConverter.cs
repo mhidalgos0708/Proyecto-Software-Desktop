@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using Excalinest.Strings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace Excalinest.Converters;
-public class BoolToVisibilityConverter
+public class BoolToVisibilityConverter: IValueConverter
 {
     public Visibility TrueValue { get; set; }
     public Visibility FalseValue { get; set; }
@@ -22,16 +23,13 @@ public class BoolToVisibilityConverter
         FalseValue = Visibility.Collapsed;
     }
 
-    public object? Convert(object value, Type targetType, object parameter, string culture)
+    public object Convert(object value, Type targetType, object parameter, string language)
     {
-        if (!(value is bool))
-            return null;
-        return GlobalVariables.AdminAutenticado ? TrueValue : FalseValue;
+        if (value is bool && (bool)value)
+            return Visibility.Visible;
+
+        return Visibility.Collapsed;
     }
 
-    public object ConvertBack(object value, Type targetType,
-        object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
+    public object ConvertBack(object value, Type targetType, object parameter, string language) => throw new NotImplementedException();
 }
