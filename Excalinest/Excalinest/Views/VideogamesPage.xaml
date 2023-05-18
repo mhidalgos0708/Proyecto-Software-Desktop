@@ -83,6 +83,7 @@
         <Grid x:Name="ContentArea">
             <controls:AdaptiveGridView
                 x:Name="GridVideojuegos"
+                ContainerContentChanging="GridVideojuegos_ContainerContentChanging"
                 animations:Connected.ListItemElementName="itemThumbnail"
                 animations:Connected.ListItemKey="animationKeyContentGrid"
                 DesiredWidth="270"

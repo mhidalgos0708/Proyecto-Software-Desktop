@@ -19,6 +19,9 @@ using CommunityToolkit.WinUI.UI;
 
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI;
+using CommunityToolkit.WinUI.UI.Animations;
+using Microsoft.UI.Xaml.Navigation;
+
 namespace Excalinest.Views;
 
 public sealed partial class VideogamesPage : Page
@@ -231,6 +234,24 @@ public sealed partial class VideogamesPage : Page
                     zonaCheckBoxSeleccion.Visibility = Visibility.Collapsed;
                 }
             }
+        }
+    }
+
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        var progressRing = FindName("progressRing") as StackPanel;
+
+        if(progressRing != null)
+        {
+            progressRing.Visibility = Visibility.Visible;
+        }
+    }
+
+    private void GridVideojuegos_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+    {
+        if (progressRing != null)
+        {
+            progressRing.Visibility = Visibility.Collapsed;
         }
     }
 }

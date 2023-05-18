@@ -14,6 +14,7 @@ using Excalinest.Core.Contracts.Services;
 using Excalinest.Core.Models;
 using Excalinest.Core.Services;
 using Excalinest.Services;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace Excalinest.ViewModels;
@@ -63,36 +64,44 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
 
         Tags.Add(defaultValue);
 
-        var tags = await _etiquetaService.GetTags();
-        foreach (var item in tags)
+        var tags = new ObservableCollection<Tag>();
+        await Task.Run(() => tags = getTags().Result);
+
+        foreach (var tag in tags)
         {
-            Tags.Add(item);
+            Tags.Add(tag);
         }
-        var message = "";
-        // TODO: Replace with real data.
-        await Task.Run(() => message = getVideojuegos().Result).ContinueWith((t) =>
+
+        var videojuegos = new ObservableCollection<Videojuego>();
+        await Task.Run(() => videojuegos = getVideojuegos().Result);
+
+        foreach (var videogame in videojuegos)
         {
-            RutaJuego = _manejoArchivos.leerRutaArchivos();
-        });
+            Source.Add(videogame);
+        }
+        RutaJuego = _manejoArchivos.leerRutaArchivos();
     }
 
-
-    public async Task<string> getVideojuegos()
+    public async Task<ObservableCollection<Tag>> getTags()
     {
-        await Task.CompletedTask;
-        try
+        var tags = new ObservableCollection<Tag>();
+        var data = await _etiquetaService.GetTags();
+        foreach (var item in data)
         {
-            var data = await _videojuegoService.GetVideojuegos();
-            foreach (var item in data)
-            {
-                Source.Add(item);
-            }
-            return "";
+            tags.Add(item);
         }
-        catch (Exception ex)
+        return tags;
+    }
+
+    public async Task<ObservableCollection<Videojuego>> getVideojuegos()
+    {
+        var videojuegos = new ObservableCollection<Videojuego>();
+        var data = await _videojuegoService.GetVideojuegos();
+        foreach (var item in data)
         {
-            return "Error: " + ex;
+            videojuegos.Add(item);
         }
+        return videojuegos;
     }
 
     public void OnNavigatedFrom()
