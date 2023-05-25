@@ -65,19 +65,23 @@ public class ServicioVideojuego
             var fileStream = bucket.OpenDownloadStreamByName(nombreArchivo);
             try
             {
-                if(!Directory.Exists(ruta + nombreArchivo[..^4]))
+                if (Directory.Exists(ruta + nombreArchivo[..^4]))
                 {
-                    using var localFileStream = new FileStream(ruta + nombreArchivo, FileMode.CreateNew);
-                    fileStream.CopyTo(localFileStream);
-                    fileStream.Close();
-                    localFileStream.Close();
-
-                    // Descomprimir y borrar zip
-                    ZipFile.ExtractToDirectory(ruta + nombreArchivo, ruta + nombreArchivo[..^4]);
-                    File.Delete(ruta + nombreArchivo);
-                    return "Videojuego " + nombreArchivo[..^4] + " descargado en ruta " + ruta;
+                    return "Videojuego " + nombreArchivo[..^4] + " ya fue descargado previamente";
                 }
-                return "Videojuego " + nombreArchivo[..^4] + " ya fue descargado previamente";
+                if (File.Exists(ruta + nombreArchivo))
+                {
+                    File.Delete(ruta + nombreArchivo);
+                }
+                using var localFileStream = new FileStream(ruta + nombreArchivo, FileMode.CreateNew);
+                fileStream.CopyTo(localFileStream);
+                fileStream.Close();
+                localFileStream.Close();
+
+                // Descomprimir y borrar zip
+                ZipFile.ExtractToDirectory(ruta + nombreArchivo, ruta + nombreArchivo[..^4]);
+                File.Delete(ruta + nombreArchivo);
+                return "Videojuego " + nombreArchivo[..^4] + " descargado en ruta " + ruta;
             }
             catch (Exception ex)
             {
