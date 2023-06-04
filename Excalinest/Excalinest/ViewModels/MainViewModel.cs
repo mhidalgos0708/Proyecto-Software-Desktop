@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing.Printing;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,10 +13,12 @@ using Excalinest.Core.Contracts.Services;
 using Excalinest.Core.Models;
 using Excalinest.Core.Services;
 using Excalinest.Services;
+using Excalinest.Strings;
 using Excalinest.Views;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.VisualBasic.Logging;
+using Windows.Networking.Connectivity;
 
 namespace Excalinest.ViewModels;
 
@@ -40,6 +43,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
 
     public String path = "";
 
+    GlobalFunctions globalFunctions;
 
     public MainViewModel(INavigationService navigationService, ISampleDataService sampleDataService)
     {
@@ -50,10 +54,13 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         _videojuegoEtiquetaService = new ServicioVideojuegoEtiqueta(new MongoConnection());
 
         ItemClickCommand = new RelayCommand<Videojuego>(OnItemClick);
+        
     }
 
     public async void OnNavigatedTo(object parameter)
     {
+        globalFunctions = new GlobalFunctions();
+        
         Source.Clear();
 
         Tag defaultValue = new Tag();
@@ -62,23 +69,38 @@ public class MainViewModel : ObservableRecipient, INavigationAware
 
         Tags.Add(defaultValue);
 
-        var tags = await _etiquetaService.GetTags();
-        foreach (var item in tags)
+        try
         {
-            Tags.Add(item);
-        }
-
-        path = _manejoArchivos.leerRutaArchivos();
-        
-        // TODO: Replace with real data.
-        var data = await _videojuegoService.GetVideojuegos();
-        foreach (var item in data)
-        {
-            if (Directory.Exists(path+item.Titulo))
+            var tags = await _etiquetaService.GetTags();
+            foreach (var item in tags)
             {
-                Source.Add(item);
+                Tags.Add(item);
+            }
+
+            path = _manejoArchivos.leerRutaArchivos();
+
+            // TODO: Replace with real data.
+            var data = await _videojuegoService.GetVideojuegos();
+            foreach (var item in data)
+            {
+                if (Directory.Exists(path + item.Titulo))
+                {
+                    Source.Add(item);
+                }
             }
         }
+        catch (Exception ex){
+            if (!globalFunctions.CheckInternetConnectivity())
+            {
+                 MessageBox.Show("No hay conexión a Internet", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
+        }
+
+        
     }
 
     public void OnNavigatedFrom()
@@ -124,4 +146,5 @@ public class MainViewModel : ObservableRecipient, INavigationAware
             }
         }
     }
+
 }

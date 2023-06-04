@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Networking.Connectivity;
 
 namespace Excalinest.Strings;
 public class GlobalVariables
@@ -61,5 +62,22 @@ public class MyEventArgs : EventArgs
     public MyEventArgs(string adminAutenticado)
     {
         AdminAutenticado = adminAutenticado;
+    }
+}
+
+public class GlobalFunctions{
+
+    public GlobalFunctions()
+    {}
+
+    public bool CheckInternetConnectivity()
+    {
+        ConnectionProfile internetConnectionProfile = NetworkInformation.GetInternetConnectionProfile();
+        if (internetConnectionProfile != null)
+        {
+            NetworkConnectivityLevel connectivityLevel = internetConnectionProfile.GetNetworkConnectivityLevel();
+            return connectivityLevel == NetworkConnectivityLevel.InternetAccess;
+        }
+        return false;
     }
 }

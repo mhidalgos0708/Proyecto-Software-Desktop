@@ -18,7 +18,20 @@
     </Page.Resources>
 
     <Grid x:Name="ContentArea">
+        <StackPanel
+            Name="infoBar"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Visibility="Collapsed">
+            <InfoBar
+                Title="Atención"
+                IsClosable="False"
+                IsOpen="True"
+                Message="No se pueden cargar la información del videojuego, no hay conexión a Internet."
+                Severity="Informational" />
+        </StackPanel>
         <ScrollViewer IsTabStop="True">
+
             <StackPanel x:Name="contentPanel">
                 <RelativePanel>
                     <Grid

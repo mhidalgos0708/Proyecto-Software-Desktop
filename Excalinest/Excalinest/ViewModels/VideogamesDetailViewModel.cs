@@ -8,6 +8,7 @@ using Excalinest.Core.Models;
 using Excalinest.Core.Services;
 using Excalinest.PatronesDiseño.ObserverTiempoInac;
 using Excalinest.Services;
+using Excalinest.Strings;
 
 namespace Excalinest.ViewModels;
 using Tag = Excalinest.Core.Models.Tag;
@@ -28,6 +29,8 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
     private static int SegundosInactividad = 0;
     private static string RutaJuego = "";
 
+    private GlobalFunctions _globalFunctions;
+
     ManejoArchivos _manejoArchivos = new ManejoArchivos();
 
     public Videojuego? Item
@@ -43,27 +46,32 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
         SegundosInactividad = _manejoArchivos.leerSegundosInactividad();
         _servicioVideojuegoEtiqueta = new ServicioVideojuegoEtiqueta(new MongoConnection());
 
+        _globalFunctions = new GlobalFunctions();
         _listaEtiquetas = new List<Tag>();
     }
 
     public async void OnNavigatedTo(object parameter)
     {
-        _listaEtiquetas.Clear();
-        if (parameter is string titulo)
+        if (_globalFunctions.CheckInternetConnectivity())
         {
-            if (servicioVideojuego != null)
+            _listaEtiquetas.Clear();
+            if (parameter is string titulo)
             {
-                Item = await servicioVideojuego.GetVideojuegoPorTitulo(titulo);
-                NombreVideojuego = Item.Titulo;
-
-                var data = await _servicioVideojuegoEtiqueta.GetEtiquetasByVideojuego(Item.ID);
-                foreach (var item in data)
+                if (servicioVideojuego != null)
                 {
-                    _listaEtiquetas.Add(item);
+                    Item = await servicioVideojuego.GetVideojuegoPorTitulo(titulo);
+                    NombreVideojuego = Item.Titulo;
+
+                    var data = await _servicioVideojuegoEtiqueta.GetEtiquetasByVideojuego(Item.ID);
+                    foreach (var item in data)
+                    {
+                        _listaEtiquetas.Add(item);
+                    }
                 }
+                RutaJuego = _manejoArchivos.leerRutaArchivos();
             }
-            RutaJuego = _manejoArchivos.leerRutaArchivos();
         }
+        
     }
 
     public void OnNavigatedFrom()
