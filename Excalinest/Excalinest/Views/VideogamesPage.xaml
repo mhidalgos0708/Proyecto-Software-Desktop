@@ -13,150 +13,150 @@
         <local:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
     </Page.Resources>
 
-    <StackPanel>
-        <StackPanel Margin="50" Orientation="Horizontal">
-            <TextBlock
-                Width="250"
-                FontSize="14"
-                Text="Seleccione un filtro por etiqueta" />
-
-            <ComboBox
-                Width="400"
-                Height="35"
-                DisplayMemberPath="Nombre"
-                ItemsSource="{x:Bind ViewModel.Tags}"
-                SelectedValuePath="Nombre"
-                SelectionChanged="TagComboBox_SelectionChanged" />
-
-            <StackPanel
-                x:Name="layoutRoot"
-                Visibility="Collapsed"
-                Margin="{StaticResource SmallTopMargin}">
+    <ScrollViewer>
+        <StackPanel>
+            <StackPanel Margin="50" Orientation="Horizontal">
                 <TextBlock
-                    Name="ProgressBarText"       
-                    Style="{ThemeResource SubtitleTextBlockStyle}"
-                    Margin="20,-20,0,0"
-                    HorizontalAlignment="Right"
-                    Text="Descargando..." />
-                <ProgressBar IsIndeterminate="True" Margin="10,10,0,0"/>
-            </StackPanel>
-            
-            <Button
-                Margin="20,0,0,0"
-                Visibility="Collapsed"
-                Name="BotonDescargar"
-                Width="130"
-                Height="35"
-                Click="DescargarVideojuegos"
-                ClickMode="Press"
-                Style="{StaticResource AccentButtonStyle}"
-                HorizontalAlignment="Right">
+                    Width="250"
+                    FontSize="14"
+                    Text="Seleccione un filtro por etiqueta" />
+
+                <ComboBox
+                    Width="400"
+                    Height="35"
+                    DisplayMemberPath="Nombre"
+                    ItemsSource="{x:Bind ViewModel.Tags}"
+                    SelectedValuePath="Nombre"
+                    SelectionChanged="TagComboBox_SelectionChanged" />
+
+                <StackPanel
+                    x:Name="layoutRoot"
+                    Visibility="Collapsed"
+                    Margin="{StaticResource SmallTopMargin}">
+                    <TextBlock
+                        Name="ProgressBarText"       
+                        Style="{ThemeResource SubtitleTextBlockStyle}"
+                        Margin="20,-20,0,0"
+                        HorizontalAlignment="Right"
+                        Text="Descargando..." />
+                    <ProgressBar IsIndeterminate="True" Margin="10,10,0,0"/>
+                </StackPanel>
+
+                <Button
+                    Margin="20,0,0,0"
+                    Visibility="Collapsed"
+                    Name="BotonDescargar"
+                    Width="130"
+                    Height="35"
+                    Click="DescargarVideojuegos"
+                    ClickMode="Press"
+                    Style="{StaticResource AccentButtonStyle}"
+                    HorizontalAlignment="Right">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon 
-                        HorizontalAlignment="Left"
-                        Symbol="Download" />
+                            HorizontalAlignment="Left"
+                            Symbol="Download" />
                         <TextBlock 
-                        HorizontalAlignment="Right"
-                        Margin="10,0,0,0"
-                        Text="Descargar" />
+                            HorizontalAlignment="Right"
+                            Margin="10,0,0,0"
+                            Text="Descargar" />
                     </StackPanel>
-            </Button>
+                </Button>
+            </StackPanel>
 
-            
-        </StackPanel>
+            <TextBlock
+                    Name="gamesOrNot"
+                    Margin="{StaticResource XXSmallTopMargin}"
+                    HorizontalAlignment="Center"
+                    FontSize="20"
+                    Visibility="Collapsed"
+                    Style="{ThemeResource BodyTextStyle}"
+                    Text= "No se han encontrado videojuegos" />
 
-        <TextBlock
-                Name="gamesOrNot"
-                Margin="{StaticResource XXSmallTopMargin}"
-                HorizontalAlignment="Center"
-                FontSize="20"
-                Visibility="Collapsed"
-                Style="{ThemeResource BodyTextStyle}"
-                Text= "No se han encontrado videojuegos" />
+            <StackPanel 
+                Name="progressRing" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center">
+                <ProgressRing x:Name="progress1" Width="70" Height="70" MinWidth="70" MinHeight="70"/>
+            </StackPanel>
 
-        <StackPanel 
-            Name="progressRing" 
-            HorizontalAlignment="Center" 
-            VerticalAlignment="Center">
-            <ProgressRing x:Name="progress1" Width="70" Height="70" MinWidth="70" MinHeight="70"/>
-        </StackPanel>
-
-        <Grid x:Name="ContentArea">
-            <controls:AdaptiveGridView
-                x:Name="GridVideojuegos"
-                ContainerContentChanging="GridVideojuegos_ContainerContentChanging"
-                animations:Connected.ListItemElementName="itemThumbnail"
-                animations:Connected.ListItemKey="animationKeyContentGrid"
-                DesiredWidth="270"
-                IsItemClickEnabled="True"
-                ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
-                ItemHeight="240"
-                ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}"
-                SelectionMode="None"
-                StretchContentForSingleRow="False">
-                <controls:AdaptiveGridView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Videojuego">
-                        <Border Background="Transparent" PointerEntered="CajaVideojuego_PointerEntered" PointerExited="CajaVideojuego_PointerExited">
-                            <Grid x:Name="itemThumbnail" Padding="{StaticResource XSmallLeftTopRightBottomMargin}">
-                                <StackPanel
-                                    Name="myStackPanel"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Width="180"
-                                    Height="Auto">
-                                    <!-- <FontIcon AutomationProperties.Name="{x:Bind Titulo}" FontSize="20" Glyph="{x:Bind Symbol}"  /> -->
-                                    <Image
-                                        Name="Cover"
-                                        Source="{Binding Portada.Data, Converter={StaticResource ByteArrayToImageConverter}}"/>
-
-                                    <TextBlock
-                                        Margin="{StaticResource XXSmallTopMargin}"
+            <Grid x:Name="ContentArea">
+                <controls:AdaptiveGridView
+                    x:Name="GridVideojuegos"
+                    ContainerContentChanging="GridVideojuegos_ContainerContentChanging"
+                    animations:Connected.ListItemElementName="itemThumbnail"
+                    animations:Connected.ListItemKey="animationKeyContentGrid"
+                    DesiredWidth="270"
+                    IsItemClickEnabled="True"
+                    ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
+                    ItemHeight="240"
+                    ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}"
+                    SelectionMode="None"
+                    StretchContentForSingleRow="False">
+                    <controls:AdaptiveGridView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Videojuego">
+                            <Border Background="Transparent" PointerEntered="CajaVideojuego_PointerEntered" PointerExited="CajaVideojuego_PointerExited">
+                                <Grid x:Name="itemThumbnail" Padding="{StaticResource XSmallLeftTopRightBottomMargin}">
+                                    <StackPanel
+                                        Name="myStackPanel"
                                         HorizontalAlignment="Center"
-                                        FontSize="20"
-                                        Style="{ThemeResource BodyTextStyle}"
-                                        Text="{x:Bind Titulo}"/>
-                                </StackPanel>
-                                <StackPanel
-                                    x:Name="ZonaCheckBoxSeleccion"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    Visibility="Collapsed"
-                                    Tag="{x:Bind}">
-                                    <Grid Background="#C8C0C0C0" CornerRadius="10">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="25" />
-                                        </Grid.ColumnDefinitions>
+                                        VerticalAlignment="Center"
+                                        Width="180"
+                                        Height="Auto">
+                                        <!-- <FontIcon AutomationProperties.Name="{x:Bind Titulo}" FontSize="20" Glyph="{x:Bind Symbol}"  /> -->
+                                        <Image
+                                            Name="Cover"
+                                            Source="{Binding Portada.Data, Converter={StaticResource ByteArrayToImageConverter}}"/>
 
-                                        <SymbolIcon Symbol="Download" HorizontalAlignment="Left" Grid.Column="0"/>
+                                        <TextBlock
+                                            Margin="{StaticResource XXSmallTopMargin}"
+                                            HorizontalAlignment="Center"
+                                            FontSize="20"
+                                            Style="{ThemeResource BodyTextStyle}"
+                                            Text="{x:Bind Titulo}"/>
+                                    </StackPanel>
+                                    <StackPanel
+                                        x:Name="ZonaCheckBoxSeleccion"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Visibility="Collapsed"
+                                        Tag="{x:Bind}">
+                                        <Grid Background="#C8C0C0C0" CornerRadius="10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="25" />
+                                            </Grid.ColumnDefinitions>
 
-                                        <CheckBox x:Name="CheckBoxSeleccion" 
-                                            IsChecked="False" 
-                                            HorizontalAlignment="Left" 
-                                            Grid.Column="1" 
-                                            Tag="{x:Bind}" 
-                                            Checked="CheckBoxSeleccion_Checked"
-                                            Unchecked="CheckBoxSeleccion_UnChecked"/>
-                                    </Grid>
-                                </StackPanel>
-                                <StackPanel
-                                    x:Name="Descargado"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    Visibility="Collapsed"
-                                    Tag="{x:Bind}">
-                                    <Grid Background="#C8CCCCCC" CornerRadius="4">
-                                        <SymbolIcon Symbol="Accept" HorizontalAlignment="Left" Grid.Column="0"/>
-                                    </Grid>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </controls:AdaptiveGridView.ItemTemplate>
-            </controls:AdaptiveGridView>
-        </Grid>
-    </StackPanel>
+                                            <SymbolIcon Symbol="Download" HorizontalAlignment="Left" Grid.Column="0"/>
+
+                                            <CheckBox x:Name="CheckBoxSeleccion" 
+                                                IsChecked="False" 
+                                                HorizontalAlignment="Left" 
+                                                Grid.Column="1" 
+                                                Tag="{x:Bind}" 
+                                                Checked="CheckBoxSeleccion_Checked"
+                                                Unchecked="CheckBoxSeleccion_UnChecked"/>
+                                        </Grid>
+                                    </StackPanel>
+                                    <StackPanel
+                                        x:Name="Descargado"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Visibility="Collapsed"
+                                        Tag="{x:Bind}">
+                                        <Grid Background="#C8CCCCCC" CornerRadius="4">
+                                            <SymbolIcon Symbol="Accept" HorizontalAlignment="Left" Grid.Column="0"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </controls:AdaptiveGridView.ItemTemplate>
+                </controls:AdaptiveGridView>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
 </Page>
