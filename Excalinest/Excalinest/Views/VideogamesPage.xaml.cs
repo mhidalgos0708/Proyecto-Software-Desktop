@@ -8,11 +8,15 @@ using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI;
 using CommunityToolkit.WinUI.UI.Animations;
 using Microsoft.UI.Xaml.Navigation;
+using Excalinest.Strings;
 
 namespace Excalinest.Views;
 
 public sealed partial class VideogamesPage : Page
 {
+
+    private GlobalFunctions _globalFunctions;
+
     public Microsoft.UI.Dispatching.DispatcherQueue TheDispatcher
     {
         get; set;
@@ -28,6 +32,18 @@ public sealed partial class VideogamesPage : Page
         
         InitializeComponent();
         TheDispatcher = this.DispatcherQueue;
+
+        _globalFunctions = new GlobalFunctions();
+
+        if (_globalFunctions.CheckInternetConnectivity())
+        {
+            var infoBar = FindName("infoBar") as StackPanel;
+
+            if (infoBar != null)
+            {
+                infoBar.Visibility = Visibility.Collapsed;
+            }
+        }
     }
     
     public void DesactivarCheckboxes(List<Videojuego> videojuegos)
@@ -89,38 +105,42 @@ public sealed partial class VideogamesPage : Page
 
     public async void TagComboBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
     {
-        ComboBox tag = (ComboBox)sender;
-        Tag chosenTag = (Tag)tag.SelectedItem;
-
-        try 
+        if (_globalFunctions.CheckInternetConnectivity())
         {
-            // Limpiar selección de videojuegos al filtrar por etiqueta
+            ComboBox tag = (ComboBox)sender;
+            Tag chosenTag = (Tag)tag.SelectedItem;
 
-            var botonDescargar = FindName("BotonDescargar") as Button;
-            if (botonDescargar != null)
+            try
             {
-                botonDescargar.Visibility = Visibility.Collapsed;
+                // Limpiar selección de videojuegos al filtrar por etiqueta
+
+                var botonDescargar = FindName("BotonDescargar") as Button;
+                if (botonDescargar != null)
+                {
+                    botonDescargar.Visibility = Visibility.Collapsed;
+                }
+
+                var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
+
+                DesactivarCheckboxes(videojuegosSeleccionados);
+
+                await ViewModel.GetVideojuegosByTag(chosenTag.ID);
             }
+            catch (Exception ex)
+            {
+                ContentDialog dialog = new ContentDialog();
+                dialog.XamlRoot = this.XamlRoot;
+                dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                dialog.Title = "Atención";
+                dialog.PrimaryButtonText = "Ok";
+                dialog.DefaultButton = ContentDialogButton.Primary;
 
-            var videojuegosSeleccionados = VideogamesViewModel.ObtenerVideojuegosSeleccionados();
-
-            DesactivarCheckboxes(videojuegosSeleccionados);
-
-            await ViewModel.GetVideojuegosByTag(chosenTag.ID);
-        } 
-        catch (Exception ex) 
-        {
-            ContentDialog dialog = new ContentDialog();
-            dialog.XamlRoot = this.XamlRoot;
-            dialog.Style = Microsoft.UI.Xaml.Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            dialog.Title = "Atención";
-            dialog.PrimaryButtonText = "Ok";
-            dialog.DefaultButton = ContentDialogButton.Primary;
-
-            var message = "Error: " + ex;
-            dialog.Content = new Dialog(message);
-            await dialog.ShowAsync();
+                var message = "Error: " + ex;
+                dialog.Content = new Dialog(message);
+                await dialog.ShowAsync();
+            }
         }
+        
     }
 
     // Agregar videojuego a lista de videojuegos por descargar al activar su respectiva casilla de selección múltiple
@@ -316,12 +336,33 @@ public sealed partial class VideogamesPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        var progressRing = FindName("progressRing") as StackPanel;
-
-        if(progressRing != null)
+        if (!_globalFunctions.CheckInternetConnectivity())
         {
-            progressRing.Visibility = Visibility.Visible;
+            var progressRing = FindName("progressRing") as StackPanel;
+
+            if (progressRing != null)
+            {
+                progressRing.Visibility = Visibility.Collapsed;
+            }
+
+            var infoBar = FindName("infoBar") as StackPanel;
+
+            if (infoBar != null)
+            {
+                infoBar.Visibility = Visibility.Visible;
+            }
+
         }
+        else
+        {
+            var progressRing = FindName("progressRing") as StackPanel;
+
+            if (progressRing != null)
+            {
+                progressRing.Visibility = Visibility.Visible;
+            }
+        }
+        
     }
 
     private void GridVideojuegos_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
@@ -329,6 +370,11 @@ public sealed partial class VideogamesPage : Page
         if (progressRing != null)
         {
             progressRing.Visibility = Visibility.Collapsed;
+        }
+        if(infoBar != null)
+        {
+        
+            infoBar.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -5,8 +5,9 @@
     xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Excalinest.Converters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:Excalinest.Core.Models" xmlns:local="using:Excalinest.Converters"
+    xmlns:models="using:Excalinest.Core.Models"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -31,61 +32,77 @@
 
                 <StackPanel
                     x:Name="layoutRoot"
-                    Visibility="Collapsed"
-                    Margin="{StaticResource SmallTopMargin}">
+                    Margin="{StaticResource SmallTopMargin}"
+                    Visibility="Collapsed">
                     <TextBlock
-                        Name="ProgressBarText"       
-                        Style="{ThemeResource SubtitleTextBlockStyle}"
+                        Name="ProgressBarText"
                         Margin="20,-20,0,0"
                         HorizontalAlignment="Right"
+                        Style="{ThemeResource SubtitleTextBlockStyle}"
                         Text="Descargando..." />
-                    <ProgressBar IsIndeterminate="True" Margin="10,10,0,0"/>
+                    <ProgressBar Margin="10,10,0,0" IsIndeterminate="True" />
                 </StackPanel>
 
                 <Button
-                    Margin="20,0,0,0"
-                    Visibility="Collapsed"
                     Name="BotonDescargar"
                     Width="130"
                     Height="35"
+                    Margin="20,0,0,0"
+                    HorizontalAlignment="Right"
                     Click="DescargarVideojuegos"
                     ClickMode="Press"
                     Style="{StaticResource AccentButtonStyle}"
-                    HorizontalAlignment="Right">
+                    Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon 
-                            HorizontalAlignment="Left"
-                            Symbol="Download" />
-                        <TextBlock 
-                            HorizontalAlignment="Right"
+                        <SymbolIcon HorizontalAlignment="Left" Symbol="Download" />
+                        <TextBlock
                             Margin="10,0,0,0"
+                            HorizontalAlignment="Right"
                             Text="Descargar" />
                     </StackPanel>
                 </Button>
+
+
             </StackPanel>
 
             <TextBlock
-                    Name="gamesOrNot"
-                    Margin="{StaticResource XXSmallTopMargin}"
-                    HorizontalAlignment="Center"
-                    FontSize="20"
-                    Visibility="Collapsed"
-                    Style="{ThemeResource BodyTextStyle}"
-                    Text= "No se han encontrado videojuegos" />
+                Name="gamesOrNot"
+                Margin="{StaticResource XXSmallTopMargin}"
+                HorizontalAlignment="Center"
+                FontSize="20"
+                Style="{ThemeResource BodyTextStyle}"
+                Text="No se han encontrado videojuegos"
+                Visibility="Collapsed" />
 
-            <StackPanel 
-                Name="progressRing" 
-                HorizontalAlignment="Center" 
+            <StackPanel
+                Name="progressRing"
+                HorizontalAlignment="Center"
                 VerticalAlignment="Center">
-                <ProgressRing x:Name="progress1" Width="70" Height="70" MinWidth="70" MinHeight="70"/>
+                <ProgressRing
+                    x:Name="progress1"
+                    Width="70"
+                    Height="70"
+                    MinWidth="70"
+                    MinHeight="70" />
+            </StackPanel>
+            <StackPanel
+                Name="infoBar"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <InfoBar
+                    Title="Atención"
+                    IsClosable="False"
+                    IsOpen="True"
+                    Message="No se pueden cargar los videojuegos, no hay conexión a Internet."
+                    Severity="Informational" />
             </StackPanel>
 
             <Grid x:Name="ContentArea">
                 <controls:AdaptiveGridView
                     x:Name="GridVideojuegos"
-                    ContainerContentChanging="GridVideojuegos_ContainerContentChanging"
                     animations:Connected.ListItemElementName="itemThumbnail"
                     animations:Connected.ListItemKey="animationKeyContentGrid"
+                    ContainerContentChanging="GridVideojuegos_ContainerContentChanging"
                     DesiredWidth="270"
                     IsItemClickEnabled="True"
                     ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
@@ -95,32 +112,33 @@
                     StretchContentForSingleRow="False">
                     <controls:AdaptiveGridView.ItemTemplate>
                         <DataTemplate x:DataType="models:Videojuego">
-                            <Border Background="Transparent" PointerEntered="CajaVideojuego_PointerEntered" PointerExited="CajaVideojuego_PointerExited">
+                            <Border
+                                Background="Transparent"
+                                PointerEntered="CajaVideojuego_PointerEntered"
+                                PointerExited="CajaVideojuego_PointerExited">
                                 <Grid x:Name="itemThumbnail" Padding="{StaticResource XSmallLeftTopRightBottomMargin}">
                                     <StackPanel
                                         Name="myStackPanel"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
                                         Width="180"
-                                        Height="Auto">
+                                        Height="Auto"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
                                         <!-- <FontIcon AutomationProperties.Name="{x:Bind Titulo}" FontSize="20" Glyph="{x:Bind Symbol}"  /> -->
-                                        <Image
-                                            Name="Cover"
-                                            Source="{Binding Portada.Data, Converter={StaticResource ByteArrayToImageConverter}}"/>
+                                        <Image Name="Cover" Source="{Binding Portada.Data, Converter={StaticResource ByteArrayToImageConverter}}" />
 
                                         <TextBlock
                                             Margin="{StaticResource XXSmallTopMargin}"
                                             HorizontalAlignment="Center"
                                             FontSize="20"
                                             Style="{ThemeResource BodyTextStyle}"
-                                            Text="{x:Bind Titulo}"/>
+                                            Text="{x:Bind Titulo}" />
                                     </StackPanel>
                                     <StackPanel
                                         x:Name="ZonaCheckBoxSeleccion"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
-                                        Visibility="Collapsed"
-                                        Tag="{x:Bind}">
+                                        Tag="{x:Bind}"
+                                        Visibility="Collapsed">
                                         <Grid Background="#C8C0C0C0" CornerRadius="10">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*" />
@@ -130,25 +148,32 @@
                                                 <ColumnDefinition Width="25" />
                                             </Grid.ColumnDefinitions>
 
-                                            <SymbolIcon Symbol="Download" HorizontalAlignment="Left" Grid.Column="0"/>
+                                            <SymbolIcon
+                                                Grid.Column="0"
+                                                HorizontalAlignment="Left"
+                                                Symbol="Download" />
 
-                                            <CheckBox x:Name="CheckBoxSeleccion" 
-                                                IsChecked="False" 
-                                                HorizontalAlignment="Left" 
-                                                Grid.Column="1" 
-                                                Tag="{x:Bind}" 
+                                            <CheckBox
+                                                x:Name="CheckBoxSeleccion"
+                                                Grid.Column="1"
+                                                HorizontalAlignment="Left"
                                                 Checked="CheckBoxSeleccion_Checked"
-                                                Unchecked="CheckBoxSeleccion_UnChecked"/>
+                                                IsChecked="False"
+                                                Tag="{x:Bind}"
+                                                Unchecked="CheckBoxSeleccion_UnChecked" />
                                         </Grid>
                                     </StackPanel>
                                     <StackPanel
                                         x:Name="Descargado"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
-                                        Visibility="Collapsed"
-                                        Tag="{x:Bind}">
+                                        Tag="{x:Bind}"
+                                        Visibility="Collapsed">
                                         <Grid Background="#C8CCCCCC" CornerRadius="4">
-                                            <SymbolIcon Symbol="Accept" HorizontalAlignment="Left" Grid.Column="0"/>
+                                            <SymbolIcon
+                                                Grid.Column="0"
+                                                HorizontalAlignment="Left"
+                                                Symbol="Accept" />
                                         </Grid>
                                     </StackPanel>
                                 </Grid>

@@ -17,7 +17,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 
 using Windows.ApplicationModel.Core;
-
+using Windows.Networking.Connectivity;
 using WinUIEx;
 
 namespace Excalinest;
@@ -106,6 +106,7 @@ public partial class App : Application
     {
         // TODO: Log and handle exceptions as appropriate.
         // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
+
     }
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
@@ -121,4 +122,6 @@ public partial class App : Application
     {
         _hookTeclado.DesactivarHookTeclado();
     }
+
+    
 }

@@ -2,6 +2,7 @@
 using CommunityToolkit.WinUI.UI.Animations;
 
 using Excalinest.Contracts.Services;
+using Excalinest.Strings;
 using Excalinest.ViewModels;
 
 using Microsoft.UI.Xaml;
@@ -22,11 +23,13 @@ public sealed partial class VideogamesDetailPage : Page
         get;
     }
 
+    private GlobalFunctions _globalFunctions;
     public VideogamesDetailPage()
     {
         ViewModel = App.GetService<VideogamesDetailViewModel>();
         InitializeComponent();
         TheDispatcher = this.DispatcherQueue;
+        _globalFunctions = new GlobalFunctions();
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -34,13 +37,10 @@ public sealed partial class VideogamesDetailPage : Page
         base.OnNavigatedTo(e);
         this.RegisterElementForConnectedAnimation("animationKeyContentGrid", itemHero);
 
-        if (ViewModel.Item != null)
-        {
-            tagsList.ItemsSource = ViewModel._listaEtiquetas;
-        }
-        
         var downloadGroup = FindName("downloadGroup") as StackPanel;
         var executeGroup = FindName("executeGroup") as StackPanel;
+        var infoBar = FindName("infoBar") as StackPanel;
+        var contentPanel = FindName("contentPanel") as StackPanel;
 
         if (VideogamesDetailViewModel.EsVideojuegoDescargado())
         {
@@ -56,6 +56,21 @@ public sealed partial class VideogamesDetailPage : Page
                 executeGroup.Visibility = Visibility.Collapsed;
             }
         }
+
+        if (_globalFunctions.CheckInternetConnectivity())
+        {
+            if (ViewModel.Item != null)
+            {
+                tagsList.ItemsSource = ViewModel._listaEtiquetas;
+            }
+            
+        }
+        else
+        {
+            if (infoBar != null) { infoBar.Visibility = Visibility.Visible; }
+            if (contentPanel != null){ contentPanel.Visibility = Visibility.Collapsed; }
+        }
+        
     }
 
     protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

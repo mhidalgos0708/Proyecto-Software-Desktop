@@ -14,6 +14,7 @@ using Excalinest.Core.Contracts.Services;
 using Excalinest.Core.Models;
 using Excalinest.Core.Services;
 using Excalinest.Services;
+using Excalinest.Strings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -32,6 +33,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
     private static List<Videojuego> _videojuegosSeleccionados;
     private static string RutaJuego = "";
 
+    private GlobalFunctions _globalFunctions;
 
     public ICommand ItemClickCommand
     {
@@ -52,6 +54,7 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
         _videojuegoEtiquetaService = new ServicioVideojuegoEtiqueta(new MongoConnection());
 
         ItemClickCommand = new RelayCommand<Videojuego>(OnItemClick);
+        _globalFunctions = new GlobalFunctions();
     }
 
     public async void OnNavigatedTo(object parameter)
@@ -64,21 +67,26 @@ public class VideogamesViewModel : ObservableRecipient, INavigationAware
 
         Tags.Add(defaultValue);
 
-        var tags = new ObservableCollection<Tag>();
-        await Task.Run(() => tags = getTags().Result);
-
-        foreach (var tag in tags)
+        if (_globalFunctions.CheckInternetConnectivity())
         {
-            Tags.Add(tag);
+            var tags = new ObservableCollection<Tag>();
+            await Task.Run(() => tags = getTags().Result);
+
+            foreach (var tag in tags)
+            {
+                Tags.Add(tag);
+            }
+
+            var videojuegos = new ObservableCollection<Videojuego>();
+            await Task.Run(() => videojuegos = getVideojuegos().Result);
+
+            foreach (var videogame in videojuegos)
+            {
+                Source.Add(videogame);
+            }
         }
 
-        var videojuegos = new ObservableCollection<Videojuego>();
-        await Task.Run(() => videojuegos = getVideojuegos().Result);
-
-        foreach (var videogame in videojuegos)
-        {
-            Source.Add(videogame);
-        }
+        
         RutaJuego = _manejoArchivos.leerRutaArchivos();
     }
 
