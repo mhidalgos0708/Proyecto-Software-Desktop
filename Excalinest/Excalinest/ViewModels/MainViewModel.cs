@@ -81,11 +81,21 @@ public class MainViewModel : ObservableRecipient, INavigationAware
 
             // TODO: Replace with real data.
             var data = await _videojuegoService.GetVideojuegos();
+            var titles = new List<string>();
             foreach (var item in data)
             {
                 if (Directory.Exists(path + item.Titulo))
                 {
                     Source.Add(item);
+                    titles.Add(item.Titulo);
+                }
+            }
+            foreach (var item1 in Directory.GetDirectories(path))
+            {
+                var title = item1.Replace(path, string.Empty);
+                if (!titles.Contains(title))
+                {
+                    MessageBox.Show(title, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
