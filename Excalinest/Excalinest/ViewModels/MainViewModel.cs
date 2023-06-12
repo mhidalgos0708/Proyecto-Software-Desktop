@@ -90,12 +90,31 @@ public class MainViewModel : ObservableRecipient, INavigationAware
                     titles.Add(item.Titulo);
                 }
             }
+            var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            var defaultImagePath = Path.Combine(baseDirectory, "Assets", "default.jpg");
+            var defaultImageBytes = File.ReadAllBytes(defaultImagePath);
             foreach (var item1 in Directory.GetDirectories(path))
             {
                 var title = item1.Replace(path, string.Empty);
                 if (!titles.Contains(title))
                 {
-                    MessageBox.Show(title, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    var videojuego = new Videojuego
+                    {
+                        Titulo = title,
+                        Portada = new ImageMongo
+                        {
+                            ImgType = "image/jpg",
+                            Data = defaultImageBytes
+                        },
+                        Facebook = new ImageMongo(),
+                        Instagram = new ImageMongo(),
+                        Twitter = new ImageMongo(),
+                        Sinopsis = "Desconocido",
+                        Usuario = "Desconocido",
+                        bucketId = "Desconocido",
+                        Etiquetas = new List<Tag>()
+                    };
+                    Source.Add(videojuego);
                 }
             }
         }
