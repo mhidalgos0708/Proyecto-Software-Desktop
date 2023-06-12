@@ -115,7 +115,7 @@ public partial class App : Application
 
         await App.GetService<IActivationService>().ActivateAsync(args);
 
-        //MainWindow.GetAppWindow().SetPresenter(AppWindowPresenterKind.FullScreen);
+        MainWindow.GetAppWindow().SetPresenter(AppWindowPresenterKind.FullScreen);
     }
 
     ~App()

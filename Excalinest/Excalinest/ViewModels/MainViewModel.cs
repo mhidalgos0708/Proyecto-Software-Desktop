@@ -147,7 +147,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
 
     public async Task GetVideojuegosByTag(int ID)
     {
-        path =  _manejoArchivos.leerRutaArchivos(); ;
+        path =  _manejoArchivos.leerRutaArchivos();
         if (ID == -1)
         {
             Source.Clear();

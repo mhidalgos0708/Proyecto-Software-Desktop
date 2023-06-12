@@ -47,6 +47,34 @@ public class ServicioVideojuego
         await Task.CompletedTask;
         var filter = Builders<Videojuego>.Filter.Eq("titulo", titulo);
         var entity = collection.Find(filter).FirstOrDefault();
+        if (entity == null)
+        {
+            var path = @"C:\Excalinest\VideojuegosExcalinest\" + titulo;
+            if (Directory.Exists(path))
+            {
+                var defaultImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "default.jpg");
+                var defaultImageBytes = File.ReadAllBytes(defaultImagePath);
+
+                var videojuego = new Videojuego
+                {
+                    Titulo = titulo,
+                    Portada = new ImageMongo
+                    {
+                        ImgType = "image/jpg",
+                        Data = defaultImageBytes
+                    },
+                    Facebook = new ImageMongo(),
+                    Instagram = new ImageMongo(),
+                    Twitter = new ImageMongo(),
+                    Sinopsis = "Desconocido",
+                    Usuario = "Desconocido",
+                    bucketId = "Desconocido",
+                    Etiquetas = new List<Tag>()
+                };
+
+                return videojuego;
+            }
+        }
         return entity;
     }
 
