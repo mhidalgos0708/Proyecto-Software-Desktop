@@ -124,6 +124,7 @@
                                 </StackPanel>
                             </Button>
                             <Button
+                                Name="deleteBtn"
                                 Width="130"
                                 Height="40"
                                 Margin="15,0,0,0"

@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing.Printing;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -71,52 +72,37 @@ public class MainViewModel : ObservableRecipient, INavigationAware
 
         try
         {
-            var tags = await _etiquetaService.GetTags();
-            foreach (var item in tags)
-            {
-                Tags.Add(item);
-            }
-
             path = _manejoArchivos.leerRutaArchivos();
 
-            // TODO: Replace with real data.
-            var data = await _videojuegoService.GetVideojuegos();
-            var titles = new List<string>();
-            foreach (var item in data)
-            {
-                if (Directory.Exists(path + item.Titulo))
-                {
-                    Source.Add(item);
-                    titles.Add(item.Titulo);
-                }
-            }
             var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             var defaultImagePath = Path.Combine(baseDirectory, "Assets", "default.jpg");
             var defaultImageBytes = File.ReadAllBytes(defaultImagePath);
-            foreach (var item1 in Directory.GetDirectories(path))
-            {
-                var title = item1.Replace(path, string.Empty);
-                if (!titles.Contains(title))
-                {
-                    var videojuego = new Videojuego
-                    {
-                        Titulo = title,
-                        Portada = new ImageMongo
-                        {
-                            ImgType = "image/jpg",
-                            Data = defaultImageBytes
-                        },
-                        Facebook = new ImageMongo(),
-                        Instagram = new ImageMongo(),
-                        Twitter = new ImageMongo(),
-                        Sinopsis = "Desconocido",
-                        Usuario = "Desconocido",
-                        bucketId = "Desconocido",
-                        Etiquetas = new List<Tag>()
-                    };
-                    Source.Add(videojuego);
-                }
+
+            if (!globalFunctions.CheckInternetConnectivity()) {
+                GetLocalVideogames(new List<string>());
             }
+            else
+            {
+                var tags = await _etiquetaService.GetTags();
+                foreach (var item in tags)
+                {
+                    Tags.Add(item);
+                }
+
+                var data = await _videojuegoService.GetVideojuegos();
+                var titles = new List<string>();
+                foreach (var item in data)
+                {
+                    if (Directory.Exists(path + item.Titulo))
+                    {
+                        Source.Add(item);
+                        titles.Add(item.Titulo);
+                    }
+                }
+                
+                GetLocalVideogames(titles);
+            }
+            
         }
         catch (Exception ex){
             if (!globalFunctions.CheckInternetConnectivity())
@@ -147,33 +133,102 @@ public class MainViewModel : ObservableRecipient, INavigationAware
 
     public async Task GetVideojuegosByTag(int ID)
     {
-        path =  _manejoArchivos.leerRutaArchivos();
+        path = _manejoArchivos.leerRutaArchivos();
         if (ID == -1)
         {
             Source.Clear();
+            
 
+            var titles = new List<string>();
             var data = await _videojuegoService.GetVideojuegos();
+
+            
             foreach (var item in data)
             {
-                if (Directory.Exists(path+item.Titulo))
+                if (Directory.Exists(path + item.Titulo))
                 {
                     Source.Add(item);
+                    titles.Add(item.Titulo);
                 }
             }
+
+            GetLocalVideogames(titles);
+
+            
         }
         else
         {
-            Source.Clear();
-
+            Source.Clear();   
+            
             var data = await _videojuegoEtiquetaService.GetVideojuegosByTagId(ID);
             foreach (var item in data)
             {
-                if (Directory.Exists(path+item.Titulo))
+                if (Directory.Exists(path + item.Titulo))
                 {
                     Source.Add(item);
                 }
             }
         }
+    }
+
+    private void GetLocalVideogames(List<String> titles)
+    {
+        var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        var defaultImagePath = Path.Combine(baseDirectory, "Assets", "default.jpg");
+        var defaultImageBytes = File.ReadAllBytes(defaultImagePath);
+
+        if(titles.Count > 0)
+        {
+            foreach (var item1 in Directory.GetDirectories(path))
+            {
+                var title = item1.Replace(path, string.Empty);
+                if (!titles.Contains(title))
+                {
+                    var videojuego = new Videojuego
+                    {
+                        Titulo = title,
+                        Portada = new ImageMongo
+                        {
+                            ImgType = "image/jpg",
+                            Data = defaultImageBytes
+                        },
+                        Facebook = new ImageMongo(),
+                        Instagram = new ImageMongo(),
+                        Twitter = new ImageMongo(),
+                        Sinopsis = "Desconocido",
+                        Usuario = "Desconocido",
+                        bucketId = "Desconocido",
+                        Etiquetas = new List<Tag>()
+                    };
+                    Source.Add(videojuego);
+                }
+            }
+        }
+        else {
+            foreach (var item1 in Directory.GetDirectories(path))
+            {
+                var title = item1.Replace(path, string.Empty);
+                var videojuego = new Videojuego
+                {
+                    Titulo = title,
+                    Portada = new ImageMongo
+                    {
+                        ImgType = "image/jpg",
+                        Data = defaultImageBytes
+                    },
+                    Facebook = new ImageMongo(),
+                    Instagram = new ImageMongo(),
+                    Twitter = new ImageMongo(),
+                    Sinopsis = "Desconocido",
+                    Usuario = "Desconocido",
+                    bucketId = "Desconocido",
+                    Etiquetas = new List<Tag>()
+                };
+                Source.Add(videojuego);
+
+            }
+        }
+        
     }
 
 }

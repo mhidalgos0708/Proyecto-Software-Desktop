@@ -52,9 +52,12 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
 
     public async void OnNavigatedTo(object parameter)
     {
+        RutaJuego = _manejoArchivos.leerRutaArchivos();
+        _listaEtiquetas.Clear();
+
         if (_globalFunctions.CheckInternetConnectivity())
         {
-            _listaEtiquetas.Clear();
+            
             if (parameter is string titulo)
             {
                 if (servicioVideojuego != null)
@@ -68,7 +71,45 @@ public class VideogamesDetailViewModel : ObservableRecipient, INavigationAware
                         _listaEtiquetas.Add(item);
                     }
                 }
-                RutaJuego = _manejoArchivos.leerRutaArchivos();
+                
+            }
+        }
+        else
+        {
+            var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            var defaultImagePath = Path.Combine(baseDirectory, "Assets", "default.jpg");
+            var defaultImageBytes = File.ReadAllBytes(defaultImagePath);
+
+            if (parameter is string titulo)
+            {
+                NombreVideojuego = titulo;
+                if (Directory.Exists(RutaJuego + titulo))
+                {
+                    var videojuego = new Videojuego
+                    {
+                        Titulo = titulo,
+                        Portada = new ImageMongo
+                        {
+                            ImgType = "image/jpg",
+                            Data = defaultImageBytes
+                        },
+                        Facebook = new ImageMongo(),
+                        Instagram = new ImageMongo(),
+                        Twitter = new ImageMongo(),
+                        Sinopsis = "Desconocido",
+                        Usuario = "Desconocido",
+                        bucketId = "Desconocido",
+                        Etiquetas = new List<Tag>()
+                    };
+
+                    Item = videojuego;
+                }
+
+                else
+                {
+
+                }
+                
             }
         }
         

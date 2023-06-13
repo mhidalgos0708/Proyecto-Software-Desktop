@@ -8,6 +8,7 @@ using Excalinest.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using Button = Microsoft.UI.Xaml.Controls.Button;
 
 namespace Excalinest.Views;
 
@@ -67,8 +68,20 @@ public sealed partial class VideogamesDetailPage : Page
         }
         else
         {
-            if (infoBar != null) { infoBar.Visibility = Visibility.Visible; }
-            if (contentPanel != null){ contentPanel.Visibility = Visibility.Collapsed; }
+            if (VideogamesDetailViewModel.EsVideojuegoDescargado())
+            {
+                if (infoBar != null) { infoBar.Visibility = Visibility.Collapsed; }
+                if (contentPanel != null) { contentPanel.Visibility = Visibility.Visible; }
+                
+                deleteBtn.IsEnabled = false;
+
+            }
+            else
+            {
+                if (infoBar != null) { infoBar.Visibility = Visibility.Visible; }
+                if (contentPanel != null) { contentPanel.Visibility = Visibility.Collapsed; }
+            }
+            
         }
         
     }
